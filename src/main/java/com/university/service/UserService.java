@@ -1,13 +1,17 @@
 package com.university.service;
 
+import com.university.dto.UserDTO;
+import com.university.entity.User;
+import com.university.mapper.UserMapper;
+import com.university.repository.UserRepository;
+
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import com.university.entity.User;
-import com.university.repository.UserRepository;
 
 @Service
 public class UserService {
@@ -15,42 +19,48 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    // CREATE
-    public User createUser(User user) {
-        return userRepository.save(user);
+    public List<UserDTO> findAllDTO() {
+        return userRepository.findAll()
+                .stream()
+                .map(UserMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
-    // READ by username
-    public User findUser(String username) {
-        return userRepository.getUserByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+    public Optional<UserDTO> findByUsername(String username) {
+        return userRepository.findByUsername(username);
     }
 
-    // READ all
-    public List<User> findAllUsers() {
-        return userRepository.findAll();
+    public Optional<UserDTO> findByIdDTO(UUID id) {
+        return userRepository.findById(id).map(UserMapper::toDTO);
     }
 
-    // UPDATE
-    public User updateUser(String username, User updatedUser) {
-        User existingUser = userRepository.getUserByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-        existingUser.setUsername(updatedUser.getUsername());
-        existingUser.setPassword(updatedUser.getPassword());
-        // thêm các trường khác nếu cần
-        return userRepository.save(existingUser);
+    public Optional<UserDTO> findByUsernameDTO(String username) {
+        return userRepository.findByUsername(username);
     }
 
-    // DELETE by username
-    public User deleteUser(String username) {
-        User user = userRepository.getUserByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-        userRepository.delete(user);
-        return user;
+    public void deleteById(UUID id) {
+        userRepository.deleteById(id);
     }
 
-    // DELETE all
-    public void deleteAllUsers() {
-        userRepository.deleteAll();
+    public boolean existsByUsername(String username) {
+        return userRepository.existsByUsername(username);
     }
+
+    // Lưu user và trả về DTO
+    public UserDTO saveDTO(User user) {
+        return UserMapper.toDTO(userRepository.save(user));
+    }
+
+    // Update user
+    public Optional<UserDTO> updateUser(UUID id, User userDetails) {
+        return userRepository.findById(id).map(user -> {
+            user.setUsername(userDetails.getUsername());
+            user.setPassword(userDetails.getPassword());
+            user.setFirstName(userDetails.getFirstName());
+            user.setLastName(userDetails.getLastName());
+            user.setDateOfBirth(userDetails.getDateOfBirth());
+            return UserMapper.toDTO(userRepository.save(user));
+        });
+    }
+
 }

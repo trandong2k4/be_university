@@ -2,15 +2,17 @@ package com.university.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
-@Table(name = "users") // tên bảng trong DB
+@Table(name = "users")
 public class User {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY) // auto-increment
-  private UUID id;
+  @Column(name = "id", updatable = false, nullable = false, insertable = false)
+  private UUID id; // DB tự sinh, Hibernate không generate
 
   @Column(name = "username", unique = true, length = 50)
   private String username;
@@ -26,6 +28,13 @@ public class User {
 
   @Column(name = "date_of_birth")
   private LocalDate dateOfBirth;
+
+  @ManyToMany
+  @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+  private Set<Role> roles = new HashSet<>();
+
+  public User() {
+  }
 
   // --- Getter & Setter ---
   public UUID getId() {
@@ -74,5 +83,13 @@ public class User {
 
   public void setDateOfBirth(LocalDate dateOfBirth) {
     this.dateOfBirth = dateOfBirth;
+  }
+
+  public Set<Role> getRoles() {
+    return roles;
+  }
+
+  public void setRoles(Set<Role> roles) {
+    this.roles = roles;
   }
 }

@@ -1,47 +1,45 @@
 package com.university.entity;
 
+import jakarta.persistence.*;
 import java.util.UUID;
+import java.util.HashSet;
+import java.util.Set;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.Generated;
-import lombok.Getter;
-import lombok.Setter;
-
-@Getter
-@Setter
 @Entity
-@Generated
-
+@Table(name = "roles")
 public class Role {
-    // UUID = UNIQUEIDENTIFIER ON SQL SERVER
+
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID) // Tạo UUID tự động
+    @Column(name = "id", nullable = false, updatable = false, insertable = false)
     private UUID id;
-    private String name;
+
+    @Column(name = "ma_role", unique = true, nullable = false, length = 30)
+    private String maRole;
+
+    @Column(name = "description")
     private String description;
+
+    @ManyToMany(mappedBy = "roles")
+    private Set<User> users = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(name = "roles_permissions", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "permission_id"))
+    private Set<Permission> permissions;
 
     public Role() {
     }
 
-    public Role(UUID id, String name, String description) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-    }
-
+    // Getters & Setters
     public UUID getId() {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public String getMaRole() {
+        return maRole;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setMaRole(String maRole) {
+        this.maRole = maRole;
     }
 
     public String getDescription() {
@@ -52,8 +50,19 @@ public class Role {
         this.description = description;
     }
 
-    @Override
-    public String toString() {
-        return "Role [id=" + id + ", name=" + name + ", description=" + description + "]";
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
+    }
+
+    public Set<Permission> getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(Set<Permission> permissions) {
+        this.permissions = permissions;
     }
 }

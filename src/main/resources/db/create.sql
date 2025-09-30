@@ -1,13 +1,15 @@
+-- Bật extension cho UUID
+CREATE EXTENSION
+IF NOT EXISTS pgcrypto;
 
+-- =====================================================
 -- USERS / ROLES / PERMISSIONS
-
+-- =====================================================
 CREATE TABLE users
 (
     id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-    username char(30) UNIQUE NOT NULL,
-    -- Tên đăng nhập cố định 30 ký tự
+    username varchar(30) UNIQUE NOT NULL,
     password bytea NOT NULL,
-    -- Mật khẩu mã hóa
     first_name varchar(30),
     last_name varchar(30),
     date_of_birth date
@@ -15,50 +17,92 @@ CREATE TABLE users
 
 CREATE TABLE roles
 (
-    name char(30) PRIMARY KEY DEFAULT gen_random_uuid(),
-    -- Tên role ngắn, ví dụ: ADMIN, STUDENT
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+    ma_role varchar(30) UNIQUE NOT NULL,
     description varchar(255)
 );
 
 CREATE TABLE permissions
 (
-    name char(30) PRIMARY KEY DEFAULT gen_random_uuid(),
-    -- Tên permission ngắn, ví dụ: VIEW_USER
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+    ma_permission varchar(30) UNIQUE NOT NULL,
     description varchar(255)
 );
 
 CREATE TABLE users_roles
 (
-    user_id uuid NOT NULL DEFAULT gen_random_uuid(),
-    role_name char(30) NOT NULL,
-    PRIMARY KEY (user_id, role_name),
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id uuid NOT NULL,
+    role_id uuid NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-    FOREIGN KEY (role_name) REFERENCES roles(name) ON DELETE CASCADE
+    FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE
 );
 
 CREATE TABLE roles_permissions
 (
-    role_name char(30) NOT NULL DEFAULT gen_random_uuid(),
-    permission_name char(30) NOT NULL,
-    PRIMARY KEY (role_name, permission_name),
-    FOREIGN KEY (role_name) REFERENCES roles(name) ON DELETE CASCADE,
-    FOREIGN KEY (permission_name) REFERENCES permissions(name) ON DELETE CASCADE
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+    role_id uuid NOT NULL,
+    permission_id uuid NOT NULL,
+    FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE,
+    FOREIGN KEY (permission_id) REFERENCES permissions(id) ON DELETE CASCADE
 );
 
--- ============================================
--- SINH VIÊN
--- ============================================
-CREATE TABLE sinhviens
+-- =====================================================
+-- TRƯỜNG / KHOA / NGÀNH
+-- =====================================================
+CREATE TABLE truongs
 (
     id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-    ma_sinh_vien char(10) NOT NULL UNIQUE,
+    ma_truong varchar(5) UNIQUE NOT NULL,
+    ten_truong varchar(100),
+    dia_chi varchar(255),
+    so_dien_thoai varchar(20),
+    email varchar(100),
+    website varchar(100),
+    mo_ta text,
+    logo_url varchar(255),
+    ngay_thanh_lap date,
+    nguoi_dai_dien varchar(100)
+);
+
+CREATE TABLE khoas
+(
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+    ma_khoa varchar(5) UNIQUE NOT NULL,
+    ten_khoa varchar(100),
+    truong_id uuid NOT NULL,
+    FOREIGN KEY (truong_id) REFERENCES truongs(id) ON DELETE CASCADE
+);
+
+CREATE TABLE nganhhocs
+(
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+    ma_nganh varchar(5) UNIQUE NOT NULL,
+    ten_nganh varchar(100),
+    khoa_id uuid NOT NULL,
+    FOREIGN KEY (khoa_id) REFERENCES khoas(id) ON DELETE CASCADE
+);
+
+-- =====================================================
+-- SINH VIÊN
+-- =====================================================
+CREATE TABLE sinhviens (
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+    ma_sinh_vien varchar(10) UNIQUE NOT NULL,
     ho_ten varchar(50),
     email varchar(50) UNIQUE,
     so_dien_thoai varchar(10) UNIQUE,
     ngay_nhap_hoc date,
-    ngay_tot_nghiep date
+    ngay_tot_nghiep date,
+    nganh_id uuid NOT NULL,
+    user_id uuid UNIQUE,
+    FOREIGN KEY (nganh_id) REFERENCES nganhhocs(id) ON DELETE RESTRICT,
+    FOREIGN KEY
+(user_id) REFERENCES users
+(id) ON
+DELETE
+SET NULL
 );
-
 
 CREATE TABLE chitietsinhviens
 (
@@ -69,51 +113,83 @@ CREATE TABLE chitietsinhviens
     quoc_tich varchar(50) DEFAULT 'Viet Nam',
     cccd varchar(12) UNIQUE,
     sdt_nguoi_than varchar(10),
-    ma_sinh_vien char(10) NOT NULL,
-    FOREIGN KEY (ma_sinh_vien) REFERENCES sinhviens(ma_sinh_vien)
+    sinhvien_id uuid NOT NULL,
+    FOREIGN KEY (sinhvien_id) REFERENCES sinhviens(id) ON DELETE CASCADE
 );
 
--- ============================================
+-- =====================================================
+-- NHÂN SỰ
+-- =====================================================
+CREATE TABLE vitris
+(
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+    ma_vi_tri varchar(5) UNIQUE NOT NULL,
+    ten_vi_tri varchar(50) NOT NULL,
+    mo_ta varchar(255),
+    muc_luong_co_ban numeric(12,2)
+);
+
+CREATE TABLE nhanviens
+(
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+    ho_ten varchar(50),
+    email varchar(50) UNIQUE,
+    so_dien_thoai varchar(10) UNIQUE,
+    ngay_vao_lam date,
+    ngay_nghi_viec date,
+    vitri_id uuid,
+    user_id uuid UNIQUE,
+    FOREIGN KEY (vitri_id) REFERENCES vitris(id),
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+-- =====================================================
 -- MÔN HỌC & TÍN CHỈ
--- ============================================
+-- =====================================================
 CREATE TABLE monhocs
 (
-    ma_mon_hoc char(5) NOT NULL PRIMARY KEY,
-    -- Ví dụ: CS101, MTH01
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+    ma_mon_hoc varchar(5) UNIQUE NOT NULL,
     ten_mon_hoc varchar(50),
     mo_ta varchar(255),
-    tong_so_tin_chi int,
-    ma_mon_hoc_tien_quyet char(5) NULL,
-    -- Môn tiên quyết
-    FOREIGN KEY (ma_mon_hoc_tien_quyet) REFERENCES monhocs(ma_mon_hoc)
+    tong_so_tin_chi int
 );
 
 CREATE TABLE loaitinchi
 (
-    ma_loai_tin_chi char(5) PRIMARY KEY,
-    -- Ví dụ: LT, TH
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+    ma_loai_tin_chi varchar(5) UNIQUE NOT NULL,
     ten_loai_tin_chi varchar(50) NOT NULL
 );
 
 CREATE TABLE tinchi
 (
-    ma_tin_chi uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     so_tin_chi int NOT NULL,
     gia_tri_tin_chi numeric(10,2) NOT NULL,
-    ma_loai_tin_chi char(5),
-    ma_mon_hoc char(5),
     ten_tin_chi varchar(50) NOT NULL,
-    FOREIGN KEY (ma_loai_tin_chi) REFERENCES loaitinchi(ma_loai_tin_chi),
-    FOREIGN KEY (ma_mon_hoc) REFERENCES monhocs(ma_mon_hoc)
+    loaitinchi_id uuid,
+    monhoc_id uuid,
+    FOREIGN KEY (loaitinchi_id) REFERENCES loaitinchi(id),
+    FOREIGN KEY (monhoc_id) REFERENCES monhocs(id)
 );
 
--- ============================================
+CREATE TABLE monhoc_tienquyet
+(
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+    monhoc_id uuid NOT NULL,
+    monhoc_tienquyet_id uuid NOT NULL,
+    FOREIGN KEY (monhoc_id) REFERENCES monhocs(id) ON DELETE CASCADE,
+    FOREIGN KEY (monhoc_tienquyet_id) REFERENCES monhocs(id) ON DELETE CASCADE
+);
+
+-- =====================================================
 -- KỲ HỌC / PHÒNG HỌC / LỊCH HỌC
--- ============================================
+-- =====================================================
 CREATE TABLE kihocs
 (
-    ma_ki_hoc char(5) PRIMARY KEY,
-    -- Ví dụ: HK01, HK02
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+    ma_ki_hoc varchar(5) UNIQUE NOT NULL,
     ten_ki_hoc varchar(50),
     ngay_bat_dau date,
     ngay_ket_thuc date
@@ -121,8 +197,8 @@ CREATE TABLE kihocs
 
 CREATE TABLE phonghocs
 (
-    ma_phong_hoc char(5) PRIMARY KEY,
-    -- Ví dụ: A101, B202
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+    ma_phong_hoc varchar(5) UNIQUE NOT NULL,
     ten_phong varchar(50),
     toa_nha varchar(50),
     tang int,
@@ -131,33 +207,33 @@ CREATE TABLE phonghocs
 
 CREATE TABLE lichhocs
 (
-    ma_lich_hoc uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     ngay_bat_dau date,
     ngay_ket_thuc date,
-    ma_phong_hoc char(5),
-    ma_ki_hoc char(5),
-    ma_mon_hoc char(5),
-    FOREIGN KEY (ma_phong_hoc) REFERENCES phonghocs(ma_phong_hoc),
-    FOREIGN KEY (ma_ki_hoc) REFERENCES kihocs(ma_ki_hoc),
-    FOREIGN KEY (ma_mon_hoc) REFERENCES monhocs(ma_mon_hoc)
+    phonghoc_id uuid,
+    kihoc_id uuid,
+    monhoc_id uuid,
+    FOREIGN KEY (phonghoc_id) REFERENCES phonghocs(id),
+    FOREIGN KEY (kihoc_id) REFERENCES kihocs(id),
+    FOREIGN KEY (monhoc_id) REFERENCES monhocs(id)
 );
 
 CREATE TABLE dangky_lichhoc
 (
-    ma_lich_hoc uuid,
-    ma_sinh_vien char(10),
-    PRIMARY KEY (ma_lich_hoc, ma_sinh_vien),
-    FOREIGN KEY (ma_lich_hoc) REFERENCES lichhocs(ma_lich_hoc),
-    FOREIGN KEY (ma_sinh_vien) REFERENCES sinhviens(ma_sinh_vien)
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+    lichhoc_id uuid NOT NULL,
+    sinhvien_id uuid NOT NULL,
+    FOREIGN KEY (lichhoc_id) REFERENCES lichhocs(id) ON DELETE CASCADE,
+    FOREIGN KEY (sinhvien_id) REFERENCES sinhviens(id) ON DELETE CASCADE
 );
 
--- ============================================
+-- =====================================================
 -- GIỜ HỌC / BUỔI HỌC
--- ============================================
+-- =====================================================
 CREATE TABLE giohocs
 (
-    ma_gio_hoc char(5) PRIMARY KEY,
-    -- Ví dụ: G01, G02
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+    ma_gio_hoc varchar(5) UNIQUE NOT NULL,
     ten_gio_hoc varchar(50),
     thoi_gian_bat_dau time,
     thoi_gian_ket_thuc time
@@ -165,49 +241,22 @@ CREATE TABLE giohocs
 
 CREATE TABLE buoihocs
 (
-    ma_buoi_hoc uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     thu_trong_tuan varchar(50),
-    ma_gio_hoc char(5),
-    ma_lich_hoc uuid,
-    FOREIGN KEY (ma_gio_hoc) REFERENCES giohocs(ma_gio_hoc),
-    FOREIGN KEY (ma_lich_hoc) REFERENCES lichhocs(ma_lich_hoc)
+    giohoc_id uuid,
+    lichhoc_id uuid,
+    FOREIGN KEY (giohoc_id) REFERENCES giohocs(id),
+    FOREIGN KEY (lichhoc_id) REFERENCES lichhocs(id)
 );
 
--- ============================================
--- NHÂN SỰ
--- ============================================
-CREATE TABLE vitris
-(
-    ma_vi_tri char(5) PRIMARY KEY,
-    -- Ví dụ: GV, NV, QL
-    ten_vi_tri varchar(50) NOT NULL,
-    mo_ta varchar(255),
-    muc_luong_co_ban numeric(12,2)
-);
-
-CREATE TABLE nhanviens
-(
-    ma_nhan_vien uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-    ho_ten varchar(50),
-    email varchar(50) UNIQUE,
-    so_dien_thoai varchar(10) UNIQUE,
-    ngay_vao_lam date,
-    ngay_nghi_viec date,
-    ma_vi_tri char(5),
-    user_id uuid UNIQUE,
-    FOREIGN KEY (ma_vi_tri) REFERENCES vitris(ma_vi_tri),
-    FOREIGN KEY (user_id) REFERENCES users(id)
-);
-
--- ============================================
+-- =====================================================
 -- HỌC PHÍ / HỌC LẠI
--- ============================================
-Drop table hocphis
+-- =====================================================
 CREATE TABLE hocphis
 (
-    ma_hoc_phi uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-    ma_sinh_vien char(10) NOT NULL,
-    ma_ki_hoc char(5) NOT NULL,
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+    sinhvien_id uuid NOT NULL,
+    kihoc_id uuid NOT NULL,
     so_tien numeric(12,2) NOT NULL,
     gia_tri_tin_chi numeric(10,2),
     ngay_tao date,
@@ -215,23 +264,41 @@ CREATE TABLE hocphis
     ngay_thanh_toan date,
     trang_thai varchar(20),
     ghi_chu varchar(255),
-    FOREIGN KEY (ma_sinh_vien) REFERENCES sinhviens(ma_sinh_vien),
-    FOREIGN KEY (ma_ki_hoc) REFERENCES kihocs(ma_ki_hoc)
+    FOREIGN KEY (sinhvien_id) REFERENCES sinhviens(id),
+    FOREIGN KEY (kihoc_id) REFERENCES kihocs(id)
 );
 
 CREATE TABLE hoclais
 (
-    ma_hoc_lai uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-    ma_sinh_vien char(10) NOT NULL,
-    ma_mon_hoc char(5) NOT NULL,
-    ma_ki_hoc char(5) NOT NULL,
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+    sinhvien_id uuid NOT NULL,
+    monhoc_id uuid NOT NULL,
+    kihoc_id uuid NOT NULL,
     lan_hoc int,
     diem_cu numeric(3,1),
     ly_do varchar(255),
     trang_thai varchar(20),
-    ma_lich_hoc uuid,
-    FOREIGN KEY (ma_sinh_vien) REFERENCES sinhviens(ma_sinh_vien),
-    FOREIGN KEY (ma_mon_hoc) REFERENCES monhocs(ma_mon_hoc),
-    FOREIGN KEY (ma_ki_hoc) REFERENCES kihocs(ma_ki_hoc),
-    FOREIGN KEY (ma_lich_hoc) REFERENCES lichhocs(ma_lich_hoc)
+    lichhoc_id uuid,
+    FOREIGN KEY (sinhvien_id) REFERENCES sinhviens(id),
+    FOREIGN KEY (monhoc_id) REFERENCES monhocs(id),
+    FOREIGN KEY (kihoc_id) REFERENCES kihocs(id),
+    FOREIGN KEY (lichhoc_id) REFERENCES lichhocs(id)
+);
+
+-- =====================================================
+-- BÀI VIẾT
+-- =====================================================
+CREATE TABLE baiviets
+(
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+    tieu_de varchar(255) NOT NULL,
+    noi_dung text NOT NULL,
+    loai_bai_viet varchar(50),
+    ngay_dang date DEFAULT CURRENT_DATE,
+    tac_gia varchar(100),
+    trang_thai varchar(20) DEFAULT 'CONG_KHAI',
+    hinh_anh_url varchar(255),
+    file_dinh_kem_url varchar(255),
+    user_id uuid,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
 );

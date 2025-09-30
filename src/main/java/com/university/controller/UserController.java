@@ -1,81 +1,73 @@
 package com.university.controller;
 
-import java.util.List;
-
-import org.springframework.http.HttpStatus;
+import com.university.dto.UserDTO;
+import com.university.entity.User;
+import com.university.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.university.entity.User;
-import com.university.service.UserService;
+import java.util.List;
+import java.util.UUID;
 
 @RestController
-@RequestMapping("api/users")
-@CrossOrigin(origins = "http://localhost:8080") // đổi thành FE của bạn
+@RequestMapping("/api/users")
 public class UserController {
 
+    @Autowired
+    private UserService userService;
+
     @GetMapping("/test")
-    public String test() {
-        return "Controller OK";
+    public String testAdmin() {
+        return "Hello ADMIN! You have access.";
     }
 
-    private final UserService userService;
-
-    public UserController(UserService userService) {
-        this.userService = userService;
+    // ✅ Lấy tất cả users (DTO)
+    @GetMapping
+    public List<UserDTO> getAllUsers() {
+        return userService.findAllDTO();
     }
 
-    // GET all users
-    @GetMapping("/get")
-    public ResponseEntity<List<User>> getAllUsers() {
-        List<User> users = userService.findAllUsers();
-        if (users.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.ok(users);
+    // ✅ Lấy user theo ID (DTO)
+    @GetMapping("/getId/{id}")
+    public ResponseEntity<UserDTO> getUserById(@PathVariable UUID id) {
+        return userService.findByIdDTO(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
-    // GET user by username
-    @GetMapping("/get/{username}")
-    public ResponseEntity<User> getUser(@PathVariable String username) {
-        User user = userService.findUser(username);
-        return (user != null) ? ResponseEntity.ok(user) : ResponseEntity.notFound().build();
+    // ✅ Lấy user theo username (DTO)
+    @GetMapping("/getUsername/{username}")
+    public ResponseEntity<UserDTO> getUserByUsername(@PathVariable String username) {
+        return userService.findByUsernameDTO(username)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
-    // CREATE user
+    // ✅ Tạo mới user (vẫn nhận entity từ client, trả DTO)
     @PostMapping
-    public ResponseEntity<User> registerUser(@RequestBody User user) {
-        User savedUser = userService.createUser(user);
-        if (savedUser != null) {
-            return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
+    public ResponseEntity<UserDTO> createUser(@RequestBody User user) {
+        if (userService.existsByUsername(user.getUsername())) {
+            return ResponseEntity.badRequest().build();
         }
-        return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        return ResponseEntity.ok(userService.saveDTO(user));
     }
 
-    // UPDATE user
-    @PutMapping("/{username}")
-    public ResponseEntity<?> updateUser(@PathVariable String username, @RequestBody User user) {
-        User updatedUser = userService.updateUser(username, user);
-        return (updatedUser != null)
-                ? ResponseEntity.ok(updatedUser)
-                : ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body("Cannot find User with username=" + username);
+    // ✅ Update user (nhận entity, trả DTO)
+    @PutMapping("/{id}")
+    public ResponseEntity<UserDTO> updateUser(@PathVariable UUID id, @RequestBody User userDetails) {
+        return userService.updateUser(id, userDetails)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
-    // DELETE user
-    @DeleteMapping("/{username}")
-    public ResponseEntity<?> deleteUser(@PathVariable String username) {
-        User deletedUser = userService.deleteUser(username);
-        return (deletedUser != null)
-                ? ResponseEntity.ok("User deleted successfully.")
-                : ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body("Cannot find User with username=" + username);
-    }
-
-    // DELETE all users
-    @DeleteMapping
-    public ResponseEntity<String> deleteAllUsers() {
-        userService.deleteAllUsers();
-        return ResponseEntity.ok("All users deleted successfully.");
+    // ✅ Delete user
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable UUID id) {
+        if (!userService.findByIdDTO(id).isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+        userService.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }
