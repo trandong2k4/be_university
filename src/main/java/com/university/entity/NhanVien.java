@@ -9,6 +9,7 @@ import java.time.LocalDate;
 public class NhanVien {
 
     @Id
+    @GeneratedValue
     @Column(name = "id", nullable = false, updatable = false, insertable = false)
     private UUID id;
 

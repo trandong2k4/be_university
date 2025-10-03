@@ -1,8 +1,9 @@
 package com.university.controller;
 
-import com.university.entity.SinhVien;
+import com.university.dto.reponse.SinhVienResponse;
+import com.university.dto.request.SinhVienRequest;
 import com.university.service.SinhVienService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,49 +14,40 @@ import java.util.UUID;
 @RequestMapping("/api/sinhviens")
 public class SinhVienController {
 
-    @Autowired
-    private SinhVienService sinhVienService;
+    private final SinhVienService service;
 
-    @GetMapping
-    public List<SinhVien> getAllSinhViens() {
-        return sinhVienService.findAll();
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<SinhVien> getSinhVienById(@PathVariable UUID id) {
-        return sinhVienService.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public SinhVienController(SinhVienService service) {
+        this.service = service;
     }
 
     @PostMapping
-    public ResponseEntity<SinhVien> createSinhVien(@RequestBody SinhVien sinhVien) {
-        if (sinhVienService.existsByMaSinhVien(sinhVien.getMaSinhVien()))
-            return ResponseEntity.badRequest().build();
-        return ResponseEntity.ok(sinhVienService.save(sinhVien));
+    public ResponseEntity<SinhVienResponse> create(@RequestBody SinhVienRequest request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.create(request));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<SinhVien> updateSinhVien(@PathVariable UUID id, @RequestBody SinhVien sinhVienDetails) {
-        return sinhVienService.findById(id)
-                .map(sinhVien -> {
-                    sinhVien.setMaSinhVien(sinhVienDetails.getMaSinhVien());
-                    sinhVien.setHoTen(sinhVienDetails.getHoTen());
-                    sinhVien.setEmail(sinhVienDetails.getEmail());
-                    sinhVien.setSoDienThoai(sinhVienDetails.getSoDienThoai());
-                    sinhVien.setNgayNhapHoc(sinhVienDetails.getNgayNhapHoc());
-                    sinhVien.setNgayTotNghiep(sinhVienDetails.getNgayTotNghiep());
-                    sinhVien.setNganhHoc(sinhVienDetails.getNganhHoc());
-                    sinhVien.setUser(sinhVienDetails.getUser());
-                    return ResponseEntity.ok(sinhVienService.save(sinhVien));
-                }).orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<SinhVienResponse> update(@PathVariable UUID id, @RequestBody SinhVienRequest request) {
+        return ResponseEntity.ok(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteSinhVien(@PathVariable UUID id) {
-        if (!sinhVienService.findById(id).isPresent())
-            return ResponseEntity.notFound().build();
-        sinhVienService.deleteById(id);
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
+        service.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<SinhVienResponse> getById(@PathVariable UUID id) {
+        return ResponseEntity.ok(service.getById(id));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<SinhVienResponse>> getAll() {
+        return ResponseEntity.ok(service.getAll());
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<SinhVienResponse>> search(@RequestParam String keyword) {
+        return ResponseEntity.ok(service.search(keyword));
     }
 }

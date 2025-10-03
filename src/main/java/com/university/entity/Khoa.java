@@ -9,10 +9,11 @@ import java.util.Set;
 public class Khoa {
 
     @Id
+    @GeneratedValue
     @Column(name = "id", nullable = false, updatable = false, insertable = false)
     private UUID id;
 
-    @Column(name = "ma_khoa", unique = true, nullable = false, length = 5)
+    @Column(name = "ma_khoa", unique = true, nullable = false, length = 10)
     private String maKhoa;
 
     @Column(name = "ten_khoa", length = 100)
@@ -23,7 +24,7 @@ public class Khoa {
     private Truong truong;
 
     @OneToMany(mappedBy = "khoa")
-    private Set<NganhHoc> nganhHocs;
+    private Set<Nganh> nganhHocs;
 
     public UUID getId() {
         return id;
@@ -57,11 +58,11 @@ public class Khoa {
         this.truong = truong;
     }
 
-    public Set<NganhHoc> getNganhHocs() {
+    public Set<Nganh> getNganhHocs() {
         return nganhHocs;
     }
 
-    public void setNganhHocs(Set<NganhHoc> nganhHocs) {
+    public void setNganhHocs(Set<Nganh> nganhHocs) {
         this.nganhHocs = nganhHocs;
     }
 

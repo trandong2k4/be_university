@@ -1,37 +1,57 @@
 package com.university.service;
 
+import com.university.dto.reponse.MonHocResponse;
+import com.university.dto.request.MonHocRequest;
 import com.university.entity.MonHoc;
+import com.university.mapper.MonHocMapper;
 import com.university.repository.MonHocRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class MonHocService {
 
-    @Autowired
-    private MonHocRepository monHocRepository;
+    private final MonHocRepository monHocRepository;
+    private final MonHocMapper monHocMapper;
 
-    public List<MonHoc> findAll() {
-        return monHocRepository.findAll();
+    public MonHocService(MonHocRepository monHocRepository, MonHocMapper monHocMapper) {
+        this.monHocRepository = monHocRepository;
+        this.monHocMapper = monHocMapper;
     }
 
-    public Optional<MonHoc> findById(UUID id) {
-        return monHocRepository.findById(id);
+    public MonHocResponse create(MonHocRequest request) {
+        MonHoc entity = monHocMapper.toEntity(request);
+        entity = monHocRepository.save(entity);
+        return monHocMapper.toResponse(entity);
     }
 
-    public MonHoc save(MonHoc monHoc) {
-        return monHocRepository.save(monHoc);
+    public List<MonHocResponse> getAll() {
+        return monHocRepository.findAll().stream()
+                .map(monHocMapper::toResponse)
+                .collect(Collectors.toList());
     }
 
-    public void deleteById(UUID id) {
+    public MonHocResponse getById(UUID id) {
+        MonHoc entity = monHocRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Môn học không tồn tại"));
+        return monHocMapper.toResponse(entity);
+    }
+
+    public MonHocResponse update(UUID id, MonHocRequest request) {
+        MonHoc entity = monHocRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Môn học không tồn tại"));
+        monHocMapper.updateEntity(entity, request);
+        entity = monHocRepository.save(entity);
+        return monHocMapper.toResponse(entity);
+    }
+
+    public void delete(UUID id) {
+        if (!monHocRepository.existsById(id)) {
+            throw new EntityNotFoundException("Môn học không tồn tại");
+        }
         monHocRepository.deleteById(id);
-    }
-
-    public boolean existsByMaMonHoc(String maMonHoc) {
-        return monHocRepository.existsByMaMonHoc(maMonHoc);
     }
 }

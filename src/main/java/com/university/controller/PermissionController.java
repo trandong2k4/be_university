@@ -1,8 +1,10 @@
 package com.university.controller;
 
-import com.university.entity.Permission;
+import com.university.dto.reponse.PermissionResponse;
+import com.university.dto.request.PermissionRequest;
 import com.university.service.PermissionService;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,44 +15,42 @@ import java.util.UUID;
 @RequestMapping("/api/permissions")
 public class PermissionController {
 
-    @Autowired
-    private PermissionService permissionService;
+    private final PermissionService permissionService;
 
-    @GetMapping
-    public List<Permission> getAllPermissions() {
-        return permissionService.findAll();
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<Permission> getPermissionById(@PathVariable UUID id) {
-        return permissionService.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public PermissionController(PermissionService permissionService) {
+        this.permissionService = permissionService;
     }
 
     @PostMapping
-    public ResponseEntity<Permission> createPermission(@RequestBody Permission permission) {
-        if (permissionService.existsByMaPermission(permission.getMaPermission()))
-            return ResponseEntity.badRequest().build();
-        return ResponseEntity.ok(permissionService.save(permission));
+    public ResponseEntity<PermissionResponse> createPermission(@RequestBody PermissionRequest request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(permissionService.createPermission(request));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<PermissionResponse>> getAllPermissions() {
+        return ResponseEntity.ok(permissionService.getAllPermissions());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<PermissionResponse> getPermissionById(@PathVariable UUID id) {
+        return ResponseEntity.ok(permissionService.getPermissionById(id));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Permission> updatePermission(@PathVariable UUID id,
-            @RequestBody Permission permissionDetails) {
-        return permissionService.findById(id)
-                .map(permission -> {
-                    permission.setMaPermission(permissionDetails.getMaPermission());
-                    permission.setDescription(permissionDetails.getDescription());
-                    return ResponseEntity.ok(permissionService.save(permission));
-                }).orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<PermissionResponse> updatePermission(@PathVariable UUID id,
+            @RequestBody PermissionRequest request) {
+        return ResponseEntity.ok(permissionService.updatePermission(id, request));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePermission(@PathVariable UUID id) {
-        if (!permissionService.findById(id).isPresent())
-            return ResponseEntity.notFound().build();
-        permissionService.deleteById(id);
+        permissionService.deletePermission(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<PermissionResponse>> searchPermissions(
+            @RequestParam("maPermission") String maPermission) {
+        return ResponseEntity.ok(permissionService.searchByMaPermission(maPermission));
     }
 }

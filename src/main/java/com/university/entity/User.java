@@ -11,27 +11,21 @@ import java.util.UUID;
 public class User {
 
   @Id
-  @Column(name = "id", updatable = false, nullable = false, insertable = false)
-  private UUID id; // DB tự sinh, Hibernate không generate
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private UUID id;
 
-  @Column(name = "username", unique = true, length = 50)
+  @Column(length = 30, unique = true, nullable = false)
   private String username;
 
-  @Column(name = "password")
+  @Column(length = 72, nullable = false)
   private String password;
 
-  @Column(name = "first_name")
   private String firstName;
-
-  @Column(name = "last_name")
   private String lastName;
-
-  @Column(name = "date_of_birth")
   private LocalDate dateOfBirth;
 
-  @ManyToMany
-  @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-  private Set<Role> roles = new HashSet<>();
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+  private Set<UserRole> userRoles = new HashSet<>();
 
   public User() {
   }
@@ -85,11 +79,12 @@ public class User {
     this.dateOfBirth = dateOfBirth;
   }
 
-  public Set<Role> getRoles() {
-    return roles;
+  public Set<UserRole> getUserRoles() {
+    return userRoles;
   }
 
-  public void setRoles(Set<Role> roles) {
-    this.roles = roles;
+  public void setUserRoles(Set<UserRole> userRoles) {
+    this.userRoles = userRoles;
   }
+
 }

@@ -1,8 +1,9 @@
 package com.university.controller;
 
-import com.university.entity.NhanVien;
+import com.university.dto.reponse.NhanVienResponse;
+import com.university.dto.request.NhanVienRequest;
 import com.university.service.NhanVienService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,48 +14,35 @@ import java.util.UUID;
 @RequestMapping("/api/nhanviens")
 public class NhanVienController {
 
-    @Autowired
-    private NhanVienService nhanVienService;
+    private final NhanVienService nhanVienService;
 
-    @GetMapping
-    public List<NhanVien> getAllNhanViens() {
-        return nhanVienService.findAll();
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<NhanVien> getNhanVienById(@PathVariable UUID id) {
-        return nhanVienService.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public NhanVienController(NhanVienService nhanVienService) {
+        this.nhanVienService = nhanVienService;
     }
 
     @PostMapping
-    public ResponseEntity<NhanVien> createNhanVien(@RequestBody NhanVien nhanVien) {
-        if (nhanVienService.existsByEmail(nhanVien.getEmail()))
-            return ResponseEntity.badRequest().build();
-        return ResponseEntity.ok(nhanVienService.save(nhanVien));
+    public ResponseEntity<NhanVienResponse> create(@RequestBody NhanVienRequest request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(nhanVienService.create(request));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<NhanVienResponse>> getAll() {
+        return ResponseEntity.ok(nhanVienService.getAll());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<NhanVienResponse> getById(@PathVariable UUID id) {
+        return ResponseEntity.ok(nhanVienService.getById(id));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<NhanVien> updateNhanVien(@PathVariable UUID id, @RequestBody NhanVien nhanVienDetails) {
-        return nhanVienService.findById(id)
-                .map(nhanVien -> {
-                    nhanVien.setHoTen(nhanVienDetails.getHoTen());
-                    nhanVien.setEmail(nhanVienDetails.getEmail());
-                    nhanVien.setSoDienThoai(nhanVienDetails.getSoDienThoai());
-                    nhanVien.setNgayVaoLam(nhanVienDetails.getNgayVaoLam());
-                    nhanVien.setNgayNghiViec(nhanVienDetails.getNgayNghiViec());
-                    nhanVien.setViTri(nhanVienDetails.getViTri());
-                    nhanVien.setUser(nhanVienDetails.getUser());
-                    return ResponseEntity.ok(nhanVienService.save(nhanVien));
-                }).orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<NhanVienResponse> update(@PathVariable UUID id, @RequestBody NhanVienRequest request) {
+        return ResponseEntity.ok(nhanVienService.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteNhanVien(@PathVariable UUID id) {
-        if (!nhanVienService.findById(id).isPresent())
-            return ResponseEntity.notFound().build();
-        nhanVienService.deleteById(id);
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
+        nhanVienService.delete(id);
         return ResponseEntity.noContent().build();
     }
 }

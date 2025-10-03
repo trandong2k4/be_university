@@ -1,37 +1,34 @@
 package com.university.service;
 
+import com.university.dto.reponse.RoleResponse;
+import com.university.dto.request.RoleRequest;
 import com.university.entity.Role;
+import com.university.mapper.RoleMapper;
 import com.university.repository.RoleRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class RoleService {
 
-    @Autowired
-    private RoleRepository roleRepository;
+    private final RoleRepository roleRepository;
+    private final RoleMapper roleMapper;
 
-    public List<Role> findAll() {
-        return roleRepository.findAll();
+    public RoleService(RoleRepository roleRepository, RoleMapper roleMapper) {
+        this.roleRepository = roleRepository;
+        this.roleMapper = roleMapper;
     }
 
-    public Optional<Role> findById(UUID id) {
-        return roleRepository.findById(id);
+    public RoleResponse create(RoleRequest request) {
+        Role role = roleMapper.toEntity(request);
+        role = roleRepository.save(role);
+        return roleMapper.toResponse(role);
     }
 
-    public Role save(Role role) {
-        return roleRepository.save(role);
-    }
-
-    public void deleteById(UUID id) {
-        roleRepository.deleteById(id);
-    }
-
-    public boolean existsByMaRole(String maRole) {
-        return roleRepository.existsByMaRole(maRole);
+    public List<RoleResponse> getAll() {
+        return roleRepository.findAll().stream()
+                .map(roleMapper::toResponse)
+                .collect(Collectors.toList());
     }
 }

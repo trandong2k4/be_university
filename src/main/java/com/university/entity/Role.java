@@ -2,6 +2,7 @@ package com.university.entity;
 
 import jakarta.persistence.*;
 import java.util.UUID;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -10,21 +11,19 @@ import java.util.Set;
 public class Role {
 
     @Id
-    @Column(name = "id", nullable = false, updatable = false, insertable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @Column(name = "ma_role", unique = true, nullable = false, length = 30)
+    @Column(length = 30, unique = true, nullable = false)
     private String maRole;
 
-    @Column(name = "description")
     private String description;
 
-    @ManyToMany(mappedBy = "roles")
-    private Set<User> users = new HashSet<>();
+    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
+    private Set<UserRole> userRoles = new HashSet<>();
 
-    @ManyToMany
-    @JoinTable(name = "roles_permissions", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "permission_id"))
-    private Set<Permission> permissions;
+    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
+    private Set<RolePermission> rolePermissions = new HashSet<>();
 
     public Role() {
     }
@@ -50,19 +49,24 @@ public class Role {
         this.description = description;
     }
 
-    public Set<User> getUsers() {
-        return users;
+    public void setId(UUID id) {
+        this.id = id;
     }
 
-    public void setUsers(Set<User> users) {
-        this.users = users;
+    public Set<UserRole> getUserRoles() {
+        return userRoles;
     }
 
-    public Set<Permission> getPermissions() {
-        return permissions;
+    public void setUserRoles(Set<UserRole> userRoles) {
+        this.userRoles = userRoles;
     }
 
-    public void setPermissions(Set<Permission> permissions) {
-        this.permissions = permissions;
+    public Set<RolePermission> getRolePermissions() {
+        return rolePermissions;
     }
+
+    public void setRolePermissions(Set<RolePermission> rolePermissions) {
+        this.rolePermissions = rolePermissions;
+    }
+
 }

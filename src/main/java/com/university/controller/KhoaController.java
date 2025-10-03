@@ -1,8 +1,12 @@
 package com.university.controller;
 
+import com.university.dto.reponse.KhoaResponse;
+import com.university.dto.request.KhoaRequest;
 import com.university.entity.Khoa;
 import com.university.service.KhoaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,44 +17,43 @@ import java.util.UUID;
 @RequestMapping("/api/khoas")
 public class KhoaController {
 
-    @Autowired
-    private KhoaService khoaService;
+    private final KhoaService khoaService;
 
-    @GetMapping
-    public List<Khoa> getAllKhoas() {
-        return khoaService.findAll();
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<Khoa> getKhoaById(@PathVariable UUID id) {
-        return khoaService.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public KhoaController(KhoaService khoaService) {
+        this.khoaService = khoaService;
     }
 
     @PostMapping
-    public ResponseEntity<Khoa> createKhoa(@RequestBody Khoa khoa) {
-        if (khoaService.existsByMaKhoa(khoa.getMaKhoa()))
-            return ResponseEntity.badRequest().build();
-        return ResponseEntity.ok(khoaService.save(khoa));
+    public ResponseEntity<KhoaResponse> create(@RequestBody KhoaRequest request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(khoaService.create(request));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<KhoaResponse>> getAll() {
+        return ResponseEntity.ok(khoaService.getAll());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<KhoaResponse> getById(@PathVariable UUID id) {
+        return ResponseEntity.ok(khoaService.getById(id));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Khoa> updateKhoa(@PathVariable UUID id, @RequestBody Khoa khoaDetails) {
-        return khoaService.findById(id)
-                .map(khoa -> {
-                    khoa.setMaKhoa(khoaDetails.getMaKhoa());
-                    khoa.setTenKhoa(khoaDetails.getTenKhoa());
-                    khoa.setTruong(khoaDetails.getTruong());
-                    return ResponseEntity.ok(khoaService.save(khoa));
-                }).orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<KhoaResponse> update(@PathVariable UUID id, @RequestBody KhoaRequest request) {
+        return ResponseEntity.ok(khoaService.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteKhoa(@PathVariable UUID id) {
-        if (!khoaService.findById(id).isPresent())
-            return ResponseEntity.notFound().build();
-        khoaService.deleteById(id);
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
+        khoaService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/filter")
+    public ResponseEntity<Page<KhoaResponse>> filterByTruong(
+            @RequestParam UUID truongId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        return ResponseEntity.ok(khoaService.getByTruong(truongId, page, size));
     }
 }

@@ -1,37 +1,57 @@
 package com.university.service;
 
+import com.university.dto.reponse.LoaiTinChiResponse;
+import com.university.dto.request.LoaiTinChiRequest;
 import com.university.entity.LoaiTinChi;
+import com.university.mapper.LoaiTinChiMapper;
 import com.university.repository.LoaiTinChiRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class LoaiTinChiService {
 
-    @Autowired
-    private LoaiTinChiRepository loaiTinChiRepository;
+    private final LoaiTinChiRepository loaiTinChiRepository;
+    private final LoaiTinChiMapper loaiTinChiMapper;
 
-    public List<LoaiTinChi> findAll() {
-        return loaiTinChiRepository.findAll();
+    public LoaiTinChiService(LoaiTinChiRepository loaiTinChiRepository, LoaiTinChiMapper loaiTinChiMapper) {
+        this.loaiTinChiRepository = loaiTinChiRepository;
+        this.loaiTinChiMapper = loaiTinChiMapper;
     }
 
-    public Optional<LoaiTinChi> findById(UUID id) {
-        return loaiTinChiRepository.findById(id);
+    public LoaiTinChiResponse create(LoaiTinChiRequest request) {
+        LoaiTinChi entity = loaiTinChiMapper.toEntity(request);
+        entity = loaiTinChiRepository.save(entity);
+        return loaiTinChiMapper.toResponse(entity);
     }
 
-    public LoaiTinChi save(LoaiTinChi loaiTinChi) {
-        return loaiTinChiRepository.save(loaiTinChi);
+    public List<LoaiTinChiResponse> getAll() {
+        return loaiTinChiRepository.findAll().stream()
+                .map(loaiTinChiMapper::toResponse)
+                .collect(Collectors.toList());
     }
 
-    public void deleteById(UUID id) {
+    public LoaiTinChiResponse getById(UUID id) {
+        LoaiTinChi entity = loaiTinChiRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Loại tín chỉ không tồn tại"));
+        return loaiTinChiMapper.toResponse(entity);
+    }
+
+    public LoaiTinChiResponse update(UUID id, LoaiTinChiRequest request) {
+        LoaiTinChi entity = loaiTinChiRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Loại tín chỉ không tồn tại"));
+        loaiTinChiMapper.updateEntity(entity, request);
+        entity = loaiTinChiRepository.save(entity);
+        return loaiTinChiMapper.toResponse(entity);
+    }
+
+    public void delete(UUID id) {
+        if (!loaiTinChiRepository.existsById(id)) {
+            throw new EntityNotFoundException("Loại tín chỉ không tồn tại");
+        }
         loaiTinChiRepository.deleteById(id);
-    }
-
-    public boolean existsByMaLoaiTinChi(String maLoaiTinChi) {
-        return loaiTinChiRepository.existsByMaLoaiTinChi(maLoaiTinChi);
     }
 }

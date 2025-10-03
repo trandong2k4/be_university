@@ -1,37 +1,63 @@
 package com.university.service;
 
+import com.university.dto.reponse.PermissionResponse;
+import com.university.dto.request.PermissionRequest;
 import com.university.entity.Permission;
+import com.university.mapper.PermissionMapper;
 import com.university.repository.PermissionRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class PermissionService {
 
-    @Autowired
-    private PermissionRepository permissionRepository;
+    private final PermissionRepository permissionRepository;
+    private final PermissionMapper permissionMapper;
 
-    public List<Permission> findAll() {
-        return permissionRepository.findAll();
+    public PermissionService(PermissionRepository permissionRepository, PermissionMapper permissionMapper) {
+        this.permissionRepository = permissionRepository;
+        this.permissionMapper = permissionMapper;
     }
 
-    public Optional<Permission> findById(UUID id) {
-        return permissionRepository.findById(id);
+    public PermissionResponse createPermission(PermissionRequest request) {
+        Permission permission = permissionMapper.toEntity(request);
+        permission = permissionRepository.save(permission);
+        return permissionMapper.toResponse(permission);
     }
 
-    public Permission save(Permission permission) {
-        return permissionRepository.save(permission);
+    public List<PermissionResponse> getAllPermissions() {
+        return permissionRepository.findAll().stream()
+                .map(permissionMapper::toResponse)
+                .collect(Collectors.toList());
     }
 
-    public void deleteById(UUID id) {
+    public PermissionResponse getPermissionById(UUID id) {
+        Permission permission = permissionRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Permission not found"));
+        return permissionMapper.toResponse(permission);
+    }
+
+    public PermissionResponse updatePermission(UUID id, PermissionRequest request) {
+        Permission permission = permissionRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Permission not found"));
+        permissionMapper.updateEntity(permission, request);
+        permission = permissionRepository.save(permission);
+        return permissionMapper.toResponse(permission);
+    }
+
+    public void deletePermission(UUID id) {
+        if (!permissionRepository.existsById(id)) {
+            throw new EntityNotFoundException("Permission not found");
+        }
         permissionRepository.deleteById(id);
     }
 
-    public boolean existsByMaPermission(String maPermission) {
-        return permissionRepository.existsByMaPermission(maPermission);
+    public List<PermissionResponse> searchByMaPermission(String keyword) {
+        return permissionRepository.findByMaPermissionContainingIgnoreCase(keyword).stream()
+                .map(permissionMapper::toResponse)
+                .collect(Collectors.toList());
     }
 }

@@ -2,6 +2,7 @@ package com.university.entity;
 
 import jakarta.persistence.*;
 import java.util.UUID;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -9,17 +10,16 @@ import java.util.Set;
 public class Permission {
 
     @Id
-    @Column(name = "id", nullable = false, updatable = false, insertable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @Column(name = "ma_permission", unique = true, nullable = false, length = 30)
+    @Column(length = 30, unique = true, nullable = false)
     private String maPermission;
 
-    @Column(name = "description")
     private String description;
 
-    @ManyToMany(mappedBy = "permissions")
-    private Set<Role> roles;
+    @OneToMany(mappedBy = "permission", cascade = CascadeType.ALL)
+    private Set<RolePermission> rolePermissions = new HashSet<>();
 
     public Permission() {
     }
@@ -45,11 +45,16 @@ public class Permission {
         this.description = description;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
+    public void setId(UUID id) {
+        this.id = id;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+    public Set<RolePermission> getRolePermissions() {
+        return rolePermissions;
     }
+
+    public void setRolePermissions(Set<RolePermission> rolePermissions) {
+        this.rolePermissions = rolePermissions;
+    }
+
 }

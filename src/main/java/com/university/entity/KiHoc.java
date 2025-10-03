@@ -10,6 +10,7 @@ import java.util.UUID;
 public class KiHoc {
 
     @Id
+    @GeneratedValue
     @Column(name = "id", nullable = false, updatable = false, insertable = false)
     private UUID id;
 

@@ -9,6 +9,7 @@ import java.util.UUID;
 public class BaiViet {
 
     @Id
+    @GeneratedValue
     @Column(name = "id", nullable = false, updatable = false, insertable = false)
     private UUID id;
 
@@ -37,7 +38,7 @@ public class BaiViet {
     private String fileDinhKemUrl;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "username")
     private User user;
 
     public BaiViet() {

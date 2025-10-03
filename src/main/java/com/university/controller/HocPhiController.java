@@ -1,11 +1,13 @@
 package com.university.controller;
 
-import com.university.entity.HocPhi;
+import com.university.dto.reponse.HocPhiResponse;
+import com.university.dto.request.HocPhiRequest;
 import com.university.service.HocPhiService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -13,48 +15,55 @@ import java.util.UUID;
 @RequestMapping("/api/hocphis")
 public class HocPhiController {
 
-    @Autowired
-    private HocPhiService hocPhiService;
+    private final HocPhiService hocPhiService;
 
-    @GetMapping
-    public List<HocPhi> getAllHocPhis() {
-        return hocPhiService.findAll();
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<HocPhi> getHocPhiById(@PathVariable UUID id) {
-        return hocPhiService.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public HocPhiController(HocPhiService hocPhiService) {
+        this.hocPhiService = hocPhiService;
     }
 
     @PostMapping
-    public ResponseEntity<HocPhi> createHocPhi(@RequestBody HocPhi hocPhi) {
-        return ResponseEntity.ok(hocPhiService.save(hocPhi));
+    public ResponseEntity<HocPhiResponse> create(@RequestBody HocPhiRequest request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(hocPhiService.create(request));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<HocPhi> updateHocPhi(@PathVariable UUID id, @RequestBody HocPhi hocPhiDetails) {
-        return hocPhiService.findById(id)
-                .map(hp -> {
-                    hp.setSinhVien(hocPhiDetails.getSinhVien());
-                    hp.setKiHoc(hocPhiDetails.getKiHoc());
-                    hp.setSoTien(hocPhiDetails.getSoTien());
-                    hp.setGiaTriTinChi(hocPhiDetails.getGiaTriTinChi());
-                    hp.setNgayTao(hocPhiDetails.getNgayTao());
-                    hp.setHanThanhToan(hocPhiDetails.getHanThanhToan());
-                    hp.setNgayThanhToan(hocPhiDetails.getNgayThanhToan());
-                    hp.setTrangThai(hocPhiDetails.getTrangThai());
-                    hp.setGhiChu(hocPhiDetails.getGhiChu());
-                    return ResponseEntity.ok(hocPhiService.save(hp));
-                }).orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<HocPhiResponse> update(@PathVariable UUID id, @RequestBody HocPhiRequest request) {
+        return ResponseEntity.ok(hocPhiService.update(id, request));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<HocPhiResponse> getById(@PathVariable UUID id) {
+        return ResponseEntity.ok(hocPhiService.getById(id));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<HocPhiResponse>> getAll() {
+        return ResponseEntity.ok(hocPhiService.getAll());
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteHocPhi(@PathVariable UUID id) {
-        if (!hocPhiService.findById(id).isPresent())
-            return ResponseEntity.notFound().build();
-        hocPhiService.deleteById(id);
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
+        hocPhiService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/filter/trangthai")
+    public ResponseEntity<List<HocPhiResponse>> filterByTrangThai(@RequestParam String trangThai) {
+        return ResponseEntity.ok(hocPhiService.filterByTrangThai(trangThai));
+    }
+
+    @GetMapping("/filter/kihoc")
+    public ResponseEntity<List<HocPhiResponse>> filterByKiHoc(@RequestParam UUID kiHocId) {
+        return ResponseEntity.ok(hocPhiService.filterByKiHoc(kiHocId));
+    }
+
+    @GetMapping("/filter/sinhvien")
+    public ResponseEntity<List<HocPhiResponse>> filterBySinhVien(@RequestParam UUID sinhVienId) {
+        return ResponseEntity.ok(hocPhiService.filterBySinhVien(sinhVienId));
+    }
+
+    @GetMapping("/filter/trehan")
+    public ResponseEntity<List<HocPhiResponse>> filterTreHanChuaThanhToan(@RequestParam LocalDate beforeDate) {
+        return ResponseEntity.ok(hocPhiService.filterTreHanChuaThanhToan(beforeDate));
     }
 }

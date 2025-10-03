@@ -1,8 +1,11 @@
 package com.university.controller;
 
-import com.university.entity.Truong;
+import com.university.dto.reponse.TruongResponse;
+import com.university.dto.request.TruongRequest;
 import com.university.service.TruongService;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,51 +16,48 @@ import java.util.UUID;
 @RequestMapping("/api/truongs")
 public class TruongController {
 
-    @Autowired
-    private TruongService truongService;
+    private final TruongService truongService;
 
-    @GetMapping
-    public List<Truong> getAllTruongs() {
-        return truongService.findAll();
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<Truong> getTruongById(@PathVariable UUID id) {
-        return truongService.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public TruongController(TruongService truongService) {
+        this.truongService = truongService;
     }
 
     @PostMapping
-    public ResponseEntity<Truong> createTruong(@RequestBody Truong truong) {
-        if (truongService.existsByMaTruong(truong.getMaTruong()))
-            return ResponseEntity.badRequest().build();
-        return ResponseEntity.ok(truongService.save(truong));
+    public ResponseEntity<TruongResponse> create(@RequestBody TruongRequest request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(truongService.create(request));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<TruongResponse>> getAll() {
+        return ResponseEntity.ok(truongService.getAll());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<TruongResponse> getById(@PathVariable UUID id) {
+        return ResponseEntity.ok(truongService.getById(id));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Truong> updateTruong(@PathVariable UUID id, @RequestBody Truong truongDetails) {
-        return truongService.findById(id)
-                .map(truong -> {
-                    truong.setMaTruong(truongDetails.getMaTruong());
-                    truong.setTenTruong(truongDetails.getTenTruong());
-                    truong.setDiaChi(truongDetails.getDiaChi());
-                    truong.setSoDienThoai(truongDetails.getSoDienThoai());
-                    truong.setEmail(truongDetails.getEmail());
-                    truong.setWebsite(truongDetails.getWebsite());
-                    truong.setMoTa(truongDetails.getMoTa());
-                    truong.setLogoUrl(truongDetails.getLogoUrl());
-                    truong.setNgayThanhLap(truongDetails.getNgayThanhLap());
-                    truong.setNguoiDaiDien(truongDetails.getNguoiDaiDien());
-                    return ResponseEntity.ok(truongService.save(truong));
-                }).orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<TruongResponse> update(@PathVariable UUID id, @RequestBody TruongRequest request) {
+        return ResponseEntity.ok(truongService.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTruong(@PathVariable UUID id) {
-        if (!truongService.findById(id).isPresent())
-            return ResponseEntity.notFound().build();
-        truongService.deleteById(id);
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
+        truongService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<TruongResponse>> search(@RequestParam("maTruong") String maTruong) {
+        return ResponseEntity.ok(truongService.searchByMaTruong(maTruong));
+    }
+
+    @GetMapping("/filter")
+    public ResponseEntity<Page<TruongResponse>> filterByDiaChi(
+            @RequestParam(defaultValue = "") String diaChi,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        return ResponseEntity.ok(truongService.getByDiaChi(diaChi, page, size));
     }
 }

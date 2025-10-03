@@ -1,11 +1,15 @@
 package com.university.controller;
 
+import com.university.dto.reponse.TinChiResponse;
+import com.university.dto.request.TinChiRequest;
 import com.university.entity.TinChi;
 import com.university.service.TinChiService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
@@ -13,44 +17,51 @@ import java.util.UUID;
 @RequestMapping("/api/tinchi")
 public class TinChiController {
 
-    @Autowired
-    private TinChiService tinChiService;
+    private final TinChiService tinChiService;
 
-    @GetMapping
-    public List<TinChi> getAllTinChi() {
-        return tinChiService.findAll();
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<TinChi> getTinChiById(@PathVariable UUID id) {
-        return tinChiService.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public TinChiController(TinChiService tinChiService) {
+        this.tinChiService = tinChiService;
     }
 
     @PostMapping
-    public ResponseEntity<TinChi> createTinChi(@RequestBody TinChi tinChi) {
-        return ResponseEntity.ok(tinChiService.save(tinChi));
+    public ResponseEntity<TinChiResponse> create(@RequestBody TinChiRequest request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(tinChiService.create(request));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<TinChiResponse>> getAll() {
+        return ResponseEntity.ok(tinChiService.getAll());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<TinChiResponse> getById(@PathVariable UUID id) {
+        return ResponseEntity.ok(tinChiService.getById(id));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TinChi> updateTinChi(@PathVariable UUID id, @RequestBody TinChi tinChiDetails) {
-        return tinChiService.findById(id)
-                .map(tc -> {
-                    tc.setSoTinChi(tinChiDetails.getSoTinChi());
-                    tc.setGiaTriTinChi(tinChiDetails.getGiaTriTinChi());
-                    tc.setTenTinChi(tinChiDetails.getTenTinChi());
-                    tc.setLoaiTinChi(tinChiDetails.getLoaiTinChi());
-                    tc.setMonHoc(tinChiDetails.getMonHoc());
-                    return ResponseEntity.ok(tinChiService.save(tc));
-                }).orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<TinChiResponse> update(@PathVariable UUID id, @RequestBody TinChiRequest request) {
+        return ResponseEntity.ok(tinChiService.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTinChi(@PathVariable UUID id) {
-        if (!tinChiService.findById(id).isPresent())
-            return ResponseEntity.notFound().build();
-        tinChiService.deleteById(id);
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
+        tinChiService.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/filter/monhoc")
+    public ResponseEntity<List<TinChiResponse>> filterByMonHoc(@RequestParam UUID monHocId) {
+        return ResponseEntity.ok(tinChiService.filterByMonHoc(monHocId));
+    }
+
+    @GetMapping("/filter/loai")
+    public ResponseEntity<List<TinChiResponse>> filterByLoaiTinChi(@RequestParam UUID loaiTinChiId) {
+        return ResponseEntity.ok(tinChiService.filterByLoaiTinChi(loaiTinChiId));
+    }
+
+    @GetMapping("/filter/giatri")
+    public ResponseEntity<List<TinChiResponse>> filterByGiaTri(@RequestParam BigDecimal minGiaTri) {
+        return ResponseEntity.ok(tinChiService.filterByGiaTri(minGiaTri));
+    }
+
 }

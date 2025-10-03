@@ -9,6 +9,7 @@ import java.util.Set;
 public class MonHoc {
 
     @Id
+    @GeneratedValue
     @Column(name = "id", nullable = false, updatable = false, insertable = false)
     private UUID id;
 

@@ -1,66 +1,54 @@
 package com.university.service;
 
-import com.university.dto.UserDTO;
+import com.university.dto.reponse.UserResponse;
+import com.university.dto.request.UserRequest;
+import com.university.entity.Role;
 import com.university.entity.User;
+import com.university.entity.UserRole;
 import com.university.mapper.UserMapper;
+import com.university.repository.RoleRepository;
 import com.university.repository.UserRepository;
+import com.university.repository.UserRoleRepository;
 
-import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final UserRoleRepository userRoleRepository;
+    private final UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
 
-    public List<UserDTO> findAllDTO() {
-        return userRepository.findAll()
-                .stream()
-                .map(UserMapper::toDTO)
-                .collect(Collectors.toList());
+    public UserService(UserRepository userRepository, RoleRepository roleRepository,
+            UserRoleRepository userRoleRepository, UserMapper userMapper,
+            PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.userRoleRepository = userRoleRepository;
+        this.userMapper = userMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
-    public Optional<UserDTO> findByUsername(String username) {
-        return userRepository.findByUsername(username);
+    public UserResponse createUser(UserRequest request) {
+        User user = userMapper.toEntity(request, passwordEncoder);
+        user = userRepository.save(user);
+        return userMapper.toResponse(user);
     }
 
-    public Optional<UserDTO> findByIdDTO(UUID id) {
-        return userRepository.findById(id).map(UserMapper::toDTO);
-    }
+    public void assignRole(UUID userId, UUID roleId) {
+        User user = userRepository.findById(userId).orElseThrow();
+        Role role = roleRepository.findById(roleId).orElseThrow();
 
-    public Optional<UserDTO> findByUsernameDTO(String username) {
-        return userRepository.findByUsername(username);
+        if (!userRoleRepository.existsByUserAndRole(user, role)) {
+            UserRole userRole = new UserRole();
+            userRole.setUser(user);
+            userRole.setRole(role);
+            userRoleRepository.save(userRole);
+        }
     }
-
-    public void deleteById(UUID id) {
-        userRepository.deleteById(id);
-    }
-
-    public boolean existsByUsername(String username) {
-        return userRepository.existsByUsername(username);
-    }
-
-    // Lưu user và trả về DTO
-    public UserDTO saveDTO(User user) {
-        return UserMapper.toDTO(userRepository.save(user));
-    }
-
-    // Update user
-    public Optional<UserDTO> updateUser(UUID id, User userDetails) {
-        return userRepository.findById(id).map(user -> {
-            user.setUsername(userDetails.getUsername());
-            user.setPassword(userDetails.getPassword());
-            user.setFirstName(userDetails.getFirstName());
-            user.setLastName(userDetails.getLastName());
-            user.setDateOfBirth(userDetails.getDateOfBirth());
-            return UserMapper.toDTO(userRepository.save(user));
-        });
-    }
-
 }

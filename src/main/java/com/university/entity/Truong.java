@@ -10,10 +10,11 @@ import java.time.LocalDate;
 public class Truong {
 
     @Id
+    @GeneratedValue
     @Column(name = "id", nullable = false, updatable = false, insertable = false)
     private UUID id;
 
-    @Column(name = "ma_truong", unique = true, nullable = false, length = 5)
+    @Column(name = "ma_truong", unique = true, nullable = false, length = 10)
     private String maTruong;
 
     @Column(name = "ten_truong", length = 100)
@@ -47,14 +48,6 @@ public class Truong {
     private Set<Khoa> khoas;
 
     public Truong() {
-    }
-
-    @Override
-    public String toString() {
-        return "Truong [id=" + id + ", maTruong=" + maTruong + ", tenTruong=" + tenTruong + ", diaChi=" + diaChi
-                + ", soDienThoai=" + soDienThoai + ", email=" + email + ", website=" + website + ", moTa=" + moTa
-                + ", logoUrl=" + logoUrl + ", ngayThanhLap=" + ngayThanhLap + ", nguoiDaiDien=" + nguoiDaiDien
-                + ", khoas=" + khoas + "]";
     }
 
     // Getters & Setters...

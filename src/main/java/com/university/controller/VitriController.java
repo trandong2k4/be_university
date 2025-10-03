@@ -1,8 +1,10 @@
 package com.university.controller;
 
-import com.university.entity.ViTri;
-import com.university.service.VitriService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.university.dto.reponse.ViTriResponse;
+import com.university.dto.request.ViTriRequest;
+import com.university.service.ViTriService;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,47 +13,42 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/vitris")
-public class VitriController {
+public class ViTriController {
 
-    @Autowired
-    private VitriService vitriService;
+    private final ViTriService viTriService;
 
-    @GetMapping
-    public List<ViTri> getAllVitris() {
-        return vitriService.findAll();
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<ViTri> getVitriById(@PathVariable UUID id) {
-        return vitriService.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public ViTriController(ViTriService viTriService) {
+        this.viTriService = viTriService;
     }
 
     @PostMapping
-    public ResponseEntity<ViTri> createVitri(@RequestBody ViTri vitri) {
-        if (vitriService.existsByMaViTri(vitri.getMaViTri()))
-            return ResponseEntity.badRequest().build();
-        return ResponseEntity.ok(vitriService.save(vitri));
+    public ResponseEntity<ViTriResponse> create(@RequestBody ViTriRequest request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(viTriService.create(request));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ViTriResponse>> getAll() {
+        return ResponseEntity.ok(viTriService.getAll());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ViTriResponse> getById(@PathVariable UUID id) {
+        return ResponseEntity.ok(viTriService.getById(id));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ViTri> updateVitri(@PathVariable UUID id, @RequestBody ViTri vitriDetails) {
-        return vitriService.findById(id)
-                .map(vitri -> {
-                    vitri.setMaViTri(vitriDetails.getMaViTri());
-                    vitri.setTenViTri(vitriDetails.getTenViTri());
-                    vitri.setMoTa(vitriDetails.getMoTa());
-                    vitri.setMucLuongCoBan(vitriDetails.getMucLuongCoBan());
-                    return ResponseEntity.ok(vitriService.save(vitri));
-                }).orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<ViTriResponse> update(@PathVariable UUID id, @RequestBody ViTriRequest request) {
+        return ResponseEntity.ok(viTriService.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteVitri(@PathVariable UUID id) {
-        if (!vitriService.findById(id).isPresent())
-            return ResponseEntity.notFound().build();
-        vitriService.deleteById(id);
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
+        viTriService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<ViTriResponse>> search(@RequestParam("tenViTri") String tenViTri) {
+        return ResponseEntity.ok(viTriService.searchByTenViTri(tenViTri));
     }
 }

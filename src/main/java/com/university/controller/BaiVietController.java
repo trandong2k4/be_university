@@ -1,8 +1,9 @@
 package com.university.controller;
 
-import com.university.entity.BaiViet;
+import com.university.dto.reponse.BaiVietResponse;
+import com.university.dto.request.BaiVietRequest;
 import com.university.service.BaiVietService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,48 +14,35 @@ import java.util.UUID;
 @RequestMapping("/api/baiviets")
 public class BaiVietController {
 
-    @Autowired
-    private BaiVietService baiVietService;
+    private final BaiVietService baiVietService;
 
-    @GetMapping
-    public List<BaiViet> getAllBaiViets() {
-        return baiVietService.findAll();
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<BaiViet> getBaiVietById(@PathVariable UUID id) {
-        return baiVietService.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public BaiVietController(BaiVietService baiVietService) {
+        this.baiVietService = baiVietService;
     }
 
     @PostMapping
-    public ResponseEntity<BaiViet> createBaiViet(@RequestBody BaiViet baiViet) {
-        return ResponseEntity.ok(baiVietService.save(baiViet));
+    public ResponseEntity<BaiVietResponse> create(@RequestBody BaiVietRequest request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(baiVietService.create(request));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<BaiViet> updateBaiViet(@PathVariable UUID id, @RequestBody BaiViet baiVietDetails) {
-        return baiVietService.findById(id)
-                .map(bv -> {
-                    bv.setTieuDe(baiVietDetails.getTieuDe());
-                    bv.setNoiDung(baiVietDetails.getNoiDung());
-                    bv.setLoaiBaiViet(baiVietDetails.getLoaiBaiViet());
-                    bv.setNgayDang(baiVietDetails.getNgayDang());
-                    bv.setTacGia(baiVietDetails.getTacGia());
-                    bv.setTrangThai(baiVietDetails.getTrangThai());
-                    bv.setHinhAnhUrl(baiVietDetails.getHinhAnhUrl());
-                    bv.setFileDinhKemUrl(baiVietDetails.getFileDinhKemUrl());
-                    bv.setUser(baiVietDetails.getUser());
-                    return ResponseEntity.ok(baiVietService.save(bv));
-                }).orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<BaiVietResponse> update(@PathVariable UUID id, @RequestBody BaiVietRequest request) {
+        return ResponseEntity.ok(baiVietService.update(id, request));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<BaiVietResponse> getById(@PathVariable UUID id) {
+        return ResponseEntity.ok(baiVietService.getById(id));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<BaiVietResponse>> getAll() {
+        return ResponseEntity.ok(baiVietService.getAll());
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteBaiViet(@PathVariable UUID id) {
-        if (!baiVietService.findById(id).isPresent())
-            return ResponseEntity.notFound().build();
-        baiVietService.deleteById(id);
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
+        baiVietService.delete(id);
         return ResponseEntity.noContent().build();
     }
 }

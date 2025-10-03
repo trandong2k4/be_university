@@ -5,11 +5,14 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
 
+import com.university.enums.TrangThaiHocPhi;
+
 @Entity
 @Table(name = "hocphis")
 public class HocPhi {
 
     @Id
+    @GeneratedValue
     @Column(name = "id", nullable = false, updatable = false, insertable = false)
     private UUID id;
 
@@ -36,8 +39,8 @@ public class HocPhi {
     @Column(name = "ngay_thanh_toan")
     private LocalDate ngayThanhToan;
 
-    @Column(name = "trang_thai", length = 20)
-    private String trangThai;
+    @Enumerated(EnumType.STRING)
+    private TrangThaiHocPhi trangThai;
 
     @Column(name = "ghi_chu", length = 255)
     private String ghiChu;
@@ -62,8 +65,8 @@ public class HocPhi {
         return kiHoc;
     }
 
-    public void setKiHoc(KiHoc kiHoc) {
-        this.kiHoc = kiHoc;
+    public void setKiHoc(KiHoc kiHoc2) {
+        this.kiHoc = kiHoc2;
     }
 
     public BigDecimal getSoTien() {
@@ -106,11 +109,11 @@ public class HocPhi {
         this.ngayThanhToan = ngayThanhToan;
     }
 
-    public String getTrangThai() {
+    public TrangThaiHocPhi getTrangThai() {
         return trangThai;
     }
 
-    public void setTrangThai(String trangThai) {
+    public void setTrangThai(TrangThaiHocPhi trangThai) {
         this.trangThai = trangThai;
     }
 

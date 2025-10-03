@@ -9,33 +9,28 @@ import java.time.LocalDate;
 public class SinhVien {
 
     @Id
-    @Column(name = "id", nullable = false, updatable = false, insertable = false)
     private UUID id;
 
     @Column(name = "ma_sinh_vien", unique = true, nullable = false, length = 10)
     private String maSinhVien;
 
-    @Column(name = "ho_ten", length = 50)
     private String hoTen;
 
-    @Column(name = "email", length = 50, unique = true)
+    @Column(unique = true, length = 50)
     private String email;
 
-    @Column(name = "so_dien_thoai", length = 10, unique = true)
+    @Column(unique = true, length = 10)
     private String soDienThoai;
 
-    @Column(name = "ngay_nhap_hoc")
     private LocalDate ngayNhapHoc;
-
-    @Column(name = "ngay_tot_nghiep")
     private LocalDate ngayTotNghiep;
 
     @ManyToOne
     @JoinColumn(name = "nganh_id", nullable = false)
-    private NganhHoc nganhHoc;
+    private Nganh nganh;
 
     @OneToOne
-    @JoinColumn(name = "user_id", unique = true)
+    @JoinColumn(name = "user_id", unique = true, nullable = false)
     private User user;
 
     @OneToOne(mappedBy = "sinhVien", cascade = CascadeType.ALL)
@@ -97,12 +92,12 @@ public class SinhVien {
         this.ngayTotNghiep = ngayTotNghiep;
     }
 
-    public NganhHoc getNganhHoc() {
-        return nganhHoc;
+    public Nganh getNganh() {
+        return nganh;
     }
 
-    public void setNganhHoc(NganhHoc nganhHoc) {
-        this.nganhHoc = nganhHoc;
+    public void setNganh(Nganh nganh) {
+        this.nganh = nganh;
     }
 
     public User getUser() {
@@ -122,13 +117,6 @@ public class SinhVien {
     }
 
     public SinhVien() {
-    }
-
-    @Override
-    public String toString() {
-        return "SinhVien [id=" + id + ", maSinhVien=" + maSinhVien + ", hoTen=" + hoTen + ", email=" + email
-                + ", soDienThoai=" + soDienThoai + ", ngayNhapHoc=" + ngayNhapHoc + ", ngayTotNghiep=" + ngayTotNghiep
-                + ", nganhHoc=" + nganhHoc + ", user=" + user + ", chiTiet=" + chiTiet + "]";
     }
 
 }

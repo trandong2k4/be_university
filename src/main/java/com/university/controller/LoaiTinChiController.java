@@ -1,8 +1,9 @@
 package com.university.controller;
 
-import com.university.entity.LoaiTinChi;
+import com.university.dto.reponse.LoaiTinChiResponse;
+import com.university.dto.request.LoaiTinChiRequest;
 import com.university.service.LoaiTinChiService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,44 +14,35 @@ import java.util.UUID;
 @RequestMapping("/api/loaitinchi")
 public class LoaiTinChiController {
 
-    @Autowired
-    private LoaiTinChiService loaiTinChiService;
+    private final LoaiTinChiService loaiTinChiService;
 
-    @GetMapping
-    public List<LoaiTinChi> getAllLoaiTinChi() {
-        return loaiTinChiService.findAll();
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<LoaiTinChi> getLoaiTinChiById(@PathVariable UUID id) {
-        return loaiTinChiService.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public LoaiTinChiController(LoaiTinChiService loaiTinChiService) {
+        this.loaiTinChiService = loaiTinChiService;
     }
 
     @PostMapping
-    public ResponseEntity<LoaiTinChi> createLoaiTinChi(@RequestBody LoaiTinChi loaiTinChi) {
-        if (loaiTinChiService.existsByMaLoaiTinChi(loaiTinChi.getMaLoaiTinChi()))
-            return ResponseEntity.badRequest().build();
-        return ResponseEntity.ok(loaiTinChiService.save(loaiTinChi));
+    public ResponseEntity<LoaiTinChiResponse> create(@RequestBody LoaiTinChiRequest request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(loaiTinChiService.create(request));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<LoaiTinChiResponse>> getAll() {
+        return ResponseEntity.ok(loaiTinChiService.getAll());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<LoaiTinChiResponse> getById(@PathVariable UUID id) {
+        return ResponseEntity.ok(loaiTinChiService.getById(id));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<LoaiTinChi> updateLoaiTinChi(@PathVariable UUID id,
-            @RequestBody LoaiTinChi loaiTinChiDetails) {
-        return loaiTinChiService.findById(id)
-                .map(ltc -> {
-                    ltc.setMaLoaiTinChi(loaiTinChiDetails.getMaLoaiTinChi());
-                    ltc.setTenLoaiTinChi(loaiTinChiDetails.getTenLoaiTinChi());
-                    return ResponseEntity.ok(loaiTinChiService.save(ltc));
-                }).orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<LoaiTinChiResponse> update(@PathVariable UUID id, @RequestBody LoaiTinChiRequest request) {
+        return ResponseEntity.ok(loaiTinChiService.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteLoaiTinChi(@PathVariable UUID id) {
-        if (!loaiTinChiService.findById(id).isPresent())
-            return ResponseEntity.notFound().build();
-        loaiTinChiService.deleteById(id);
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
+        loaiTinChiService.delete(id);
         return ResponseEntity.noContent().build();
     }
 }

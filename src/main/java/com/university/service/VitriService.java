@@ -1,37 +1,63 @@
 package com.university.service;
 
+import com.university.dto.reponse.ViTriResponse;
+import com.university.dto.request.ViTriRequest;
 import com.university.entity.ViTri;
-import com.university.repository.VitriRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.university.mapper.ViTriMapper;
+import com.university.repository.ViTriRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
-public class VitriService {
+public class ViTriService {
 
-    @Autowired
-    private VitriRepository vitriRepository;
+    private final ViTriRepository viTriRepository;
+    private final ViTriMapper viTriMapper;
 
-    public List<ViTri> findAll() {
-        return vitriRepository.findAll();
+    public ViTriService(ViTriRepository viTriRepository, ViTriMapper viTriMapper) {
+        this.viTriRepository = viTriRepository;
+        this.viTriMapper = viTriMapper;
     }
 
-    public Optional<ViTri> findById(UUID id) {
-        return vitriRepository.findById(id);
+    public ViTriResponse create(ViTriRequest request) {
+        ViTri viTri = viTriMapper.toEntity(request);
+        viTri = viTriRepository.save(viTri);
+        return viTriMapper.toResponse(viTri);
     }
 
-    public ViTri save(ViTri vitri) {
-        return vitriRepository.save(vitri);
+    public List<ViTriResponse> getAll() {
+        return viTriRepository.findAll().stream()
+                .map(viTriMapper::toResponse)
+                .collect(Collectors.toList());
     }
 
-    public void deleteById(UUID id) {
-        vitriRepository.deleteById(id);
+    public ViTriResponse getById(UUID id) {
+        ViTri viTri = viTriRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Vị trí không tồn tại"));
+        return viTriMapper.toResponse(viTri);
     }
 
-    public boolean existsByMaViTri(String maViTri) {
-        return vitriRepository.existsByMaViTri(maViTri);
+    public ViTriResponse update(UUID id, ViTriRequest request) {
+        ViTri viTri = viTriRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Vị trí không tồn tại"));
+        viTriMapper.updateEntity(viTri, request);
+        viTri = viTriRepository.save(viTri);
+        return viTriMapper.toResponse(viTri);
+    }
+
+    public void delete(UUID id) {
+        if (!viTriRepository.existsById(id)) {
+            throw new EntityNotFoundException("Vị trí không tồn tại");
+        }
+        viTriRepository.deleteById(id);
+    }
+
+    public List<ViTriResponse> searchByTenViTri(String keyword) {
+        return viTriRepository.findByTenViTriContainingIgnoreCase(keyword).stream()
+                .map(viTriMapper::toResponse)
+                .collect(Collectors.toList());
     }
 }
