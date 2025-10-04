@@ -1,44 +1,31 @@
 package com.university.service;
 
-import com.university.config.SecurityConfig;
-import com.university.dto.reponse.AuthResponse;
+import com.university.dto.reponse.LoginResponse;
 import com.university.dto.reponse.RegisterReponse;
-import com.university.dto.request.AuthRequest;
 import com.university.dto.request.RegisterRequest;
 import com.university.entity.User;
 import com.university.repository.UserRepository;
 import com.university.security.JwtService;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
+
+import java.util.Optional;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AuthService {
 
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
-    private final JwtService jwtService;
+    public final UserRepository userRepository;
+    public final PasswordEncoder passwordEncoder;
+    public final JwtService jwtService;
 
-    public AuthService(UserRepository userRepository,
-            PasswordEncoder passwordEncoder,
-            JwtService jwtService) {
+    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtService jwtService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtService = jwtService;
-    }
-
-    public AuthResponse authenticate(AuthRequest request) {
-        User user = userRepository.findByUsername(request.getUsername())
-                .orElseThrow(() -> new UsernameNotFoundException("Tài khoản không tồn tại"));
-
-        if (!passwordEncoder.matches(request.getPassword(), new String(user.getPassword()))) {
-            throw new BadCredentialsException("Sai mật khẩu");
-        }
-
-        String token = jwtService.generateToken(user);
-
-        return new AuthResponse(token, user.getUsername(), "ROLE_USER");
     }
 
     public RegisterReponse register(RegisterRequest request) {
@@ -53,5 +40,32 @@ public class AuthService {
 
         return new RegisterReponse(user.getId(), user.getUsername(), user.getFirstName() + " " + user.getLastName(),
                 user.getDateOfBirth());
+    }
+
+    @Transactional
+    public LoginResponse authenticate(String username, String rawPassword) {
+        System.out.println("Đang xác thực: " + username);
+        try {
+            User user = userRepository.findByUsername(username)
+                    .orElseThrow(() -> new EntityNotFoundException("Tài khoản không tồn tại"));
+            System.out.println("Raw: " + rawPassword);
+            System.out.println("Encoded: " + user.getPassword());
+            System.out.println("Match: " + passwordEncoder.matches(rawPassword, user.getPassword()));
+            if (!passwordEncoder.matches(rawPassword, user.getPassword())) {
+                throw new IllegalArgumentException("Sai mật khẩu");
+            }
+
+            String role = Optional.ofNullable(user.getUserRoles())
+                    .flatMap(list -> list.stream().findFirst())
+                    .map(ur -> ur.getRole().getMaRole())
+                    .orElse("guest");
+
+            String token = "dummy-token";
+            return new LoginResponse(user.getUsername(), role, token);
+
+        } catch (Exception e) {
+            e.printStackTrace(); // 👈 In ra lỗi thật sự
+            throw e;
+        }
     }
 }

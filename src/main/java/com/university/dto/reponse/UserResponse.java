@@ -7,7 +7,8 @@ import java.util.UUID;
 public class UserResponse {
     private UUID id;
     private String username;
-    private String fullName;
+    private String firstname;
+    private String lastname;
     private LocalDate dateOfBirth;
     private List<String> roles;
 
@@ -46,12 +47,20 @@ public class UserResponse {
         this.roles = roles;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 
 }

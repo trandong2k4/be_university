@@ -1,7 +1,7 @@
 package com.university.controller;
 
-import com.university.dto.request.AuthRequest;
-import com.university.dto.reponse.AuthResponse;
+import com.university.dto.request.LoginRequest;
+import com.university.dto.reponse.LoginResponse;
 import com.university.dto.reponse.RegisterReponse;
 import com.university.dto.request.RegisterRequest;
 import com.university.service.AuthService;
@@ -20,8 +20,10 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest request) {
-        return ResponseEntity.ok(authService.authenticate(request));
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
+        LoginResponse response = authService.authenticate(request.getUsername(), request.getPassword());
+        System.out.println("Đăng nhập thành công: " + response.getUsername());
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/register")

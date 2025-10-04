@@ -2,6 +2,7 @@ package com.university.controller;
 
 import com.university.dto.reponse.NganhResponse;
 import com.university.dto.request.NganhRequest;
+import com.university.entity.Nganh;
 import com.university.service.NganhService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -31,6 +32,14 @@ public class NganhController {
         return ResponseEntity.ok(nganhService.getAll());
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<List<Nganh>> searchNganhs(
+            @RequestParam(required = false) String tenNganh,
+            @RequestParam(required = false) String tenKhoa) {
+        List<Nganh> result = nganhService.search(tenNganh, tenKhoa);
+        return ResponseEntity.ok(result);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<NganhResponse> getById(@PathVariable UUID id) {
         return ResponseEntity.ok(nganhService.getById(id));
@@ -54,4 +63,5 @@ public class NganhController {
             @RequestParam(defaultValue = "10") int size) {
         return ResponseEntity.ok(nganhService.getByKhoa(khoaId, page, size));
     }
+
 }

@@ -1,8 +1,6 @@
 package com.university.dto.request;
 
 import java.time.LocalDate;
-import java.util.Set;
-import java.util.UUID;
 
 public class UserRequest {
     private String username;

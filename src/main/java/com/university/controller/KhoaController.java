@@ -2,9 +2,7 @@ package com.university.controller;
 
 import com.university.dto.reponse.KhoaResponse;
 import com.university.dto.request.KhoaRequest;
-import com.university.entity.Khoa;
 import com.university.service.KhoaService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

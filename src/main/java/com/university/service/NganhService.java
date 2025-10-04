@@ -73,4 +73,11 @@ public class NganhService {
         Page<Nganh> pageResult = nganhRepository.findByKhoaId(khoaId, pageable);
         return pageResult.map(nganhMapper::toResponse);
     }
+
+    public List<Nganh> search(String tenNganh, String tenKhoa) {
+        return nganhRepository.search(
+                tenNganh != null && !tenNganh.isBlank() ? tenNganh : null,
+                tenKhoa != null && !tenKhoa.isBlank() ? tenKhoa : null);
+    }
+
 }

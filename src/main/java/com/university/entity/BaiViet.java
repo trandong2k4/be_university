@@ -38,7 +38,7 @@ public class BaiViet {
     private String fileDinhKemUrl;
 
     @ManyToOne
-    @JoinColumn(name = "username")
+    @JoinColumn(name = "id")
     private User user;
 
     public BaiViet() {

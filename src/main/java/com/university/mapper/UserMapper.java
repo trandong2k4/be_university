@@ -1,18 +1,11 @@
 package com.university.mapper;
 
-import java.util.Collections;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
-
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import com.university.dto.reponse.UserResponse;
 import com.university.dto.request.UserRequest;
-import com.university.entity.Role;
 import com.university.entity.User;
-import com.university.entity.UserRole;
 
 @Component
 public class UserMapper {
@@ -28,19 +21,15 @@ public class UserMapper {
     }
 
     public UserResponse toResponse(User user) {
-        UserResponse response = new UserResponse();
-        response.setId(user.getId());
-        response.setUsername(user.getUsername());
-        response.setFullName(user.getFirstName() + " " + user.getLastName());
-        response.setDateOfBirth(user.getDateOfBirth());
-        response.setRoles(
-                Optional.ofNullable(user.getUserRoles())
-                        .orElse(Collections.emptySet())
-                        .stream()
-                        .map(UserRole::getRole)
-                        .filter(Objects::nonNull)
-                        .map(Role::getMaRole)
-                        .collect(Collectors.toList()));
-        return response;
+        UserResponse res = new UserResponse();
+        res.setId(user.getId());
+        res.setUsername(user.getUsername());
+        res.setFirstname(user.getFirstName());
+        res.setLastname(user.getLastName());
+        res.setRoles(user.getUserRoles().stream()
+                .map(ur -> ur.getRole().getMaRole())
+                .collect(Collectors.toList()));
+        return res;
     }
+
 }

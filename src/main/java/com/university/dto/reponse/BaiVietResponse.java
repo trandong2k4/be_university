@@ -14,14 +14,12 @@ public class BaiVietResponse {
     private String hinhAnhUrl;
     private String fileDinhKemUrl;
     private String tenNguoiDang;
-    private String emailNguoiDang;
 
     public BaiVietResponse() {
     }
 
     public BaiVietResponse(UUID id, String tieuDe, String noiDung, String loaiBaiViet, LocalDate ngayDang,
-            String tacGia, String trangThai, String hinhAnhUrl, String fileDinhKemUrl, String tenNguoiDang,
-            String emailNguoiDang) {
+            String tacGia, String trangThai, String hinhAnhUrl, String fileDinhKemUrl, String tenNguoiDang) {
         this.id = id;
         this.tieuDe = tieuDe;
         this.noiDung = noiDung;
@@ -32,7 +30,6 @@ public class BaiVietResponse {
         this.hinhAnhUrl = hinhAnhUrl;
         this.fileDinhKemUrl = fileDinhKemUrl;
         this.tenNguoiDang = tenNguoiDang;
-        this.emailNguoiDang = emailNguoiDang;
     }
 
     public UUID getId() {
@@ -114,13 +111,4 @@ public class BaiVietResponse {
     public void setTenNguoiDang(String tenNguoiDang) {
         this.tenNguoiDang = tenNguoiDang;
     }
-
-    public String getEmailNguoiDang() {
-        return emailNguoiDang;
-    }
-
-    public void setEmailNguoiDang(String emailNguoiDang) {
-        this.emailNguoiDang = emailNguoiDang;
-    }
-
 }

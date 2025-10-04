@@ -17,20 +17,6 @@ public class TruongRequest {
     public TruongRequest() {
     }
 
-    public TruongRequest(String maTruong, String tenTruong, String diaChi, String soDienThoai, String email,
-            String website, String moTa, String logoUrl, LocalDate ngayThanhLap, String nguoiDaiDien) {
-        this.maTruong = maTruong;
-        this.tenTruong = tenTruong;
-        this.diaChi = diaChi;
-        this.soDienThoai = soDienThoai;
-        this.email = email;
-        this.website = website;
-        this.moTa = moTa;
-        this.logoUrl = logoUrl;
-        this.ngayThanhLap = ngayThanhLap;
-        this.nguoiDaiDien = nguoiDaiDien;
-    }
-
     public String getMaTruong() {
         return maTruong;
     }
