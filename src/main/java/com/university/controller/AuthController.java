@@ -1,8 +1,8 @@
 package com.university.controller;
 
-import com.university.dto.request.LoginRequest;
-import com.university.dto.reponse.LoginResponse;
+import com.university.dto.reponse.LoginResponseDTO;
 import com.university.dto.reponse.RegisterReponse;
+import com.university.dto.request.LoginRequestDTO;
 import com.university.dto.request.RegisterRequest;
 import com.university.service.AuthService;
 import org.springframework.http.HttpStatus;
@@ -20,8 +20,8 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
-        LoginResponse response = authService.authenticate(request.getUsername(), request.getPassword());
+    public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginRequestDTO request) {
+        LoginResponseDTO response = authService.authenticate(request.getUsername(), request.getPassword());
         System.out.println("Đăng nhập thành công: " + response.getUsername());
         return ResponseEntity.ok(response);
     }

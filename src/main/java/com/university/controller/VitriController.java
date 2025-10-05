@@ -1,8 +1,11 @@
 package com.university.controller;
 
-import com.university.dto.reponse.ViTriResponse;
-import com.university.dto.request.ViTriRequest;
+import com.university.dto.reponse.ViTriResponseDTO;
+import com.university.dto.request.ViTriRequestDTO;
 import com.university.service.ViTriService;
+
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,42 +16,39 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/vitris")
+@RequiredArgsConstructor
 public class ViTriController {
 
     private final ViTriService viTriService;
 
-    public ViTriController(ViTriService viTriService) {
-        this.viTriService = viTriService;
-    }
-
     @PostMapping
-    public ResponseEntity<ViTriResponse> create(@RequestBody ViTriRequest request) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(viTriService.create(request));
-    }
-
-    @GetMapping
-    public ResponseEntity<List<ViTriResponse>> getAll() {
-        return ResponseEntity.ok(viTriService.getAll());
+    public ResponseEntity<ViTriResponseDTO> create(@RequestBody @Valid ViTriRequestDTO dto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(viTriService.create(dto));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ViTriResponse> getById(@PathVariable UUID id) {
+    public ResponseEntity<ViTriResponseDTO> getById(@PathVariable UUID id) {
         return ResponseEntity.ok(viTriService.getById(id));
     }
 
+    @GetMapping
+    public ResponseEntity<List<ViTriResponseDTO>> getAll() {
+        return ResponseEntity.ok(viTriService.getAll());
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<ViTriResponseDTO>> search(@RequestParam String keyword) {
+        return ResponseEntity.ok(viTriService.search(keyword));
+    }
+
     @PutMapping("/{id}")
-    public ResponseEntity<ViTriResponse> update(@PathVariable UUID id, @RequestBody ViTriRequest request) {
-        return ResponseEntity.ok(viTriService.update(id, request));
+    public ResponseEntity<ViTriResponseDTO> update(@PathVariable UUID id, @RequestBody @Valid ViTriRequestDTO dto) {
+        return ResponseEntity.ok(viTriService.update(id, dto));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable UUID id) {
         viTriService.delete(id);
         return ResponseEntity.noContent().build();
-    }
-
-    @GetMapping("/search")
-    public ResponseEntity<List<ViTriResponse>> search(@RequestParam("tenViTri") String tenViTri) {
-        return ResponseEntity.ok(viTriService.searchByTenViTri(tenViTri));
     }
 }

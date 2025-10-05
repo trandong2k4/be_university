@@ -1,7 +1,10 @@
 package com.university.exception;
 
 import java.util.Date;
+import java.util.stream.Collectors;
+
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 
@@ -33,4 +36,19 @@ public class GlobalExceptionHandler {
                 request.getDescription(false));
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<String> handleNotFound(ResourceNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<String> handleValidationErrors(MethodArgumentNotValidException ex) {
+        String error = ex.getBindingResult().getFieldErrors().stream()
+                .map(e -> e.getField() + ": " + e.getDefaultMessage())
+                .collect(Collectors.joining(", "));
+        return ResponseEntity.badRequest().body(error);
+    }
+
+    // Có thể thêm các handler khác như MethodArgumentNotValidException, etc.
 }

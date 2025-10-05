@@ -1,43 +1,47 @@
 package com.university.controller;
 
-import com.university.dto.reponse.MonHocResponse;
-import com.university.dto.request.MonHocRequest;
+import com.university.dto.reponse.MonHocResponseDTO;
+import com.university.dto.request.MonHocRequestDTO;
 import com.university.service.MonHocService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/monhocs")
+@RequiredArgsConstructor
 public class MonHocController {
 
     private final MonHocService monHocService;
 
-    public MonHocController(MonHocService monHocService) {
-        this.monHocService = monHocService;
-    }
-
     @PostMapping
-    public ResponseEntity<MonHocResponse> create(@RequestBody MonHocRequest request) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(monHocService.create(request));
+    public ResponseEntity<MonHocResponseDTO> create(@RequestBody @Valid MonHocRequestDTO dto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(monHocService.create(dto));
     }
 
     @GetMapping
-    public ResponseEntity<List<MonHocResponse>> getAll() {
+    public ResponseEntity<List<MonHocResponseDTO>> getAll() {
         return ResponseEntity.ok(monHocService.getAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MonHocResponse> getById(@PathVariable UUID id) {
+    public ResponseEntity<MonHocResponseDTO> getById(@PathVariable UUID id) {
         return ResponseEntity.ok(monHocService.getById(id));
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<List<MonHocResponseDTO>> search(@RequestParam String keyword) {
+        return ResponseEntity.ok(monHocService.search(keyword));
+    }
+
     @PutMapping("/{id}")
-    public ResponseEntity<MonHocResponse> update(@PathVariable UUID id, @RequestBody MonHocRequest request) {
-        return ResponseEntity.ok(monHocService.update(id, request));
+    public ResponseEntity<MonHocResponseDTO> update(@PathVariable UUID id,
+            @RequestBody @Valid MonHocRequestDTO dto) {
+        return ResponseEntity.ok(monHocService.update(id, dto));
     }
 
     @DeleteMapping("/{id}")

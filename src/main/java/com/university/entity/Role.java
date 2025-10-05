@@ -1,72 +1,54 @@
 package com.university.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import java.util.UUID;
+import lombok.*;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Table(name = "roles")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Role {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "UUID")
     private UUID id;
 
-    @Column(length = 30, unique = true, nullable = false)
+    @Column(name = "ma_role", length = 30, unique = true, nullable = false)
     private String maRole;
 
+    @Column(length = 255)
     private String description;
 
-    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
-    private Set<UserRole> userRoles = new HashSet<>();
+    @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
+    @JsonIgnore // tránh vòng lặp User <-> Role
+    private Set<User> users = new HashSet<>();
 
-    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
-    private Set<RolePermission> rolePermissions = new HashSet<>();
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "roles_permissions", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "permission_id"))
+    @JsonIgnoreProperties("roles") // tránh vòng lặp Role <-> Permission
+    private Set<Permission> permissions = new HashSet<>();
 
-    public Role() {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (!(o instanceof Role))
+            return false;
+        return Objects.equals(id, ((Role) o).id);
     }
 
-    // Getters & Setters
-    public UUID getId() {
-        return id;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
-
-    public String getMaRole() {
-        return maRole;
-    }
-
-    public void setMaRole(String maRole) {
-        this.maRole = maRole;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public Set<UserRole> getUserRoles() {
-        return userRoles;
-    }
-
-    public void setUserRoles(Set<UserRole> userRoles) {
-        this.userRoles = userRoles;
-    }
-
-    public Set<RolePermission> getRolePermissions() {
-        return rolePermissions;
-    }
-
-    public void setRolePermissions(Set<RolePermission> rolePermissions) {
-        this.rolePermissions = rolePermissions;
-    }
-
 }

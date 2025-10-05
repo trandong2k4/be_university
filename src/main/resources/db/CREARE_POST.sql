@@ -1,20 +1,20 @@
 -- Bật extension cho UUID
-CREATE EXTENSION
-IF NOT EXISTS pgcrypto;
+-- CREATE EXTENSION
+-- IF NOT EXISTS pgcrypto;
 
 -- =====================================================
 -- ENUM TYPES
 -- =====================================================
-CREATE TYPE gioi_tinh_enum AS ENUM
-('Nam', 'Nữ', 'Khác');
-CREATE TYPE thu_enum AS ENUM
-('Thứ 2','Thứ 3','Thứ 4','Thứ 5','Thứ 6','Thứ 7','Chủ Nhật');
-CREATE TYPE hocphi_enum AS ENUM
-('CHUA_THANH_TOAN','DA_THANH_TOAN','QUA_HAN');
-CREATE TYPE hoclai_enum AS ENUM
-('CHO_XET_DUYET','DA_DUYET','DA_HUY');
-CREATE TYPE baiviet_enum AS ENUM
-('CONG_KHAI','RIENG_TU','NHAP');
+-- CREATE TYPE gioi_tinh_enum AS ENUM
+-- ('Nam', 'Nữ', 'Khác');
+-- CREATE TYPE thu_enum AS ENUM
+-- ('Thứ 2','Thứ 3','Thứ 4','Thứ 5','Thứ 6','Thứ 7','Chủ Nhật');
+-- CREATE TYPE hocphi_enum AS ENUM
+-- ('CHUA_THANH_TOAN','DA_THANH_TOAN','QUA_HAN');
+-- CREATE TYPE hoclai_enum AS ENUM
+-- ('CHO_XET_DUYET','DA_DUYET','DA_HUY');
+-- CREATE TYPE baiviet_enum AS ENUM
+-- ('CONG_KHAI','RIENG_TU','NHAP');
 
 -- =====================================================
 -- USERS / ROLES / PERMISSIONS

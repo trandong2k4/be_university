@@ -6,69 +6,67 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import com.university.dto.reponse.ChiTietSinhVienResponse;
-import com.university.dto.request.ChiTietSinhVienRequest;
+import com.university.dto.reponse.ChiTietSinhVienResponseDTO;
+import com.university.dto.reponse.TruongResponseDTO;
+import com.university.dto.request.ChiTietSinhVienRequestDTO;
 import com.university.entity.ChiTietSinhVien;
 import com.university.entity.SinhVien;
+import com.university.exception.ResourceNotFoundException;
 import com.university.mapper.ChiTietSinhVienMapper;
 import com.university.repository.ChiTietSinhVienRepository;
 import com.university.repository.SinhVienRepository;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class ChiTietSinhVienService {
 
-    private final ChiTietSinhVienRepository repository;
+    private final ChiTietSinhVienRepository chiTietSinhVienRepository;
     private final SinhVienRepository sinhVienRepository;
-    private final ChiTietSinhVienMapper mapper;
+    private final ChiTietSinhVienMapper chiTietSinhVienMapper;
 
-    public ChiTietSinhVienService(ChiTietSinhVienRepository repository,
-            SinhVienRepository sinhVienRepository,
-            ChiTietSinhVienMapper mapper) {
-        this.repository = repository;
-        this.sinhVienRepository = sinhVienRepository;
-        this.mapper = mapper;
+    public ChiTietSinhVienResponseDTO create(ChiTietSinhVienRequestDTO dto) {
+        SinhVien sv = sinhVienRepository.findById(dto.getSinhVienId())
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy sinh viên"));
+
+        ChiTietSinhVien ct = chiTietSinhVienMapper.toEntity(dto, sv);
+        return chiTietSinhVienMapper.toResponseDTO(chiTietSinhVienRepository.save(ct));
     }
 
-    public ChiTietSinhVienResponse create(ChiTietSinhVienRequest request) {
-        SinhVien sv = sinhVienRepository.findById(request.getSinhVienId()).orElseThrow();
-        ChiTietSinhVien entity = mapper.toEntity(request, sv);
-        return mapper.toResponse(repository.save(entity));
+    public List<ChiTietSinhVienResponseDTO> getAll() {
+        return chiTietSinhVienRepository.findAll().stream()
+                .map(chiTietSinhVienMapper::toResponseDTO)
+                .toList();
     }
 
-    public ChiTietSinhVienResponse update(UUID id, ChiTietSinhVienRequest request) {
-        ChiTietSinhVien ct = repository.findById(id).orElseThrow();
-        SinhVien sv = sinhVienRepository.findById(request.getSinhVienId()).orElseThrow();
+    public ChiTietSinhVienResponseDTO getById(UUID id) {
+        ChiTietSinhVien ct = chiTietSinhVienRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy chi tiết sinh viên"));
+        return chiTietSinhVienMapper.toResponseDTO(ct);
+    }
 
-        ct.setDiaChi(request.getDiaChi());
-        ct.setNgaySinh(request.getNgaySinh());
-        ct.setGioiTinh(request.getGioiTinh());
-        ct.setQuocTich(request.getQuocTich());
-        ct.setCccd(request.getCccd());
-        ct.setSdtNguoiThan(request.getSdtNguoiThan());
-        ct.setSinhVien(sv);
+    public List<ChiTietSinhVienResponseDTO> search(String keyword) {
+        return chiTietSinhVienRepository.searchByTenSinhVien(keyword).stream()
+                .map(chiTietSinhVienMapper::toResponseDTO)
+                .collect(Collectors.toList());
+    }
 
-        return mapper.toResponse(repository.save(ct));
+    public ChiTietSinhVienResponseDTO update(UUID id, ChiTietSinhVienRequestDTO dto) {
+        ChiTietSinhVien existing = chiTietSinhVienRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy chi tiết sinh viên"));
+
+        existing.setDiaChi(dto.getDiaChi());
+        existing.setNgaySinh(dto.getNgaySinh());
+        existing.setGioiTinh(dto.getGioiTinh());
+        existing.setQuocTich(dto.getQuocTich());
+        existing.setCccd(dto.getCccd());
+        existing.setSdtNguoiThan(dto.getSdtNguoiThan());
+
+        return chiTietSinhVienMapper.toResponseDTO(chiTietSinhVienRepository.save(existing));
     }
 
     public void delete(UUID id) {
-        repository.deleteById(id);
-    }
-
-    public ChiTietSinhVienResponse getById(UUID id) {
-        return repository.findById(id)
-                .map(mapper::toResponse)
-                .orElseThrow();
-    }
-
-    public List<ChiTietSinhVienResponse> getAll() {
-        return repository.findAll().stream()
-                .map(mapper::toResponse)
-                .collect(Collectors.toList());
-    }
-
-    public List<ChiTietSinhVienResponse> search(String keyword) {
-        return repository.findByDiaChiContainingIgnoreCase(keyword).stream()
-                .map(mapper::toResponse)
-                .collect(Collectors.toList());
+        chiTietSinhVienRepository.deleteById(id);
     }
 }

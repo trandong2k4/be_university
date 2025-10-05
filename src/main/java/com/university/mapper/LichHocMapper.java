@@ -2,8 +2,8 @@ package com.university.mapper;
 
 import org.springframework.stereotype.Component;
 
-import com.university.dto.reponse.LichHocResponse;
-import com.university.dto.request.LichHocRequest;
+import com.university.dto.reponse.LichHocResponseDTO;
+import com.university.dto.request.LichHocRequestDTO;
 import com.university.entity.KiHoc;
 import com.university.entity.LichHoc;
 import com.university.entity.MonHoc;
@@ -12,24 +12,24 @@ import com.university.entity.PhongHoc;
 @Component
 public class LichHocMapper {
 
-    public LichHoc toEntity(LichHocRequest dto, PhongHoc phongHoc, KiHoc kiHoc, MonHoc monHoc) {
-        LichHoc lich = new LichHoc();
-        lich.setNgayBatDau(dto.getNgayBatDau());
-        lich.setNgayKetThuc(dto.getNgayKetThuc());
-        lich.setPhongHoc(phongHoc);
-        lich.setKiHoc(kiHoc);
-        lich.setMonHoc(monHoc);
-        return lich;
+    public LichHoc toEntity(LichHocRequestDTO dto, MonHoc monHoc, PhongHoc phongHoc, KiHoc kiHoc) {
+        return LichHoc.builder()
+                .monHoc(monHoc)
+                .phongHoc(phongHoc)
+                .kiHoc(kiHoc)
+                .ngayBatDau(dto.getNgayBatDau())
+                .ngayKetThuc(dto.getNgayKetThuc())
+                .build();
     }
 
-    public LichHocResponse toResponse(LichHoc lichHoc) {
-        LichHocResponse res = new LichHocResponse();
-        res.setId(lichHoc.getId());
-        res.setNgayBatDau(lichHoc.getNgayBatDau());
-        res.setNgayKetThuc(lichHoc.getNgayKetThuc());
-        res.setTenPhong(lichHoc.getPhongHoc().getTenPhong());
-        res.setTenKiHoc(lichHoc.getKiHoc().getTenKiHoc());
-        res.setTenMonHoc(lichHoc.getMonHoc().getTenMonHoc());
-        return res;
+    public LichHocResponseDTO toResponseDTO(LichHoc lichHoc) {
+        return LichHocResponseDTO.builder()
+                .id(lichHoc.getId())
+                .tenMonHoc(lichHoc.getMonHoc().getTenMonHoc())
+                .tenPhongHoc(lichHoc.getPhongHoc().getTenPhong())
+                .tenKiHoc(lichHoc.getKiHoc().getTenKiHoc())
+                .ngayBatDau(lichHoc.getNgayBatDau())
+                .ngayKetThuc(lichHoc.getNgayKetThuc())
+                .build();
     }
 }

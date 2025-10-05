@@ -1,76 +1,82 @@
 package com.university.service;
 
-import com.university.dto.reponse.TruongResponse;
-import com.university.dto.request.TruongRequest;
+import com.university.dto.reponse.TruongResponseDTO;
+import com.university.dto.request.TruongRequestDTO;
 import com.university.entity.Truong;
-import com.university.mapper.TruongMapper;
 import com.university.repository.TruongRepository;
-
-import jakarta.persistence.EntityNotFoundException;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;  
+import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class TruongService {
 
     private final TruongRepository truongRepository;
-    private final TruongMapper truongMapper;
 
-    public TruongService(TruongRepository truongRepository, TruongMapper truongMapper) {
-        this.truongRepository = truongRepository;
-        this.truongMapper = truongMapper;
-    }
-
-    public TruongResponse create(TruongRequest request) {
-        Truong truong = truongMapper.toEntity(request);
-        truong = truongRepository.save(truong);
-        return truongMapper.toResponse(truong);
-    }
-
-    public List<TruongResponse> getAll() {
+    public List<TruongResponseDTO> getAll() {
         return truongRepository.findAll().stream()
-                .map(truongMapper::toResponse)
-                .collect(Collectors.toList());
+                .map(this::toResponseDTO)
+                .toList();
     }
 
-    public TruongResponse getById(UUID id) {
+    public TruongResponseDTO getById(UUID id) {
         Truong truong = truongRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Trường không tồn tại"));
-        return truongMapper.toResponse(truong);
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy trường"));
+        return toResponseDTO(truong);
     }
 
-    public TruongResponse update(UUID id, TruongRequest request) {
+    public TruongResponseDTO create(TruongRequestDTO dto) {
+        if (truongRepository.existsByMaTruong(dto.getMaTruong())) {
+            throw new RuntimeException("Mã trường đã tồn tại");
+        }
+
+        Truong truong = new Truong();
+        updateEntity(truong, dto);
+        truongRepository.save(truong);
+        return toResponseDTO(truong);
+    }
+
+    public TruongResponseDTO update(UUID id, TruongRequestDTO dto) {
         Truong truong = truongRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Trường không tồn tại"));
-        truongMapper.updateEntity(truong, request);
-        truong = truongRepository.save(truong);
-        return truongMapper.toResponse(truong);
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy trường"));
+        updateEntity(truong, dto);
+        truongRepository.save(truong);
+        return toResponseDTO(truong);
     }
 
     public void delete(UUID id) {
-        if (!truongRepository.existsById(id)) {
-            throw new EntityNotFoundException("Trường không tồn tại");
-        }
         truongRepository.deleteById(id);
     }
 
-    public List<TruongResponse> searchByMaTruong(String keyword) {
-        return truongRepository.findByMaTruongContainingIgnoreCase(keyword).stream()
-                .map(truongMapper::toResponse)
-                .collect(Collectors.toList());
+    private void updateEntity(Truong truong, TruongRequestDTO dto) {
+        truong.setMaTruong(dto.getMaTruong());
+        truong.setTenTruong(dto.getTenTruong());
+        truong.setDiaChi(dto.getDiaChi());
+        truong.setSoDienThoai(dto.getSoDienThoai());
+        truong.setEmail(dto.getEmail());
+        truong.setWebsite(dto.getWebsite());
+        truong.setMoTa(dto.getMoTa());
+        truong.setLogoUrl(dto.getLogoUrl());
+        truong.setNgayThanhLap(dto.getNgayThanhLap());
+        truong.setNguoiDaiDien(dto.getNguoiDaiDien());
     }
 
-    public Page<TruongResponse> getByDiaChi(String diaChi, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("tenTruong").ascending());
-        Page<Truong> truongs = truongRepository.findByDiaChiContainingIgnoreCase(diaChi, pageable);
-        return truongs.map(truongMapper::toResponse);
+    private TruongResponseDTO toResponseDTO(Truong t) {
+        return TruongResponseDTO.builder()
+                .id(t.getId())
+                .maTruong(t.getMaTruong())
+                .tenTruong(t.getTenTruong())
+                .diaChi(t.getDiaChi())
+                .soDienThoai(t.getSoDienThoai())
+                .email(t.getEmail())
+                .website(t.getWebsite())
+                .moTa(t.getMoTa())
+                .logoUrl(t.getLogoUrl())
+                .ngayThanhLap(t.getNgayThanhLap())
+                .nguoiDaiDien(t.getNguoiDaiDien())
+                .build();
     }
 }

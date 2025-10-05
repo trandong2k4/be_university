@@ -2,14 +2,15 @@ package com.university.repository;
 
 import com.university.entity.Permission;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 public interface PermissionRepository extends JpaRepository<Permission, UUID> {
-    List<Permission> findByMaPermissionContainingIgnoreCase(String maPermission);
 
     Optional<Permission> findByMaPermission(String maPermission);
 
+    @Query("SELECT p FROM Permission p WHERE LOWER(p.maPermission) LIKE LOWER(CONCAT('%', :keyword, '%'))")
+    List<Permission> searchByMaPermission(@Param("keyword") String keyword);
 }

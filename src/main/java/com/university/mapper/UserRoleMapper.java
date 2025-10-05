@@ -23,6 +23,7 @@ public class UserRoleMapper {
         res.setUserId(ur.getUser().getId());
         res.setRoleId(ur.getRole().getId());
         res.setMaRole(ur.getRole().getMaRole());
+        res.setDescription(ur.getRole().getDescription());
         return res;
     }
 }

@@ -2,37 +2,29 @@ package com.university.mapper;
 
 import org.springframework.stereotype.Component;
 
-import com.university.dto.reponse.MonHocResponse;
-import com.university.dto.request.MonHocRequest;
+import com.university.dto.reponse.MonHocResponseDTO;
+import com.university.dto.request.MonHocRequestDTO;
 import com.university.entity.MonHoc;
 
 @Component
 public class MonHocMapper {
 
-    public MonHoc toEntity(MonHocRequest dto) {
-        MonHoc entity = new MonHoc();
-        entity.setMaMonHoc(dto.getMaMonHoc());
-        entity.setTenMonHoc(dto.getTenMonHoc());
-        entity.setMoTa(dto.getMoTa());
-        entity.setTongSoTinChi(dto.getTongSoTinChi());
-        return entity;
+    public MonHoc toEntity(MonHocRequestDTO dto) {
+        return MonHoc.builder()
+                .maMonHoc(dto.getMaMonHoc())
+                .tenMonHoc(dto.getTenMonHoc())
+                .moTa(dto.getMoTa())
+                .tongSoTinChi(dto.getTongSoTinChi())
+                .build();
     }
 
-    public void updateEntity(MonHoc entity, MonHocRequest dto) {
-        entity.setMaMonHoc(dto.getMaMonHoc());
-        entity.setTenMonHoc(dto.getTenMonHoc());
-        entity.setMoTa(dto.getMoTa());
-        entity.setTongSoTinChi(dto.getTongSoTinChi());
-    }
-
-    public MonHocResponse toResponse(MonHoc entity) {
-        MonHocResponse response = new MonHocResponse();
-        response.setId(entity.getId());
-        response.setMaMonHoc(entity.getMaMonHoc());
-        response.setTenMonHoc(entity.getTenMonHoc());
-        response.setMoTa(entity.getMoTa());
-        response.setTongSoTinChi(entity.getTongSoTinChi());
-        response.setSoTinChiThucTe(entity.getTinChis() != null ? entity.getTinChis().size() : 0);
-        return response;
+    public MonHocResponseDTO toResponseDTO(MonHoc monHoc) {
+        return MonHocResponseDTO.builder()
+                .id(monHoc.getId())
+                .maMonHoc(monHoc.getMaMonHoc())
+                .tenMonHoc(monHoc.getTenMonHoc())
+                .moTa(monHoc.getMoTa())
+                .tongSoTinChi(monHoc.getTongSoTinChi())
+                .build();
     }
 }

@@ -1,16 +1,27 @@
 package com.university.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.UUID;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.math.BigDecimal;
 import java.util.Set;
 
 @Entity
 @Table(name = "vitris")
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ViTri {
 
     @Id
-    @GeneratedValue
     @Column(name = "id", nullable = false, updatable = false, insertable = false)
     private UUID id;
 
@@ -27,53 +38,7 @@ public class ViTri {
     private BigDecimal mucLuongCoBan;
 
     @OneToMany(mappedBy = "viTri")
+    @JsonIgnore
     private Set<NhanVien> nhanViens;
 
-    public ViTri() {
-    }
-
-    // Getters & Setters
-    public UUID getId() {
-        return id;
-    }
-
-    public String getMaViTri() {
-        return maViTri;
-    }
-
-    public void setMaViTri(String maViTri) {
-        this.maViTri = maViTri;
-    }
-
-    public String getTenViTri() {
-        return tenViTri;
-    }
-
-    public void setTenViTri(String tenViTri) {
-        this.tenViTri = tenViTri;
-    }
-
-    public String getMoTa() {
-        return moTa;
-    }
-
-    public void setMoTa(String moTa) {
-        this.moTa = moTa;
-    }
-
-    public BigDecimal getMucLuongCoBan() {
-        return mucLuongCoBan;
-    }
-
-    public void setMucLuongCoBan(BigDecimal mucLuongCoBan) {
-        this.mucLuongCoBan = mucLuongCoBan;
-    }
-
-    public Set<NhanVien> getNhanViens() {
-        return nhanViens;
-    }
-
-    public void setNhanViens(Set<NhanVien> nhanViens) {
-        this.nhanViens = nhanViens;
-    }
 }

@@ -1,20 +1,27 @@
 package com.university.entity;
 
 import jakarta.persistence.*;
-import java.util.UUID;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "truongs")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Truong {
 
     @Id
-    @GeneratedValue
-    @Column(name = "id", nullable = false, updatable = false, insertable = false)
+    @GeneratedValue(generator = "UUID")
     private UUID id;
 
-    @Column(name = "ma_truong", unique = true, nullable = false, length = 10)
+    @Column(name = "ma_truong", length = 10, unique = true, nullable = false)
     private String maTruong;
 
     @Column(name = "ten_truong", length = 100)
@@ -26,13 +33,13 @@ public class Truong {
     @Column(name = "so_dien_thoai", length = 20)
     private String soDienThoai;
 
-    @Column(name = "email", length = 100)
+    @Column(length = 100)
     private String email;
 
-    @Column(name = "website", length = 100)
+    @Column(length = 100)
     private String website;
 
-    @Column(name = "mo_ta", columnDefinition = "text")
+    @Column(name = "mo_ta", columnDefinition = "TEXT")
     private String moTa;
 
     @Column(name = "logo_url", length = 255)
@@ -44,108 +51,6 @@ public class Truong {
     @Column(name = "nguoi_dai_dien", length = 100)
     private String nguoiDaiDien;
 
-    @OneToMany(mappedBy = "truong")
-    private Set<Khoa> khoas;
-
-    public Truong() {
-    }
-
-    // Getters & Setters...
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getMaTruong() {
-        return maTruong;
-    }
-
-    public void setMaTruong(String maTruong) {
-        this.maTruong = maTruong;
-    }
-
-    public String getTenTruong() {
-        return tenTruong;
-    }
-
-    public void setTenTruong(String tenTruong) {
-        this.tenTruong = tenTruong;
-    }
-
-    public String getDiaChi() {
-        return diaChi;
-    }
-
-    public void setDiaChi(String diaChi) {
-        this.diaChi = diaChi;
-    }
-
-    public String getSoDienThoai() {
-        return soDienThoai;
-    }
-
-    public void setSoDienThoai(String soDienThoai) {
-        this.soDienThoai = soDienThoai;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getWebsite() {
-        return website;
-    }
-
-    public void setWebsite(String website) {
-        this.website = website;
-    }
-
-    public String getMoTa() {
-        return moTa;
-    }
-
-    public void setMoTa(String moTa) {
-        this.moTa = moTa;
-    }
-
-    public String getLogoUrl() {
-        return logoUrl;
-    }
-
-    public void setLogoUrl(String logoUrl) {
-        this.logoUrl = logoUrl;
-    }
-
-    public LocalDate getNgayThanhLap() {
-        return ngayThanhLap;
-    }
-
-    public void setNgayThanhLap(LocalDate ngayThanhLap) {
-        this.ngayThanhLap = ngayThanhLap;
-    }
-
-    public String getNguoiDaiDien() {
-        return nguoiDaiDien;
-    }
-
-    public void setNguoiDaiDien(String nguoiDaiDien) {
-        this.nguoiDaiDien = nguoiDaiDien;
-    }
-
-    public Set<Khoa> getKhoas() {
-        return khoas;
-    }
-
-    public void setKhoas(Set<Khoa> khoas) {
-        this.khoas = khoas;
-    }
-
+    @OneToMany(mappedBy = "truong", cascade = CascadeType.ALL)
+    private Set<Khoa> khoas = new HashSet<>();
 }

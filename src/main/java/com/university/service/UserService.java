@@ -1,97 +1,61 @@
 package com.university.service;
 
-import com.university.dto.reponse.UserResponse;
-import com.university.dto.request.UserRequest;
-import com.university.entity.Role;
+import com.university.dto.reponse.NhanVienResponseDTO;
+import com.university.dto.reponse.UserResponseDTO;
+import com.university.dto.request.UserRequestDTO;
 import com.university.entity.User;
-import com.university.entity.UserRole;
+import com.university.exception.ResourceNotFoundException;
 import com.university.mapper.UserMapper;
-import com.university.repository.RoleRepository;
 import com.university.repository.UserRepository;
-import com.university.repository.UserRoleRepository;
-
+import lombok.RequiredArgsConstructor;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.UUID;
 import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
-    private final UserRoleRepository userRoleRepository;
     private final UserMapper userMapper;
 
-    public UserService(UserRepository userRepository,
-            RoleRepository roleRepository,
-            UserRoleRepository userRoleRepository,
-            UserMapper userMapper) {
-        this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
-        this.userRoleRepository = userRoleRepository;
-        this.userMapper = userMapper;
+    public UserResponseDTO create(UserRequestDTO dto) {
+        User user = userMapper.toEntity(dto);
+        return userMapper.toResponseDTO(userRepository.save(user));
     }
 
-    // Lấy tất cả người dùng
-    public List<UserResponse> getAllUsers() {
-        List<User> users = userRepository.findAll();
-        System.out.println("Tổng số user: " + users.size()); // Debug
-        return users.stream().map(userMapper::toResponse).collect(Collectors.toList());
+    public List<UserResponseDTO> getAll() {
+        return userRepository.findAll().stream()
+                .map(userMapper::toResponseDTO)
+                .toList();
     }
 
-    // Lấy người dùng theo ID
-    public UserResponse getUserById(UUID id) {
+    public UserResponseDTO getById(UUID id) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Không tìm thấy người dùng"));
-        return userMapper.toResponse(user);
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy user"));
+        return userMapper.toResponseDTO(user);
     }
 
-    // Tạo mới người dùng
-    public UserResponse createUser(UserRequest request) {
-        User user = new User();
-        user.setUsername(request.getUsername());
-        user.setFirstName(request.getFirstName());
-        user.setLastName(request.getLastName());
-        user.setPassword(request.getPassword()); // nên mã hóa nếu dùng Spring Security
-        user = userRepository.save(user);
-        return userMapper.toResponse(user);
+    public List<UserResponseDTO> search(String keyword) {
+        return userRepository.searchByUsername(keyword).stream()
+                .map(userMapper::toResponseDTO)
+                .collect(Collectors.toList());
     }
 
-    // Cập nhật người dùng
-    public UserResponse updateUser(UUID id, UserRequest request) {
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Không tìm thấy người dùng"));
-
-        user.setUsername(request.getUsername());
-        user.setFirstName(request.getFirstName());
-        user.setLastName(request.getLastName());
-        user.setPassword(request.getPassword());
-
-        user = userRepository.save(user);
-        return userMapper.toResponse(user);
+    public UserResponseDTO update(UUID id, UserRequestDTO dto) {
+        User existing = userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy user"));
+        existing.setUsername(dto.getUsername());
+        existing.setPassword(dto.getPassword());
+        existing.setFirstName(dto.getFirstName());
+        existing.setLastName(dto.getLastName());
+        existing.setDateOfBirth(dto.getDateOfBirth());
+        return userMapper.toResponseDTO(userRepository.save(existing));
     }
 
-    // Xóa người dùng
-    public void deleteUser(UUID id) {
+    public void delete(UUID id) {
         userRepository.deleteById(id);
-    }
-
-    // Gán vai trò cho người dùng
-    public void assignRole(UUID userId, UUID roleId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new NoSuchElementException("Không tìm thấy người dùng"));
-        Role role = roleRepository.findById(roleId)
-                .orElseThrow(() -> new NoSuchElementException("Không tìm thấy vai trò"));
-
-        if (userRoleRepository.existsByUserAndRole(user, role)) {
-            throw new IllegalStateException("Người dùng đã có vai trò này");
-        }
-
-        UserRole ur = new UserRole();
-        ur.setUser(user);
-        ur.setRole(role);
-        userRoleRepository.save(ur);
     }
 }

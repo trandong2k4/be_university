@@ -1,13 +1,16 @@
 package com.university.service;
 
-import com.university.dto.reponse.KhoaResponse;
-import com.university.dto.request.KhoaRequest;
+import com.university.dto.reponse.KhoaResponseDTO;
+import com.university.dto.request.KhoaRequestDTO;
 import com.university.entity.Khoa;
 import com.university.entity.Truong;
+import com.university.exception.ResourceNotFoundException;
 import com.university.mapper.KhoaMapper;
 import com.university.repository.KhoaRepository;
 import com.university.repository.TruongRepository;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -18,58 +21,54 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class KhoaService {
 
     private final KhoaRepository khoaRepository;
     private final TruongRepository truongRepository;
     private final KhoaMapper khoaMapper;
 
-    public KhoaService(KhoaRepository khoaRepository, TruongRepository truongRepository, KhoaMapper khoaMapper) {
-        this.khoaRepository = khoaRepository;
-        this.truongRepository = truongRepository;
-        this.khoaMapper = khoaMapper;
+    public KhoaResponseDTO create(KhoaRequestDTO dto) {
+        var truong = truongRepository.findById(dto.getTruongId())
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy trường"));
+        var khoa = khoaMapper.toEntity(dto, truong);
+        return khoaMapper.toResponseDTO(khoaRepository.save(khoa));
     }
 
-    public KhoaResponse create(KhoaRequest request) {
-        Truong truong = truongRepository.findById(request.getTruongId())
-                .orElseThrow(() -> new EntityNotFoundException("Trường không tồn tại"));
-        Khoa khoa = khoaMapper.toEntity(request, truong);
-        khoa = khoaRepository.save(khoa);
-        return khoaMapper.toResponse(khoa);
+    public KhoaResponseDTO getById(UUID id) {
+        var khoa = khoaRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy khoa"));
+        return khoaMapper.toResponseDTO(khoa);
     }
 
-    public List<KhoaResponse> getAll() {
+    public List<KhoaResponseDTO> getAll() {
         return khoaRepository.findAll().stream()
-                .map(khoaMapper::toResponse)
-                .collect(Collectors.toList());
+                .map(khoaMapper::toResponseDTO)
+                .toList();
     }
 
-    public KhoaResponse getById(UUID id) {
-        Khoa khoa = khoaRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Khoa không tồn tại"));
-        return khoaMapper.toResponse(khoa);
+    public List<KhoaResponseDTO> search(String keyword) {
+        return khoaRepository
+                .findByMaKhoaContainingIgnoreCaseOrTenKhoaContainingIgnoreCase(keyword, keyword)
+                .stream().map(khoaMapper::toResponseDTO)
+                .toList();
     }
 
-    public KhoaResponse update(UUID id, KhoaRequest request) {
+    public KhoaResponseDTO update(UUID id, KhoaRequestDTO dto) {
         Khoa khoa = khoaRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Khoa không tồn tại"));
-        Truong truong = truongRepository.findById(request.getTruongId())
-                .orElseThrow(() -> new EntityNotFoundException("Trường không tồn tại"));
-        khoaMapper.updateEntity(khoa, request, truong);
-        khoa = khoaRepository.save(khoa);
-        return khoaMapper.toResponse(khoa);
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy khoa"));
+
+        khoa.setMaKhoa(dto.getMaKhoa());
+        khoa.setTenKhoa(dto.getTenKhoa());
+
+        Truong truong = truongRepository.findById(dto.getTruongId())
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy trường"));
+        khoa.setTruong(truong);
+
+        return khoaMapper.toResponseDTO(khoaRepository.save(khoa));
     }
 
     public void delete(UUID id) {
-        if (!khoaRepository.existsById(id)) {
-            throw new EntityNotFoundException("Khoa không tồn tại");
-        }
         khoaRepository.deleteById(id);
-    }
-
-    public Page<KhoaResponse> getByTruong(UUID truongId, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("tenKhoa").ascending());
-        Page<Khoa> khoas = khoaRepository.findByTruongId(truongId, pageable);
-        return khoas.map(khoaMapper::toResponse);
     }
 }

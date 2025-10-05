@@ -12,6 +12,14 @@ public class UserRoleResponse {
     public UserRoleResponse() {
     }
 
+    public UserRoleResponse(UUID id, UUID userId, UUID roleId, String maRole, String description) {
+        this.id = id;
+        this.userId = userId;
+        this.roleId = roleId;
+        this.maRole = maRole;
+        this.description = description;
+    }
+
     public UUID getId() {
         return id;
     }

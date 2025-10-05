@@ -7,5 +7,5 @@ import java.util.List;
 import java.util.UUID;
 
 public interface ViTriRepository extends JpaRepository<ViTri, UUID> {
-    List<ViTri> findByTenViTriContainingIgnoreCase(String tenViTri);
+    List<ViTri> findByMaViTriContainingIgnoreCaseOrTenViTriContainingIgnoreCase(String ma, String ten);
 }

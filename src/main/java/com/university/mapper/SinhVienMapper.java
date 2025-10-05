@@ -2,8 +2,8 @@ package com.university.mapper;
 
 import org.springframework.stereotype.Component;
 
-import com.university.dto.reponse.SinhVienResponse;
-import com.university.dto.request.SinhVienRequest;
+import com.university.dto.reponse.SinhVienResponseDTO;
+import com.university.dto.request.SinhVienRequestDTO;
 import com.university.entity.Nganh;
 import com.university.entity.SinhVien;
 import com.university.entity.User;
@@ -11,32 +11,29 @@ import com.university.entity.User;
 @Component
 public class SinhVienMapper {
 
-    public SinhVien toEntity(SinhVienRequest dto, Nganh nganh, User user) {
-        SinhVien sv = new SinhVien();
-        sv.setMaSinhVien(dto.getMaSinhVien());
-        sv.setHoTen(dto.getHoTen());
-        sv.setEmail(dto.getEmail());
-        sv.setSoDienThoai(dto.getSoDienThoai());
-        sv.setNgayNhapHoc(dto.getNgayNhapHoc());
-        sv.setNgayTotNghiep(dto.getNgayTotNghiep());
-        sv.setNganh(nganh);
-        sv.setUser(user);
-        return sv;
+    public SinhVien toEntity(SinhVienRequestDTO dto, Nganh nganh, User user) {
+        return SinhVien.builder()
+                .maSinhVien(dto.getMaSinhVien())
+                .hoTen(dto.getHoTen())
+                .email(dto.getEmail())
+                .soDienThoai(dto.getSoDienThoai())
+                .ngayNhapHoc(dto.getNgayNhapHoc())
+                .ngayTotNghiep(dto.getNgayTotNghiep())
+                .nganh(nganh)
+                .user(user)
+                .build();
     }
 
-    public SinhVienResponse toResponse(SinhVien sv) {
-        SinhVienResponse res = new SinhVienResponse();
-        res.setId(sv.getId());
-        res.setMaSinhVien(sv.getMaSinhVien());
-        res.setHoTen(sv.getHoTen());
-        res.setEmail(sv.getEmail());
-        res.setSoDienThoai(sv.getSoDienThoai());
-        res.setNgayNhapHoc(sv.getNgayNhapHoc());
-        res.setNgayTotNghiep(sv.getNgayTotNghiep());
-        res.setNganhId(sv.getNganh().getId());
-        res.setTenNganh(sv.getNganh().getTenNganh());
-        res.setTenKhoa(sv.getNganh().getKhoa().getTenKhoa());
-        res.setTenTruong(sv.getNganh().getKhoa().getTruong().getTenTruong());
-        return res;
+    public SinhVienResponseDTO toResponseDTO(SinhVien sv) {
+        return SinhVienResponseDTO.builder()
+                .id(sv.getId())
+                .maSinhVien(sv.getMaSinhVien())
+                .hoTen(sv.getHoTen())
+                .email(sv.getEmail())
+                .soDienThoai(sv.getSoDienThoai())
+                .tenNganh(sv.getNganh().getTenNganh())
+                .tenKhoa(sv.getNganh().getKhoa().getTenKhoa())
+                .tenTruong(sv.getNganh().getKhoa().getTruong().getTenTruong())
+                .build();
     }
 }

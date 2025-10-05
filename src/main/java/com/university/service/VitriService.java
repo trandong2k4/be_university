@@ -1,63 +1,59 @@
 package com.university.service;
 
-import com.university.dto.reponse.ViTriResponse;
-import com.university.dto.request.ViTriRequest;
+import com.university.dto.reponse.ViTriResponseDTO;
+import com.university.dto.request.ViTriRequestDTO;
 import com.university.entity.ViTri;
+import com.university.exception.ResourceNotFoundException;
 import com.university.mapper.ViTriMapper;
 import com.university.repository.ViTriRepository;
-import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class ViTriService {
 
     private final ViTriRepository viTriRepository;
     private final ViTriMapper viTriMapper;
 
-    public ViTriService(ViTriRepository viTriRepository, ViTriMapper viTriMapper) {
-        this.viTriRepository = viTriRepository;
-        this.viTriMapper = viTriMapper;
+    public ViTriResponseDTO create(ViTriRequestDTO dto) {
+        ViTri vt = viTriMapper.toEntity(dto);
+        return viTriMapper.toResponseDTO(viTriRepository.save(vt));
     }
 
-    public ViTriResponse create(ViTriRequest request) {
-        ViTri viTri = viTriMapper.toEntity(request);
-        viTri = viTriRepository.save(viTri);
-        return viTriMapper.toResponse(viTri);
+    public ViTriResponseDTO getById(UUID id) {
+        ViTri vt = viTriRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy vị trí"));
+        return viTriMapper.toResponseDTO(vt);
     }
 
-    public List<ViTriResponse> getAll() {
+    public List<ViTriResponseDTO> getAll() {
         return viTriRepository.findAll().stream()
-                .map(viTriMapper::toResponse)
-                .collect(Collectors.toList());
+                .map(viTriMapper::toResponseDTO)
+                .toList();
     }
 
-    public ViTriResponse getById(UUID id) {
-        ViTri viTri = viTriRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Vị trí không tồn tại"));
-        return viTriMapper.toResponse(viTri);
+    public List<ViTriResponseDTO> search(String keyword) {
+        return viTriRepository
+                .findByMaViTriContainingIgnoreCaseOrTenViTriContainingIgnoreCase(keyword, keyword)
+                .stream().map(viTriMapper::toResponseDTO)
+                .toList();
     }
 
-    public ViTriResponse update(UUID id, ViTriRequest request) {
-        ViTri viTri = viTriRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Vị trí không tồn tại"));
-        viTriMapper.updateEntity(viTri, request);
-        viTri = viTriRepository.save(viTri);
-        return viTriMapper.toResponse(viTri);
+    public ViTriResponseDTO update(UUID id, ViTriRequestDTO dto) {
+        ViTri vt = viTriRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy vị trí"));
+        vt.setMaViTri(dto.getMaViTri());
+        vt.setTenViTri(dto.getTenViTri());
+        vt.setMoTa(dto.getMoTa());
+        vt.setMucLuongCoBan(dto.getMucLuongCoBan());
+        return viTriMapper.toResponseDTO(viTriRepository.save(vt));
     }
 
     public void delete(UUID id) {
-        if (!viTriRepository.existsById(id)) {
-            throw new EntityNotFoundException("Vị trí không tồn tại");
-        }
         viTriRepository.deleteById(id);
-    }
-
-    public List<ViTriResponse> searchByTenViTri(String keyword) {
-        return viTriRepository.findByTenViTriContainingIgnoreCase(keyword).stream()
-                .map(viTriMapper::toResponse)
-                .collect(Collectors.toList());
     }
 }

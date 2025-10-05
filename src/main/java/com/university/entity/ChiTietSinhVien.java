@@ -1,19 +1,25 @@
 package com.university.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import java.util.UUID;
-
-import com.university.enums.GioiTinh;
+import com.university.enums.GioiTinhEnum;
 
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "chitietsinhviens")
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ChiTietSinhVien {
 
     @Id
-    @GeneratedValue
-    @Column(name = "id", nullable = false, updatable = false, insertable = false)
+    @GeneratedValue(generator = "UUID")
     private UUID id;
 
     @Column(name = "dia_chi", length = 100)
@@ -22,8 +28,9 @@ public class ChiTietSinhVien {
     @Column(name = "ngay_sinh")
     private LocalDate ngaySinh;
 
-    @Column(name = "gioi_tinh", length = 10)
-    private GioiTinh gioiTinh;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "gioi_tinh")
+    private GioiTinhEnum gioiTinh;
 
     @Column(name = "quoc_tich", length = 50)
     private String quocTich = "Viet Nam";
@@ -35,74 +42,6 @@ public class ChiTietSinhVien {
     private String sdtNguoiThan;
 
     @OneToOne
-    @JoinTable(name = "sinhviens")
+    @JoinColumn(name = "sinhvien_id", nullable = false)
     private SinhVien sinhVien;
-
-    public ChiTietSinhVien() {
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getDiaChi() {
-        return diaChi;
-    }
-
-    public void setDiaChi(String diaChi) {
-        this.diaChi = diaChi;
-    }
-
-    public LocalDate getNgaySinh() {
-        return ngaySinh;
-    }
-
-    public void setNgaySinh(LocalDate ngaySinh) {
-        this.ngaySinh = ngaySinh;
-    }
-
-    public GioiTinh getGioiTinh() {
-        return gioiTinh;
-    }
-
-    public void setGioiTinh(GioiTinh gioiTinh) {
-        this.gioiTinh = gioiTinh;
-    }
-
-    public String getQuocTich() {
-        return quocTich;
-    }
-
-    public void setQuocTich(String quocTich) {
-        this.quocTich = quocTich;
-    }
-
-    public String getCccd() {
-        return cccd;
-    }
-
-    public void setCccd(String cccd) {
-        this.cccd = cccd;
-    }
-
-    public String getSdtNguoiThan() {
-        return sdtNguoiThan;
-    }
-
-    public void setSdtNguoiThan(String sdtNguoiThan) {
-        this.sdtNguoiThan = sdtNguoiThan;
-    }
-
-    public SinhVien getSinhVien() {
-        return sinhVien;
-    }
-
-    public void setSinhVien(SinhVien sinhVien) {
-        this.sinhVien = sinhVien;
-    }
-
 }

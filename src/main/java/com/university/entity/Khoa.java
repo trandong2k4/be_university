@@ -1,19 +1,26 @@
 package com.university.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import java.util.UUID;
+
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "khoas")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Khoa {
 
     @Id
-    @GeneratedValue
-    @Column(name = "id", nullable = false, updatable = false, insertable = false)
+    @GeneratedValue(generator = "UUID")
     private UUID id;
 
-    @Column(name = "ma_khoa", unique = true, nullable = false, length = 10)
+    @Column(name = "ma_khoa", length = 10, unique = true, nullable = false)
     private String maKhoa;
 
     @Column(name = "ten_khoa", length = 100)
@@ -23,55 +30,6 @@ public class Khoa {
     @JoinColumn(name = "truong_id", nullable = false)
     private Truong truong;
 
-    @OneToMany(mappedBy = "khoa")
-    private Set<Nganh> nganhHocs;
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getMaKhoa() {
-        return maKhoa;
-    }
-
-    public void setMaKhoa(String maKhoa) {
-        this.maKhoa = maKhoa;
-    }
-
-    public String getTenKhoa() {
-        return tenKhoa;
-    }
-
-    public void setTenKhoa(String tenKhoa) {
-        this.tenKhoa = tenKhoa;
-    }
-
-    public Truong getTruong() {
-        return truong;
-    }
-
-    public void setTruong(Truong truong) {
-        this.truong = truong;
-    }
-
-    public Set<Nganh> getNganhHocs() {
-        return nganhHocs;
-    }
-
-    public void setNganhHocs(Set<Nganh> nganhHocs) {
-        this.nganhHocs = nganhHocs;
-    }
-
-    public Khoa() {
-    }
-
-    @Override
-    public String toString() {
-        return "Khoa [id=" + id + ", maKhoa=" + maKhoa + ", tenKhoa=" + tenKhoa + ", truong=" + truong + ", nganhHocs="
-                + nganhHocs + "]";
-    }
+    @OneToMany(mappedBy = "khoa", cascade = CascadeType.ALL)
+    private Set<Nganh> nganhs = new HashSet<>();
 }

@@ -1,15 +1,24 @@
 package com.university.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.UUID;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "nhanviens")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class NhanVien {
 
     @Id
-    @GeneratedValue
     @Column(name = "id", nullable = false, updatable = false, insertable = false)
     private UUID id;
 
@@ -30,73 +39,12 @@ public class NhanVien {
 
     @ManyToOne
     @JoinColumn(name = "vitri_id")
+    @JsonIgnore
     private ViTri viTri;
 
     @OneToOne
     @JoinColumn(name = "user_id", unique = true)
+    @JsonIgnore
     private User user;
 
-    public NhanVien() {
-    }
-
-    // Getters & Setters
-    public UUID getId() {
-        return id;
-    }
-
-    public String getHoTen() {
-        return hoTen;
-    }
-
-    public void setHoTen(String hoTen) {
-        this.hoTen = hoTen;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getSoDienThoai() {
-        return soDienThoai;
-    }
-
-    public void setSoDienThoai(String soDienThoai) {
-        this.soDienThoai = soDienThoai;
-    }
-
-    public LocalDate getNgayVaoLam() {
-        return ngayVaoLam;
-    }
-
-    public void setNgayVaoLam(LocalDate ngayVaoLam) {
-        this.ngayVaoLam = ngayVaoLam;
-    }
-
-    public LocalDate getNgayNghiViec() {
-        return ngayNghiViec;
-    }
-
-    public void setNgayNghiViec(LocalDate ngayNghiViec) {
-        this.ngayNghiViec = ngayNghiViec;
-    }
-
-    public ViTri getViTri() {
-        return viTri;
-    }
-
-    public void setViTri(ViTri viTri) {
-        this.viTri = viTri;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 }

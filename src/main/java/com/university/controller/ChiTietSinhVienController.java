@@ -15,49 +15,50 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.university.dto.reponse.ChiTietSinhVienResponse;
-import com.university.dto.request.ChiTietSinhVienRequest;
+import com.university.dto.reponse.ChiTietSinhVienResponseDTO;
+import com.university.dto.reponse.RoleResponseDTO;
+import com.university.dto.request.ChiTietSinhVienRequestDTO;
 import com.university.service.ChiTietSinhVienService;
 
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+
 @RestController
-@RequestMapping("/api/chitiet-sinhvien")
+@RequestMapping("/api/chitietsinhviens")
+@RequiredArgsConstructor
 public class ChiTietSinhVienController {
 
-    private final ChiTietSinhVienService service;
-
-    public ChiTietSinhVienController(ChiTietSinhVienService service) {
-        this.service = service;
-    }
+    private final ChiTietSinhVienService chiTietSinhVienService;
 
     @PostMapping
-    public ResponseEntity<ChiTietSinhVienResponse> create(@RequestBody ChiTietSinhVienRequest request) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.create(request));
+    public ResponseEntity<ChiTietSinhVienResponseDTO> create(@RequestBody @Valid ChiTietSinhVienRequestDTO dto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(chiTietSinhVienService.create(dto));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ChiTietSinhVienResponseDTO>> getAll() {
+        return ResponseEntity.ok(chiTietSinhVienService.getAll());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ChiTietSinhVienResponseDTO> getById(@PathVariable UUID id) {
+        return ResponseEntity.ok(chiTietSinhVienService.getById(id));
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<ChiTietSinhVienResponseDTO>> search(@RequestParam String keyword) {
+        return ResponseEntity.ok(chiTietSinhVienService.search(keyword));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ChiTietSinhVienResponse> update(@PathVariable UUID id,
-            @RequestBody ChiTietSinhVienRequest request) {
-        return ResponseEntity.ok(service.update(id, request));
+    public ResponseEntity<ChiTietSinhVienResponseDTO> update(@PathVariable UUID id,
+            @RequestBody @Valid ChiTietSinhVienRequestDTO dto) {
+        return ResponseEntity.ok(chiTietSinhVienService.update(id, dto));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable UUID id) {
-        service.delete(id);
+        chiTietSinhVienService.delete(id);
         return ResponseEntity.noContent().build();
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<ChiTietSinhVienResponse> getById(@PathVariable UUID id) {
-        return ResponseEntity.ok(service.getById(id));
-    }
-
-    @GetMapping
-    public ResponseEntity<List<ChiTietSinhVienResponse>> getAll() {
-        return ResponseEntity.ok(service.getAll());
-    }
-
-    @GetMapping("/search")
-    public ResponseEntity<List<ChiTietSinhVienResponse>> search(@RequestParam String keyword) {
-        return ResponseEntity.ok(service.search(keyword));
     }
 }

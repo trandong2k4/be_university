@@ -1,60 +1,48 @@
 package com.university.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import java.util.UUID;
+import lombok.*;
+
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Table(name = "permissions")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Permission {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "UUID")
     private UUID id;
 
-    @Column(length = 30, unique = true, nullable = false)
+    @Column(name = "ma_permission", length = 30, unique = true, nullable = false)
     private String maPermission;
 
+    @Column(length = 255)
     private String description;
 
-    @OneToMany(mappedBy = "permission", cascade = CascadeType.ALL)
-    private Set<RolePermission> rolePermissions = new HashSet<>();
+    @ManyToMany(mappedBy = "permissions", fetch = FetchType.LAZY)
+    @JsonIgnore // tránh vòng lặp Permission <-> Role
+    private Set<Role> roles = new HashSet<>();
 
-    public Permission() {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (!(o instanceof Permission))
+            return false;
+        return Objects.equals(id, ((Permission) o).id);
     }
 
-    // Getters & Setters
-    public UUID getId() {
-        return id;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
-
-    public String getMaPermission() {
-        return maPermission;
-    }
-
-    public void setMaPermission(String maPermission) {
-        this.maPermission = maPermission;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public Set<RolePermission> getRolePermissions() {
-        return rolePermissions;
-    }
-
-    public void setRolePermissions(Set<RolePermission> rolePermissions) {
-        this.rolePermissions = rolePermissions;
-    }
-
 }

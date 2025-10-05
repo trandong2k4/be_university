@@ -1,16 +1,26 @@
 package com.university.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.util.UUID;
+import com.university.enums.HocLaiEnum;
 
 @Entity
-@Table(name = "hoclais")
+@Table(name = "hoclais", uniqueConstraints = {
+        @UniqueConstraint(columnNames = { "sinhvien_id", "monhoc_id", "kihoc_id" })
+})
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class HocLai {
 
     @Id
-    @GeneratedValue
-    @Column(name = "id", nullable = false, updatable = false, insertable = false)
+    @GeneratedValue(generator = "UUID")
     private UUID id;
 
     @ManyToOne
@@ -26,7 +36,7 @@ public class HocLai {
     private KiHoc kiHoc;
 
     @Column(name = "lan_hoc")
-    private Integer lanHoc;
+    private int lanHoc;
 
     @Column(name = "diem_cu", precision = 3, scale = 1)
     private BigDecimal diemCu;
@@ -34,82 +44,11 @@ public class HocLai {
     @Column(name = "ly_do", length = 255)
     private String lyDo;
 
-    @Column(name = "trang_thai", length = 20)
-    private String trangThai;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "trang_thai")
+    private HocLaiEnum trangThai;
 
     @ManyToOne
     @JoinColumn(name = "lichhoc_id")
     private LichHoc lichHoc;
-
-    public HocLai() {
-    }
-
-    // Getters & Setters
-    public UUID getId() {
-        return id;
-    }
-
-    public SinhVien getSinhVien() {
-        return sinhVien;
-    }
-
-    public void setSinhVien(SinhVien sinhVien) {
-        this.sinhVien = sinhVien;
-    }
-
-    public MonHoc getMonHoc() {
-        return monHoc;
-    }
-
-    public void setMonHoc(MonHoc monHoc) {
-        this.monHoc = monHoc;
-    }
-
-    public KiHoc getKiHoc() {
-        return kiHoc;
-    }
-
-    public void setKiHoc(KiHoc kiHoc) {
-        this.kiHoc = kiHoc;
-    }
-
-    public Integer getLanHoc() {
-        return lanHoc;
-    }
-
-    public void setLanHoc(Integer lanHoc) {
-        this.lanHoc = lanHoc;
-    }
-
-    public BigDecimal getDiemCu() {
-        return diemCu;
-    }
-
-    public void setDiemCu(BigDecimal diemCu) {
-        this.diemCu = diemCu;
-    }
-
-    public String getLyDo() {
-        return lyDo;
-    }
-
-    public void setLyDo(String lyDo) {
-        this.lyDo = lyDo;
-    }
-
-    public String getTrangThai() {
-        return trangThai;
-    }
-
-    public void setTrangThai(String trangThai) {
-        this.trangThai = trangThai;
-    }
-
-    public LichHoc getLichHoc() {
-        return lichHoc;
-    }
-
-    public void setLichHoc(LichHoc lichHoc) {
-        this.lichHoc = lichHoc;
-    }
 }

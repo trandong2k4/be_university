@@ -1,89 +1,54 @@
 package com.university.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import lombok.*;
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
 @Entity
 @Table(name = "users")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class User {
 
   @Id
+  @GeneratedValue(generator = "UUID")
   private UUID id;
 
-  @Column(name = "username")
+  @Column(length = 30, unique = true, nullable = false)
   private String username;
 
-  @Column(name = "password", length = 72, nullable = false)
+  @Column(length = 72, nullable = false)
   private String password;
 
-  @Column(name = "first_name")
   private String firstName;
-
-  @Column(name = "last_name")
   private String lastName;
-
-  @Column(name = "date_of_birth")
   private LocalDate dateOfBirth;
 
-  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-  private Set<UserRole> userRoles = new HashSet<>();
+  @ManyToMany(fetch = FetchType.LAZY)
+  @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+  @JsonIgnoreProperties("users") // tránh vòng lặp JSON
+  private Set<Role> roles = new HashSet<>();
 
-  public User() {
+  // equals / hashCode chỉ dùng id
+  @Override
+  public boolean equals(Object o) {
+    if (this == o)
+      return true;
+    if (!(o instanceof User))
+      return false;
+    return Objects.equals(id, ((User) o).id);
   }
 
-  // --- Getter & Setter ---
-  public UUID getId() {
-    return id;
-  }
-
-  public String getUsername() {
-    return username;
-  }
-
-  public void setUsername(String username) {
-    this.username = username;
-  }
-
-  public String getPassword() {
-    return password;
-  }
-
-  public void setPassword(String password) {
-    this.password = password;
-  }
-
-  public String getFirstName() {
-    return firstName;
-  }
-
-  public void setFirstName(String firstName) {
-    this.firstName = firstName;
-  }
-
-  public String getLastName() {
-    return lastName;
-  }
-
-  public void setLastName(String lastName) {
-    this.lastName = lastName;
-  }
-
-  public LocalDate getDateOfBirth() {
-    return dateOfBirth;
-  }
-
-  public void setDateOfBirth(LocalDate dateOfBirth) {
-    this.dateOfBirth = dateOfBirth;
-  }
-
-  public Set<UserRole> getUserRoles() {
-    return userRoles;
-  }
-
-  public void setUserRoles(Set<UserRole> userRoles) {
-    this.userRoles = userRoles;
+  @Override
+  public int hashCode() {
+    return Objects.hash(id);
   }
 }

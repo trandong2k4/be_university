@@ -1,16 +1,15 @@
 package com.university.service;
 
-import com.university.dto.reponse.LoginResponse;
+import com.university.dto.reponse.LoginResponseDTO;
 import com.university.dto.reponse.RegisterReponse;
 import com.university.dto.request.RegisterRequest;
+import com.university.entity.Role;
 import com.university.entity.User;
 import com.university.repository.UserRepository;
 import com.university.security.JwtService;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
-
-import java.util.Optional;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -43,7 +42,7 @@ public class AuthService {
     }
 
     @Transactional
-    public LoginResponse authenticate(String username, String rawPassword) {
+    public LoginResponseDTO authenticate(String username, String rawPassword) {
         System.out.println("Đang xác thực: " + username);
         try {
             User user = userRepository.findByUsername(username)
@@ -54,14 +53,14 @@ public class AuthService {
             if (!passwordEncoder.matches(rawPassword, user.getPassword())) {
                 throw new IllegalArgumentException("Sai mật khẩu");
             }
-
-            String role = Optional.ofNullable(user.getUserRoles())
-                    .flatMap(list -> list.stream().findFirst())
-                    .map(ur -> ur.getRole().getMaRole())
+            String maRole = user.getRoles().stream()
+                    .findFirst()
+                    .map(Role::getMaRole)
                     .orElse("guest");
 
+            System.out.println("marole la: " + maRole);
             String token = "dummy-token";
-            return new LoginResponse(user.getUsername(), role, token);
+            return new LoginResponseDTO(user.getUsername(), maRole, token, user.getId());
 
         } catch (Exception e) {
             e.printStackTrace(); // 👈 In ra lỗi thật sự

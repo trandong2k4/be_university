@@ -1,22 +1,25 @@
 package com.university.service;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
-import com.university.dto.reponse.HocPhiResponse;
-import com.university.dto.request.HocPhiRequest;
+
+import com.university.dto.reponse.HocPhiResponseDTO;
+import com.university.dto.reponse.TruongResponseDTO;
+import com.university.dto.request.HocPhiRequestDTO;
 import com.university.entity.HocPhi;
 import com.university.entity.SinhVien;
+import com.university.exception.ResourceNotFoundException;
 import com.university.entity.KiHoc;
 import com.university.mapper.HocPhiMapper;
 import com.university.repository.HocPhiRepository;
 import com.university.repository.KiHocRepository;
 import com.university.repository.SinhVienRepository;
-import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class HocPhiService {
 
     private final HocPhiRepository hocPhiRepository;
@@ -24,81 +27,49 @@ public class HocPhiService {
     private final KiHocRepository kiHocRepository;
     private final HocPhiMapper hocPhiMapper;
 
-    public HocPhiService(HocPhiRepository hocPhiRepository,
-            SinhVienRepository sinhVienRepository,
-            KiHocRepository kiHocRepository,
-            HocPhiMapper hocPhiMapper) {
-        this.hocPhiRepository = hocPhiRepository;
-        this.sinhVienRepository = sinhVienRepository;
-        this.kiHocRepository = kiHocRepository;
-        this.hocPhiMapper = hocPhiMapper;
+    public HocPhiResponseDTO create(HocPhiRequestDTO dto) {
+        SinhVien sv = sinhVienRepository.findById(dto.getSinhVienId())
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy sinh viên"));
+        KiHoc kiHoc = kiHocRepository.findById(dto.getKiHocId())
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy kỳ học"));
+
+        HocPhi hp = hocPhiMapper.toEntity(dto, sv, kiHoc);
+        return hocPhiMapper.toResponseDTO(hocPhiRepository.save(hp));
     }
 
-    public HocPhiResponse create(HocPhiRequest request) {
-        SinhVien sinhVien = sinhVienRepository.findById(request.getSinhVienId())
-                .orElseThrow(() -> new EntityNotFoundException("Sinh viên không tồn tại"));
-        KiHoc kiHoc = kiHocRepository.findById(request.getKiHocId())
-                .orElseThrow(() -> new EntityNotFoundException("Kì học không tồn tại"));
-
-        HocPhi hocPhi = hocPhiMapper.toEntity(request, sinhVien, kiHoc);
-        hocPhi = hocPhiRepository.save(hocPhi);
-        return hocPhiMapper.toResponse(hocPhi);
-    }
-
-    public HocPhiResponse update(UUID id, HocPhiRequest request) {
-        HocPhi hocPhi = hocPhiRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Học phí không tồn tại"));
-        SinhVien sinhVien = sinhVienRepository.findById(request.getSinhVienId())
-                .orElseThrow(() -> new EntityNotFoundException("Sinh viên không tồn tại"));
-        KiHoc kiHoc = kiHocRepository.findById(request.getKiHocId())
-                .orElseThrow(() -> new EntityNotFoundException("Kì học không tồn tại"));
-
-        hocPhiMapper.updateEntity(hocPhi, request, sinhVien, kiHoc);
-        hocPhi = hocPhiRepository.save(hocPhi);
-        return hocPhiMapper.toResponse(hocPhi);
-    }
-
-    public HocPhiResponse getById(UUID id) {
-        HocPhi hocPhi = hocPhiRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Học phí không tồn tại"));
-        return hocPhiMapper.toResponse(hocPhi);
-    }
-
-    public List<HocPhiResponse> getAll() {
+    public List<HocPhiResponseDTO> getAll() {
         return hocPhiRepository.findAll().stream()
-                .map(hocPhiMapper::toResponse)
+                .map(hocPhiMapper::toResponseDTO)
+                .toList();
+    }
+
+    public HocPhiResponseDTO getById(UUID id) {
+        HocPhi hp = hocPhiRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy học phí"));
+        return hocPhiMapper.toResponseDTO(hp);
+    }
+
+    public List<HocPhiResponseDTO> search(String keyword) {
+        return hocPhiRepository.searchByTenSinhVien(keyword).stream()
+                .map(hocPhiMapper::toResponseDTO)
                 .collect(Collectors.toList());
+    }
+
+    public HocPhiResponseDTO update(UUID id, HocPhiRequestDTO dto) {
+        HocPhi existing = hocPhiRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy học phí"));
+
+        existing.setSoTien(dto.getSoTien());
+        existing.setGiaTriTinChi(dto.getGiaTriTinChi());
+        existing.setHanThanhToan(dto.getHanThanhToan());
+        existing.setNgayThanhToan(dto.getNgayThanhToan());
+        existing.setTrangThai(dto.getTrangThai());
+        existing.setGhiChu(dto.getGhiChu());
+
+        return hocPhiMapper.toResponseDTO(hocPhiRepository.save(existing));
     }
 
     public void delete(UUID id) {
-        if (!hocPhiRepository.existsById(id)) {
-            throw new EntityNotFoundException("Học phí không tồn tại");
-        }
         hocPhiRepository.deleteById(id);
     }
-
-    public List<HocPhiResponse> filterByTrangThai(String trangThai) {
-        return hocPhiRepository.findByTrangThai(trangThai).stream()
-                .map(hocPhiMapper::toResponse)
-                .collect(Collectors.toList());
-    }
-
-    public List<HocPhiResponse> filterByKiHoc(UUID kiHocId) {
-        return hocPhiRepository.findByKiHocId(kiHocId).stream()
-                .map(hocPhiMapper::toResponse)
-                .collect(Collectors.toList());
-    }
-
-    public List<HocPhiResponse> filterBySinhVien(UUID sinhVienId) {
-        return hocPhiRepository.findBySinhVienId(sinhVienId).stream()
-                .map(hocPhiMapper::toResponse)
-                .collect(Collectors.toList());
-    }
-
-    public List<HocPhiResponse> filterTreHanChuaThanhToan(LocalDate beforeDate) {
-        return hocPhiRepository.findByNgayThanhToanIsNullAndHanThanhToanBefore(beforeDate).stream()
-                .map(hocPhiMapper::toResponse)
-                .collect(Collectors.toList());
-    }
-
 }

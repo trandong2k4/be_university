@@ -2,9 +2,7 @@ package com.university.controller;
 
 import com.university.dto.reponse.TinChiResponse;
 import com.university.dto.request.TinChiRequest;
-import com.university.entity.TinChi;
 import com.university.service.TinChiService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/tinchi")
+@RequestMapping("/api/tinchis")
 public class TinChiController {
 
     private final TinChiService tinChiService;

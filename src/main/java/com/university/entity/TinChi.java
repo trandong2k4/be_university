@@ -1,25 +1,29 @@
 package com.university.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.util.UUID;
 
 @Entity
 @Table(name = "tinchi")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class TinChi {
-
     @Id
-    @GeneratedValue
-    @Column(name = "id", nullable = false, updatable = false, insertable = false)
+    @GeneratedValue(generator = "UUID")
     private UUID id;
 
     @Column(name = "so_tin_chi", nullable = false)
-    private Integer soTinChi;
+    private int soTinChi;
 
-    @Column(name = "gia_tri_tin_chi", nullable = false, precision = 10, scale = 2)
+    @Column(name = "gia_tri_tin_chi", nullable = false)
     private BigDecimal giaTriTinChi;
 
-    @Column(name = "ten_tin_chi", nullable = false, length = 50)
+    @Column(name = "ten_tin_chi", length = 50, nullable = false)
     private String tenTinChi;
 
     @ManyToOne
@@ -29,57 +33,4 @@ public class TinChi {
     @ManyToOne
     @JoinColumn(name = "monhoc_id")
     private MonHoc monHoc;
-
-    public TinChi(LoaiTinChi loaiTinChi, MonHoc monHoc) {
-        this.loaiTinChi = loaiTinChi;
-        this.monHoc = monHoc;
-    }
-
-    public TinChi() {
-    }
-
-    // Getters & Setters
-    public UUID getId() {
-        return id;
-    }
-
-    public Integer getSoTinChi() {
-        return soTinChi;
-    }
-
-    public void setSoTinChi(Integer soTinChi) {
-        this.soTinChi = soTinChi;
-    }
-
-    public BigDecimal getGiaTriTinChi() {
-        return giaTriTinChi;
-    }
-
-    public void setGiaTriTinChi(BigDecimal giaTriTinChi) {
-        this.giaTriTinChi = giaTriTinChi;
-    }
-
-    public String getTenTinChi() {
-        return tenTinChi;
-    }
-
-    public void setTenTinChi(String tenTinChi) {
-        this.tenTinChi = tenTinChi;
-    }
-
-    public LoaiTinChi getLoaiTinChi() {
-        return loaiTinChi;
-    }
-
-    public void setLoaiTinChi(LoaiTinChi loaiTinChi) {
-        this.loaiTinChi = loaiTinChi;
-    }
-
-    public MonHoc getMonHoc() {
-        return monHoc;
-    }
-
-    public void setMonHoc(MonHoc monHoc) {
-        this.monHoc = monHoc;
-    }
 }

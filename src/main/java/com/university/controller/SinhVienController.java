@@ -1,53 +1,58 @@
 package com.university.controller;
 
-import com.university.dto.reponse.SinhVienResponse;
-import com.university.dto.request.SinhVienRequest;
+import com.university.dto.reponse.SinhVienResponseDTO;
+import com.university.dto.request.SinhVienRequestDTO;
 import com.university.service.SinhVienService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/sinhviens")
+@RequiredArgsConstructor
 public class SinhVienController {
 
-    private final SinhVienService service;
+    private final SinhVienService sinhVienService;
 
-    public SinhVienController(SinhVienService service) {
-        this.service = service;
+    // 🔹 Lấy tất cả sinh viên
+    @GetMapping
+    public ResponseEntity<List<SinhVienResponseDTO>> getAll() {
+        return ResponseEntity.ok(sinhVienService.getAll());
     }
 
+    // 🔹 Lấy theo ID
+    @GetMapping("/{id}")
+    public ResponseEntity<SinhVienResponseDTO> getById(@PathVariable UUID id) {
+        return ResponseEntity.ok(sinhVienService.getById(id));
+    }
+
+    // 🔹 Tìm kiếm theo từ khóa
+    @GetMapping("/search")
+    public ResponseEntity<List<SinhVienResponseDTO>> search(@RequestParam String keyword) {
+        return ResponseEntity.ok(sinhVienService.search(keyword));
+    }
+
+    // 🔹 Tạo mới sinh viên
     @PostMapping
-    public ResponseEntity<SinhVienResponse> create(@RequestBody SinhVienRequest request) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.create(request));
+    public ResponseEntity<SinhVienResponseDTO> create(@RequestBody @Valid SinhVienRequestDTO dto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(sinhVienService.create(dto));
     }
 
+    // 🔹 Cập nhật sinh viên
     @PutMapping("/{id}")
-    public ResponseEntity<SinhVienResponse> update(@PathVariable UUID id, @RequestBody SinhVienRequest request) {
-        return ResponseEntity.ok(service.update(id, request));
+    public ResponseEntity<SinhVienResponseDTO> update(@PathVariable UUID id,
+            @RequestBody @Valid SinhVienRequestDTO dto) {
+        return ResponseEntity.ok(sinhVienService.update(id, dto));
     }
 
+    // 🔹 Xóa sinh viên
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable UUID id) {
-        service.delete(id);
+        sinhVienService.delete(id);
         return ResponseEntity.noContent().build();
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<SinhVienResponse> getById(@PathVariable UUID id) {
-        return ResponseEntity.ok(service.getById(id));
-    }
-
-    @GetMapping
-    public ResponseEntity<List<SinhVienResponse>> getAll() {
-        return ResponseEntity.ok(service.getAll());
-    }
-
-    @GetMapping("/search")
-    public ResponseEntity<List<SinhVienResponse>> search(@RequestParam String keyword) {
-        return ResponseEntity.ok(service.search(keyword));
     }
 }

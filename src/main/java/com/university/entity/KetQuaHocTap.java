@@ -1,17 +1,26 @@
 package com.university.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
-@Table(name = "ketquahoctaps")
+@Table(name = "ketquahoctaps", uniqueConstraints = {
+        @UniqueConstraint(columnNames = { "sinhvien_id", "monhoc_id", "kihoc_id" })
+})
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class KetQuaHocTap {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(nullable = false, updatable = false)
+    @GeneratedValue(generator = "UUID")
     private UUID id;
 
     @ManyToOne
@@ -26,76 +35,15 @@ public class KetQuaHocTap {
     @JoinColumn(name = "kihoc_id", nullable = false)
     private KiHoc kiHoc;
 
-    @Column(precision = 3, scale = 1)
+    @Column(name = "diem", precision = 3, scale = 1)
     private BigDecimal diem;
 
     @Column(name = "danh_gia", length = 50)
     private String danhGia;
 
-    @Column(name = "ghi_chu", columnDefinition = "text")
+    @Column(name = "ghi_chu", columnDefinition = "TEXT")
     private String ghiChu;
 
     @Column(name = "ngay_cap_nhat")
     private LocalDate ngayCapNhat = LocalDate.now();
-
-    // Getters & Setters
-    public UUID getId() {
-        return id;
-    }
-
-    public SinhVien getSinhVien() {
-        return sinhVien;
-    }
-
-    public void setSinhVien(SinhVien sinhVien) {
-        this.sinhVien = sinhVien;
-    }
-
-    public MonHoc getMonHoc() {
-        return monHoc;
-    }
-
-    public void setMonHoc(MonHoc monHoc) {
-        this.monHoc = monHoc;
-    }
-
-    public KiHoc getKiHoc() {
-        return kiHoc;
-    }
-
-    public void setKiHoc(KiHoc kiHoc) {
-        this.kiHoc = kiHoc;
-    }
-
-    public BigDecimal getDiem() {
-        return diem;
-    }
-
-    public void setDiem(BigDecimal diem) {
-        this.diem = diem;
-    }
-
-    public String getDanhGia() {
-        return danhGia;
-    }
-
-    public void setDanhGia(String danhGia) {
-        this.danhGia = danhGia;
-    }
-
-    public String getGhiChu() {
-        return ghiChu;
-    }
-
-    public void setGhiChu(String ghiChu) {
-        this.ghiChu = ghiChu;
-    }
-
-    public LocalDate getNgayCapNhat() {
-        return ngayCapNhat;
-    }
-
-    public void setNgayCapNhat(LocalDate ngayCapNhat) {
-        this.ngayCapNhat = ngayCapNhat;
-    }
 }

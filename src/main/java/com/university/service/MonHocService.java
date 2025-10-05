@@ -1,57 +1,58 @@
 package com.university.service;
 
-import com.university.dto.reponse.MonHocResponse;
-import com.university.dto.request.MonHocRequest;
+import com.university.dto.reponse.MonHocResponseDTO;
+import com.university.dto.request.MonHocRequestDTO;
 import com.university.entity.MonHoc;
+import com.university.exception.ResourceNotFoundException;
 import com.university.mapper.MonHocMapper;
 import com.university.repository.MonHocRepository;
-import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class MonHocService {
 
     private final MonHocRepository monHocRepository;
     private final MonHocMapper monHocMapper;
 
-    public MonHocService(MonHocRepository monHocRepository, MonHocMapper monHocMapper) {
-        this.monHocRepository = monHocRepository;
-        this.monHocMapper = monHocMapper;
+    public MonHocResponseDTO create(MonHocRequestDTO dto) {
+        MonHoc monHoc = monHocMapper.toEntity(dto);
+        return monHocMapper.toResponseDTO(monHocRepository.save(monHoc));
     }
 
-    public MonHocResponse create(MonHocRequest request) {
-        MonHoc entity = monHocMapper.toEntity(request);
-        entity = monHocRepository.save(entity);
-        return monHocMapper.toResponse(entity);
-    }
-
-    public List<MonHocResponse> getAll() {
+    public List<MonHocResponseDTO> getAll() {
         return monHocRepository.findAll().stream()
-                .map(monHocMapper::toResponse)
+                .map(monHocMapper::toResponseDTO)
                 .collect(Collectors.toList());
     }
 
-    public MonHocResponse getById(UUID id) {
-        MonHoc entity = monHocRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Môn học không tồn tại"));
-        return monHocMapper.toResponse(entity);
+    public MonHocResponseDTO getById(UUID id) {
+        MonHoc monHoc = monHocRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy môn học"));
+        return monHocMapper.toResponseDTO(monHoc);
     }
 
-    public MonHocResponse update(UUID id, MonHocRequest request) {
-        MonHoc entity = monHocRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Môn học không tồn tại"));
-        monHocMapper.updateEntity(entity, request);
-        entity = monHocRepository.save(entity);
-        return monHocMapper.toResponse(entity);
+    public List<MonHocResponseDTO> search(String keyword) {
+        return monHocRepository.searchByTenMonHoc(keyword).stream()
+                .map(monHocMapper::toResponseDTO)
+                .collect(Collectors.toList());
+    }
+
+    public MonHocResponseDTO update(UUID id, MonHocRequestDTO dto) {
+        MonHoc existing = monHocRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy môn học"));
+        existing.setMaMonHoc(dto.getMaMonHoc());
+        existing.setTenMonHoc(dto.getTenMonHoc());
+        existing.setMoTa(dto.getMoTa());
+        existing.setTongSoTinChi(dto.getTongSoTinChi());
+        return monHocMapper.toResponseDTO(monHocRepository.save(existing));
     }
 
     public void delete(UUID id) {
-        if (!monHocRepository.existsById(id)) {
-            throw new EntityNotFoundException("Môn học không tồn tại");
-        }
         monHocRepository.deleteById(id);
     }
 }

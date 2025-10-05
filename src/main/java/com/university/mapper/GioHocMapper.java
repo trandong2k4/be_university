@@ -2,29 +2,29 @@ package com.university.mapper;
 
 import org.springframework.stereotype.Component;
 
-import com.university.dto.reponse.GioHocResponse;
-import com.university.dto.request.GioHocRequest;
+import com.university.dto.reponse.GioHocResponseDTO;
+import com.university.dto.request.GioHocRequestDTO;
 import com.university.entity.GioHoc;
 
 @Component
 public class GioHocMapper {
 
-    public GioHoc toEntity(GioHocRequest dto) {
-        GioHoc gio = new GioHoc();
-        gio.setMaGioHoc(dto.getMaGioHoc());
-        gio.setTenGioHoc(dto.getTenGioHoc());
-        gio.setThoiGianBatDau(dto.getThoiGianBatDau());
-        gio.setThoiGianKetThuc(dto.getThoiGianKetThuc());
-        return gio;
+    public GioHoc toEntity(GioHocRequestDTO dto) {
+        return GioHoc.builder()
+                .maGioHoc(dto.getMaGioHoc())
+                .tenGioHoc(dto.getTenGioHoc())
+                .thoiGianBatDau(dto.getThoiGianBatDau())
+                .thoiGianKetThuc(dto.getThoiGianKetThuc())
+                .build();
     }
 
-    public GioHocResponse toResponse(GioHoc gioHoc) {
-        GioHocResponse res = new GioHocResponse();
-        res.setId(gioHoc.getId());
-        res.setMaGioHoc(gioHoc.getMaGioHoc());
-        res.setTenGioHoc(gioHoc.getTenGioHoc());
-        res.setThoiGianBatDau(gioHoc.getThoiGianBatDau());
-        res.setThoiGianKetThuc(gioHoc.getThoiGianKetThuc());
-        return res;
+    public GioHocResponseDTO toResponseDTO(GioHoc gioHoc) {
+        return GioHocResponseDTO.builder()
+                .id(gioHoc.getId())
+                .maGioHoc(gioHoc.getMaGioHoc())
+                .tenGioHoc(gioHoc.getTenGioHoc())
+                .thoiGianBatDau(gioHoc.getThoiGianBatDau())
+                .thoiGianKetThuc(gioHoc.getThoiGianKetThuc())
+                .build();
     }
 }

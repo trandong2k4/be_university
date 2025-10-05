@@ -1,34 +1,59 @@
 package com.university.service;
 
-import com.university.dto.reponse.RoleResponse;
-import com.university.dto.request.RoleRequest;
+import com.university.dto.reponse.RoleResponseDTO;
+import com.university.dto.reponse.TruongResponseDTO;
+import com.university.dto.request.RoleRequestDTO;
 import com.university.entity.Role;
+import com.university.exception.ResourceNotFoundException;
 import com.university.mapper.RoleMapper;
 import com.university.repository.RoleRepository;
+
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class RoleService {
 
     private final RoleRepository roleRepository;
     private final RoleMapper roleMapper;
 
-    public RoleService(RoleRepository roleRepository, RoleMapper roleMapper) {
-        this.roleRepository = roleRepository;
-        this.roleMapper = roleMapper;
+    public RoleResponseDTO create(RoleRequestDTO dto) {
+        Role role = roleMapper.toEntity(dto);
+        return roleMapper.toResponseDTO(roleRepository.save(role));
     }
 
-    public RoleResponse create(RoleRequest request) {
-        Role role = roleMapper.toEntity(request);
-        role = roleRepository.save(role);
-        return roleMapper.toResponse(role);
-    }
-
-    public List<RoleResponse> getAll() {
+    public List<RoleResponseDTO> getAll() {
         return roleRepository.findAll().stream()
-                .map(roleMapper::toResponse)
+                .map(roleMapper::toResponseDTO)
+                .toList();
+    }
+
+    public RoleResponseDTO getById(UUID id) {
+        Role role = roleRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy role"));
+        return roleMapper.toResponseDTO(role);
+    }
+
+    public List<RoleResponseDTO> search(String keyword) {
+        return roleRepository.searchByMaRole(keyword).stream()
+                .map(roleMapper::toResponseDTO)
                 .collect(Collectors.toList());
+    }
+
+    public RoleResponseDTO update(UUID id, RoleRequestDTO dto) {
+        Role existing = roleRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy role"));
+        existing.setMaRole(dto.getTenRole());
+        existing.setDescription(dto.getMoTa());
+        return roleMapper.toResponseDTO(roleRepository.save(existing));
+    }
+
+    public void delete(UUID id) {
+        roleRepository.deleteById(id);
     }
 }

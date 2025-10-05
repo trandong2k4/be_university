@@ -1,8 +1,13 @@
 package com.university.controller;
 
-import com.university.dto.reponse.BaiVietResponse;
-import com.university.dto.request.BaiVietRequest;
+import com.university.dto.reponse.BaiVietResponseDTO;
+import com.university.dto.reponse.RoleResponseDTO;
+import com.university.dto.request.BaiVietRequestDTO;
 import com.university.service.BaiVietService;
+
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,32 +17,34 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/baiviets")
+@RequiredArgsConstructor
 public class BaiVietController {
 
     private final BaiVietService baiVietService;
 
-    public BaiVietController(BaiVietService baiVietService) {
-        this.baiVietService = baiVietService;
-    }
-
     @PostMapping
-    public ResponseEntity<BaiVietResponse> create(@RequestBody BaiVietRequest request) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(baiVietService.create(request));
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<BaiVietResponse> update(@PathVariable UUID id, @RequestBody BaiVietRequest request) {
-        return ResponseEntity.ok(baiVietService.update(id, request));
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<BaiVietResponse> getById(@PathVariable UUID id) {
-        return ResponseEntity.ok(baiVietService.getById(id));
+    public ResponseEntity<BaiVietResponseDTO> create(@RequestBody @Valid BaiVietRequestDTO dto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(baiVietService.create(dto));
     }
 
     @GetMapping
-    public ResponseEntity<List<BaiVietResponse>> getAll() {
+    public ResponseEntity<List<BaiVietResponseDTO>> getAll() {
         return ResponseEntity.ok(baiVietService.getAll());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<BaiVietResponseDTO> getById(@PathVariable UUID id) {
+        return ResponseEntity.ok(baiVietService.getById(id));
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<BaiVietResponseDTO>> search(@RequestParam String keyword) {
+        return ResponseEntity.ok(baiVietService.search(keyword));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<BaiVietResponseDTO> update(@PathVariable UUID id, @RequestBody @Valid BaiVietRequestDTO dto) {
+        return ResponseEntity.ok(baiVietService.update(id, dto));
     }
 
     @DeleteMapping("/{id}")

@@ -7,7 +7,8 @@ import java.util.List;
 import java.util.UUID;
 
 public interface NhanVienRepository extends JpaRepository<NhanVien, UUID> {
-    List<NhanVien> findByViTriId(UUID viTriId);
+    List<NhanVien> findByHoTenContainingIgnoreCaseOrEmailContainingIgnoreCase(String hoTen, String email);
 
-    List<NhanVien> findByNgayNghiViecIsNull(); // Nhân viên đang làm việc
+    List<NhanVien> findByViTri_TenViTri(String tenViTri);
+
 }

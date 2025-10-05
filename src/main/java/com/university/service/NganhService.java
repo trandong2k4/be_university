@@ -1,83 +1,64 @@
 package com.university.service;
 
-import com.university.dto.reponse.NganhResponse;
-import com.university.dto.request.NganhRequest;
-import com.university.entity.Khoa;
+import com.university.dto.reponse.NganhResponseDTO;
+import com.university.dto.request.NganhRequestDTO;
 import com.university.entity.Nganh;
+import com.university.exception.DuplicateRequestException;
+import com.university.exception.ResourceNotFoundException;
 import com.university.mapper.NganhMapper;
-import com.university.repository.KhoaRepository;
 import com.university.repository.NganhRepository;
-import jakarta.persistence.EntityNotFoundException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class NganhService {
 
     private final NganhRepository nganhRepository;
-    private final KhoaRepository khoaRepository;
     private final NganhMapper nganhMapper;
 
-    public NganhService(NganhRepository nganhRepository, KhoaRepository khoaRepository,
-            NganhMapper nganhMapper) {
-        this.nganhRepository = nganhRepository;
-        this.khoaRepository = khoaRepository;
-        this.nganhMapper = nganhMapper;
+    public NganhResponseDTO create(NganhRequestDTO dto) {
+        if (nganhRepository.findByMaNganh(dto.getMaNganh()).isPresent()) {
+            throw new DuplicateRequestException("Mã ngành đã tồn tại");
+        }
+        Nganh nganh = nganhMapper.toEntity(dto);
+        return nganhMapper.toResponseDTO(nganhRepository.save(nganh));
     }
 
-    public NganhResponse create(NganhRequest request) {
-        Khoa khoa = khoaRepository.findById(request.getKhoaId())
-                .orElseThrow(() -> new EntityNotFoundException("Khoa không tồn tại"));
-        Nganh nganh = nganhMapper.toEntity(request, khoa);
-        nganh = nganhRepository.save(nganh);
-        return nganhMapper.toResponse(nganh);
-    }
-
-    public List<NganhResponse> getAll() {
+    public List<NganhResponseDTO> getAllNganhResponseDTO() {
         return nganhRepository.findAll().stream()
-                .map(nganhMapper::toResponse)
+                .map(nganhMapper::toResponseDTO)
                 .collect(Collectors.toList());
     }
 
-    public NganhResponse getById(UUID id) {
+    public NganhResponseDTO getById(UUID id) {
         Nganh nganh = nganhRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Ngành học không tồn tại"));
-        return nganhMapper.toResponse(nganh);
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy ngành"));
+        return nganhMapper.toResponseDTO(nganh);
     }
 
-    public NganhResponse update(UUID id, NganhRequest request) {
-        Nganh nganh = nganhRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Ngành học không tồn tại"));
-        Khoa khoa = khoaRepository.findById(request.getKhoaId())
-                .orElseThrow(() -> new EntityNotFoundException("Khoa không tồn tại"));
-        nganhMapper.updateEntity(nganh, request, khoa);
-        nganh = nganhRepository.save(nganh);
-        return nganhMapper.toResponse(nganh);
+    public List<NganhResponseDTO> search(String keyword) {
+        return nganhRepository.searchByTenNganh(keyword).stream()
+                .map(nganhMapper::toResponseDTO)
+                .collect(Collectors.toList());
+    }
+
+    public NganhResponseDTO update(UUID id, NganhRequestDTO dto) {
+        Nganh existing = nganhRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy ngành"));
+
+        existing.setMaNganh(dto.getMaNganh());
+        existing.setTenNganh(dto.getTenNganh());
+        existing.setKhoa(dto.getKhoa());
+
+        return nganhMapper.toResponseDTO(nganhRepository.save(existing));
     }
 
     public void delete(UUID id) {
-        if (!nganhRepository.existsById(id)) {
-            throw new EntityNotFoundException("Ngành học không tồn tại");
-        }
         nganhRepository.deleteById(id);
     }
-
-    public Page<NganhResponse> getByKhoa(UUID khoaId, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("tenNganh").ascending());
-        Page<Nganh> pageResult = nganhRepository.findByKhoaId(khoaId, pageable);
-        return pageResult.map(nganhMapper::toResponse);
-    }
-
-    public List<Nganh> search(String tenNganh, String tenKhoa) {
-        return nganhRepository.search(
-                tenNganh != null && !tenNganh.isBlank() ? tenNganh : null,
-                tenKhoa != null && !tenKhoa.isBlank() ? tenKhoa : null);
-    }
-
 }

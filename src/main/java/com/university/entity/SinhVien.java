@@ -1,28 +1,41 @@
 package com.university.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import java.util.UUID;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "sinhviens")
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class SinhVien {
 
     @Id
+    @GeneratedValue(generator = "UUID")
     private UUID id;
 
-    @Column(name = "ma_sinh_vien", unique = true, nullable = false, length = 10)
+    @Column(name = "ma_sinh_vien", length = 10, unique = true, nullable = false)
     private String maSinhVien;
 
+    @Column(name = "ho_ten", length = 50)
     private String hoTen;
 
-    @Column(unique = true, length = 50)
+    @Column(length = 50, unique = true)
     private String email;
 
-    @Column(unique = true, length = 10)
+    @Column(name = "so_dien_thoai", length = 10, unique = true)
     private String soDienThoai;
 
+    @Column(name = "ngay_nhap_hoc")
     private LocalDate ngayNhapHoc;
+
+    @Column(name = "ngay_tot_nghiep")
     private LocalDate ngayTotNghiep;
 
     @ManyToOne
@@ -35,88 +48,4 @@ public class SinhVien {
 
     @OneToOne(mappedBy = "sinhVien", cascade = CascadeType.ALL)
     private ChiTietSinhVien chiTiet;
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getMaSinhVien() {
-        return maSinhVien;
-    }
-
-    public void setMaSinhVien(String maSinhVien) {
-        this.maSinhVien = maSinhVien;
-    }
-
-    public String getHoTen() {
-        return hoTen;
-    }
-
-    public void setHoTen(String hoTen) {
-        this.hoTen = hoTen;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getSoDienThoai() {
-        return soDienThoai;
-    }
-
-    public void setSoDienThoai(String soDienThoai) {
-        this.soDienThoai = soDienThoai;
-    }
-
-    public LocalDate getNgayNhapHoc() {
-        return ngayNhapHoc;
-    }
-
-    public void setNgayNhapHoc(LocalDate ngayNhapHoc) {
-        this.ngayNhapHoc = ngayNhapHoc;
-    }
-
-    public LocalDate getNgayTotNghiep() {
-        return ngayTotNghiep;
-    }
-
-    public void setNgayTotNghiep(LocalDate ngayTotNghiep) {
-        this.ngayTotNghiep = ngayTotNghiep;
-    }
-
-    public Nganh getNganh() {
-        return nganh;
-    }
-
-    public void setNganh(Nganh nganh) {
-        this.nganh = nganh;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public ChiTietSinhVien getChiTiet() {
-        return chiTiet;
-    }
-
-    public void setChiTiet(ChiTietSinhVien chiTiet) {
-        this.chiTiet = chiTiet;
-    }
-
-    public SinhVien() {
-    }
-
 }

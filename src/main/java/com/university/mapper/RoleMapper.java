@@ -2,25 +2,25 @@ package com.university.mapper;
 
 import org.springframework.stereotype.Component;
 
-import com.university.dto.reponse.RoleResponse;
-import com.university.dto.request.RoleRequest;
+import com.university.dto.reponse.RoleResponseDTO;
+import com.university.dto.request.RoleRequestDTO;
 import com.university.entity.Role;
 
 @Component
 public class RoleMapper {
 
-    public Role toEntity(RoleRequest dto) {
-        Role role = new Role();
-        role.setMaRole(dto.getMaRole());
-        role.setDescription(dto.getDescription());
-        return role;
+    public Role toEntity(RoleRequestDTO dto) {
+        return Role.builder()
+                .maRole(dto.getTenRole())
+                .description(dto.getMoTa())
+                .build();
     }
 
-    public RoleResponse toResponse(Role role) {
-        RoleResponse res = new RoleResponse();
-        res.setId(role.getId());
-        res.setMaRole(role.getMaRole());
-        res.setDescription(role.getDescription());
-        return res;
+    public RoleResponseDTO toResponseDTO(Role role) {
+        return RoleResponseDTO.builder()
+                .id(role.getId())
+                .tenRole(role.getMaRole())
+                .moTa(role.getDescription())
+                .build();
     }
 }

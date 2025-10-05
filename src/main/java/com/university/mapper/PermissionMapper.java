@@ -2,30 +2,25 @@ package com.university.mapper;
 
 import org.springframework.stereotype.Component;
 
-import com.university.dto.reponse.PermissionResponse;
-import com.university.dto.request.PermissionRequest;
+import com.university.dto.reponse.PermissionResponseDTO;
+import com.university.dto.request.PermissionRequestDTO;
 import com.university.entity.Permission;
 
 @Component
 public class PermissionMapper {
 
-    public Permission toEntity(PermissionRequest dto) {
-        Permission permission = new Permission();
-        permission.setMaPermission(dto.getMaPermission());
-        permission.setDescription(dto.getDescription());
-        return permission;
+    public Permission toEntity(PermissionRequestDTO dto) {
+        return Permission.builder()
+                .maPermission(dto.getTenPermission())
+                .description(dto.getMoTa())
+                .build();
     }
 
-    public void updateEntity(Permission permission, PermissionRequest dto) {
-        permission.setMaPermission(dto.getMaPermission());
-        permission.setDescription(dto.getDescription());
-    }
-
-    public PermissionResponse toResponse(Permission permission) {
-        PermissionResponse response = new PermissionResponse();
-        response.setId(permission.getId());
-        response.setMaPermission(permission.getMaPermission());
-        response.setDescription(permission.getDescription());
-        return response;
+    public PermissionResponseDTO toResponseDTO(Permission permission) {
+        return PermissionResponseDTO.builder()
+                .id(permission.getId())
+                .tenPermission(permission.getMaPermission())
+                .moTa(permission.getDescription())
+                .build();
     }
 }

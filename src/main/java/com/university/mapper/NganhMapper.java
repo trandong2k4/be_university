@@ -2,34 +2,27 @@ package com.university.mapper;
 
 import org.springframework.stereotype.Component;
 
-import com.university.dto.reponse.NganhResponse;
-import com.university.dto.request.NganhRequest;
-import com.university.entity.Khoa;
+import com.university.dto.reponse.NganhResponseDTO;
+import com.university.dto.request.NganhRequestDTO;
 import com.university.entity.Nganh;
 
 @Component
 public class NganhMapper {
 
-    public Nganh toEntity(NganhRequest dto, Khoa khoa) {
-        Nganh nganh = new Nganh();
-        nganh.setMaNganh(dto.getMaNganh());
-        nganh.setTenNganh(dto.getTenNganh());
-        nganh.setKhoa(khoa);
-        return nganh;
+    public Nganh toEntity(NganhRequestDTO dto) {
+        return Nganh.builder()
+                .maNganh(dto.getMaNganh())
+                .tenNganh(dto.getTenNganh())
+                .khoa(dto.getKhoa())
+                .build();
     }
 
-    public void updateEntity(Nganh nganh, NganhRequest dto, Khoa khoa) {
-        nganh.setMaNganh(dto.getMaNganh());
-        nganh.setTenNganh(dto.getTenNganh());
-        nganh.setKhoa(khoa);
-    }
-
-    public NganhResponse toResponse(Nganh nganh) {
-        NganhResponse response = new NganhResponse();
-        response.setId(nganh.getId());
-        response.setMaNganh(nganh.getMaNganh());
-        response.setTenNganh(nganh.getTenNganh());
-        response.setTenKhoa(nganh.getKhoa().getTenKhoa());
-        return response;
+    public NganhResponseDTO toResponseDTO(Nganh nganh) {
+        return NganhResponseDTO.builder()
+                .id(nganh.getId())
+                .maNganh(nganh.getMaNganh())
+                .tenNganh(nganh.getTenNganh())
+                .khoa(nganh.getKhoa())
+                .build();
     }
 }

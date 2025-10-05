@@ -1,69 +1,66 @@
 package com.university.service;
 
-import com.university.dto.reponse.PhongHocResponse;
-import com.university.dto.request.PhongHocRequest;
+import com.university.dto.reponse.PhongHocResponseDTO;
+import com.university.dto.request.PhongHocRequestDTO;
 import com.university.entity.PhongHoc;
+import com.university.exception.DuplicateRequestException;
+import com.university.exception.ResourceNotFoundException;
 import com.university.mapper.PhongHocMapper;
 import com.university.repository.PhongHocRepository;
-import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class PhongHocService {
 
     private final PhongHocRepository phongHocRepository;
     private final PhongHocMapper phongHocMapper;
 
-    public PhongHocService(PhongHocRepository phongHocRepository, PhongHocMapper phongHocMapper) {
-        this.phongHocRepository = phongHocRepository;
-        this.phongHocMapper = phongHocMapper;
+    public PhongHocResponseDTO create(PhongHocRequestDTO dto) {
+        if (phongHocRepository.findByMaPhong(dto.getMaPhong()).isPresent()) {
+            throw new DuplicateRequestException("Mã phòng học đã tồn tại");
+        }
+        PhongHoc phong = phongHocMapper.toEntity(dto);
+        return phongHocMapper.toResponseDTO(phongHocRepository.save(phong));
     }
 
-    public PhongHocResponse create(PhongHocRequest request) {
-        PhongHoc phong = phongHocMapper.toEntity(request);
-        phong = phongHocRepository.save(phong);
-        return phongHocMapper.toResponse(phong);
-    }
-
-    public List<PhongHocResponse> getAll() {
+    public List<PhongHocResponseDTO> getAll() {
         return phongHocRepository.findAll().stream()
-                .map(phongHocMapper::toResponse)
+                .map(phongHocMapper::toResponseDTO)
                 .collect(Collectors.toList());
     }
 
-    public PhongHocResponse getById(UUID id) {
+    public PhongHocResponseDTO getById(UUID id) {
         PhongHoc phong = phongHocRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Phòng học không tồn tại"));
-        return phongHocMapper.toResponse(phong);
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy phòng học"));
+        return phongHocMapper.toResponseDTO(phong);
     }
 
-    public PhongHocResponse update(UUID id, PhongHocRequest request) {
-        PhongHoc phong = phongHocRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Phòng học không tồn tại"));
-        phongHocMapper.updateEntity(phong, request);
-        phong = phongHocRepository.save(phong);
-        return phongHocMapper.toResponse(phong);
+    public List<PhongHocResponseDTO> search(String keyword) {
+        return phongHocRepository.searchByTenPhong(keyword).stream()
+                .map(phongHocMapper::toResponseDTO)
+                .collect(Collectors.toList());
+    }
+
+    public PhongHocResponseDTO update(UUID id, PhongHocRequestDTO dto) {
+        PhongHoc existing = phongHocRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy phòng học"));
+
+        existing.setMaPhong(dto.getMaPhong());
+        existing.setTenPhong(dto.getTenPhong());
+        existing.setToaNha(dto.getToaNha());
+        existing.setTang(dto.getTang());
+        existing.setSucChua(dto.getSucChua());
+
+        return phongHocMapper.toResponseDTO(phongHocRepository.save(existing));
     }
 
     public void delete(UUID id) {
-        if (!phongHocRepository.existsById(id)) {
-            throw new EntityNotFoundException("Phòng học không tồn tại");
-        }
         phongHocRepository.deleteById(id);
-    }
-
-    public List<PhongHocResponse> searchByToaNha(String keyword) {
-        return phongHocRepository.findByToaNhaContainingIgnoreCase(keyword).stream()
-                .map(phongHocMapper::toResponse)
-                .collect(Collectors.toList());
-    }
-
-    public List<PhongHocResponse> filterByTangAndSucChua(Integer tang, Integer sucChua) {
-        List<PhongHoc> phongHocs = phongHocRepository.findByTangAndSucChuaGreaterThanEqual(tang, sucChua);
-        return phongHocs.stream().map(phongHocMapper::toResponse).collect(Collectors.toList());
     }
 }

@@ -1,19 +1,25 @@
 package com.university.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import java.util.UUID;
-import java.util.Set;
 
 @Entity
 @Table(name = "nganhs")
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Nganh {
 
     @Id
-    @GeneratedValue
-    @Column(name = "id", nullable = false, updatable = false, insertable = false)
+    @GeneratedValue(generator = "UUID")
     private UUID id;
 
-    @Column(name = "ma_nganh", unique = true, nullable = false, length = 10)
+    @Column(name = "ma_nganh", length = 10, unique = true, nullable = false)
     private String maNganh;
 
     @Column(name = "ten_nganh", length = 100)
@@ -22,50 +28,4 @@ public class Nganh {
     @ManyToOne
     @JoinColumn(name = "khoa_id", nullable = false)
     private Khoa khoa;
-
-    @OneToMany(mappedBy = "nganh")
-    private Set<SinhVien> sinhViens;
-
-    public Nganh() {
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getMaNganh() {
-        return maNganh;
-    }
-
-    public void setMaNganh(String maNganh) {
-        this.maNganh = maNganh;
-    }
-
-    public String getTenNganh() {
-        return tenNganh;
-    }
-
-    public void setTenNganh(String tenNganh) {
-        this.tenNganh = tenNganh;
-    }
-
-    public Khoa getKhoa() {
-        return khoa;
-    }
-
-    public void setKhoa(Khoa khoa) {
-        this.khoa = khoa;
-    }
-
-    public Set<SinhVien> getSinhViens() {
-        return sinhViens;
-    }
-
-    public void setSinhViens(Set<SinhVien> sinhViens) {
-        this.sinhViens = sinhViens;
-    }
 }

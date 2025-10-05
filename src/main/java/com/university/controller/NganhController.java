@@ -1,10 +1,11 @@
 package com.university.controller;
 
-import com.university.dto.reponse.NganhResponse;
-import com.university.dto.request.NganhRequest;
-import com.university.entity.Nganh;
+import com.university.dto.reponse.NganhResponseDTO;
+import com.university.dto.request.NganhRequestDTO;
 import com.university.service.NganhService;
-import org.springframework.data.domain.Page;
+
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,40 +15,34 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/nganhs")
+@RequiredArgsConstructor
 public class NganhController {
 
     private final NganhService nganhService;
 
-    public NganhController(NganhService nganhService) {
-        this.nganhService = nganhService;
-    }
-
     @PostMapping
-    public ResponseEntity<NganhResponse> create(@RequestBody NganhRequest request) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(nganhService.create(request));
-    }
-
-    @GetMapping
-    public ResponseEntity<List<NganhResponse>> getAll() {
-        return ResponseEntity.ok(nganhService.getAll());
-    }
-
-    @GetMapping("/search")
-    public ResponseEntity<List<Nganh>> searchNganhs(
-            @RequestParam(required = false) String tenNganh,
-            @RequestParam(required = false) String tenKhoa) {
-        List<Nganh> result = nganhService.search(tenNganh, tenKhoa);
-        return ResponseEntity.ok(result);
+    public ResponseEntity<NganhResponseDTO> create(@RequestBody @Valid NganhRequestDTO dto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(nganhService.create(dto));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<NganhResponse> getById(@PathVariable UUID id) {
+    public ResponseEntity<NganhResponseDTO> getById(@PathVariable UUID id) {
         return ResponseEntity.ok(nganhService.getById(id));
     }
 
+    @GetMapping
+    public ResponseEntity<List<NganhResponseDTO>> getAll() {
+        return ResponseEntity.ok(nganhService.getAllNganhResponseDTO());
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<NganhResponseDTO>> search(@RequestParam String keyword) {
+        return ResponseEntity.ok(nganhService.search(keyword));
+    }
+
     @PutMapping("/{id}")
-    public ResponseEntity<NganhResponse> update(@PathVariable UUID id, @RequestBody NganhRequest request) {
-        return ResponseEntity.ok(nganhService.update(id, request));
+    public ResponseEntity<NganhResponseDTO> update(@PathVariable UUID id, @RequestBody @Valid NganhRequestDTO dto) {
+        return ResponseEntity.ok(nganhService.update(id, dto));
     }
 
     @DeleteMapping("/{id}")
@@ -55,13 +50,4 @@ public class NganhController {
         nganhService.delete(id);
         return ResponseEntity.noContent().build();
     }
-
-    @GetMapping("/filter")
-    public ResponseEntity<Page<NganhResponse>> filterByKhoa(
-            @RequestParam UUID khoaId,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
-        return ResponseEntity.ok(nganhService.getByKhoa(khoaId, page, size));
-    }
-
 }

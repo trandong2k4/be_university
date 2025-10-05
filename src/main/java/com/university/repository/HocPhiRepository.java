@@ -2,20 +2,17 @@ package com.university.repository;
 
 import com.university.entity.HocPhi;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
 public interface HocPhiRepository extends JpaRepository<HocPhi, UUID> {
 
-    List<HocPhi> findByTrangThai(String trangThai);
-
-    List<HocPhi> findByKiHocId(UUID kiHocId);
+    @Query("SELECT h FROM HocPhi h WHERE LOWER(h.sinhVien.hoTen) LIKE LOWER(CONCAT('%', :keyword, '%'))")
+    List<HocPhi> searchByTenSinhVien(@Param("keyword") String keyword);
 
     List<HocPhi> findBySinhVienId(UUID sinhVienId);
 
-    List<HocPhi> findByHanThanhToanBefore(LocalDate date);
-
-    List<HocPhi> findByNgayThanhToanIsNullAndHanThanhToanBefore(LocalDate date); // trễ hạn chưa thanh toán
 }
