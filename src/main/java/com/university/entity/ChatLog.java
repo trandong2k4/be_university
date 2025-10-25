@@ -8,9 +8,11 @@ import java.util.UUID;
 @Entity
 @Table(name = "chat_logs")
 @Data
+@Getter
+@Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class ChatLog {
 
     @Id

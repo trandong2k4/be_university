@@ -11,6 +11,8 @@ import com.university.enums.ThuEnum;
 @Table(name = "buoihocs", uniqueConstraints = @UniqueConstraint(columnNames = { "ngay_Hoc", "gio_hoc_id",
         "lich_hoc_id" }))
 @Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
