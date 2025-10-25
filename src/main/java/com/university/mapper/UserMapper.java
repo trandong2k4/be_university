@@ -1,9 +1,5 @@
 package com.university.mapper;
 
-import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import org.springframework.stereotype.Component;
 
 import com.university.dto.reponse.UserResponseDTO;
@@ -24,13 +20,11 @@ public class UserMapper {
     }
 
     public UserResponseDTO toResponseDTO(User user) {
-        String fullName = Stream.of(user.getFirstName(), user.getLastName())
-                .filter(Objects::nonNull)
-                .collect(Collectors.joining(" "));
         return UserResponseDTO.builder()
                 .id(user.getId())
                 .username(user.getUsername())
-                .fullName(fullName)
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
                 .dateOfBirth(user.getDateOfBirth())
                 .build();
     }

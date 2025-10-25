@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -31,5 +33,6 @@ public class Khoa {
     private Truong truong;
 
     @OneToMany(mappedBy = "khoa", cascade = CascadeType.ALL)
+    @JsonIgnore
     private Set<Nganh> nganhs = new HashSet<>();
 }

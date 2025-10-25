@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -18,15 +17,18 @@ public interface SinhVienRepository extends JpaRepository<SinhVien, UUID> {
 
         Optional<SinhVien> findByMaSinhVien(String maSinhVien);
 
+        Optional<SinhVien> findByUser_Id(UUID userId);
+        
+
         @Query("SELECT COUNT(sv) FROM SinhVien sv WHERE sv.ngayTotNghiep IS NULL")
         long countByNgayTotNghiepIsNull();
 
         @Query("SELECT COUNT(sv) FROM SinhVien sv WHERE sv.ngayTotNghiep IS NOT NULL")
         long countByNgayTotNghiepIsNotNull();
 
-        @Query("SELECT sv.nganh.tenNganh, COUNT(sv) FROM SinhVien sv GROUP BY sv.nganh.tenNganh")
-        Map<String, Long> countByNganh();
+        @Query("SELECT n.tenNganh, COUNT(s.id) FROM SinhVien s JOIN s.nganh n WHERE s.nganh IS NOT NULL GROUP BY n.tenNganh")
+        List<Object[]> countByNganhRaw();
 
-        @Query("SELECT YEAR(sv.ngayNhapHoc), COUNT(sv) FROM SinhVien sv GROUP BY YEAR(sv.ngayNhapHoc)")
-        Map<Integer, Long> countByNamNhapHoc();
+        @Query("SELECT EXTRACT(YEAR FROM s.ngayNhapHoc), COUNT(s.id) FROM SinhVien s WHERE s.ngayNhapHoc IS NOT NULL GROUP BY EXTRACT(YEAR FROM s.ngayNhapHoc)")
+        List<Object[]> countByNamNhapHocRaw();
 }

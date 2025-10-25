@@ -39,12 +39,10 @@ public class NhanVien {
 
     @ManyToOne
     @JoinColumn(name = "vitri_id")
-    @JsonIgnore
     private ViTri viTri;
 
     @OneToOne
     @JoinColumn(name = "user_id", unique = true)
-    @JsonIgnore
     private User user;
 
 }

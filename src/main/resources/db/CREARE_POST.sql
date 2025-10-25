@@ -77,6 +77,7 @@ CREATE TABLE truongs
     nguoi_dai_dien varchar(100)
 );
 
+
 CREATE TABLE khoas
 (
     id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -206,25 +207,6 @@ CREATE TABLE phonghocs
     suc_chua int CHECK (suc_chua >= 0)
 );
 
-CREATE TABLE lichhocs
-(
-    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-    ngay_bat_dau date,
-    ngay_ket_thuc date,
-    phonghoc_id uuid NOT NULL REFERENCES phonghocs(id),
-    kihoc_id uuid NOT NULL REFERENCES kihocs(id),
-    monhoc_id uuid NOT NULL REFERENCES monhocs(id),
-    CONSTRAINT chk_lichhoc_date CHECK (ngay_ket_thuc IS NULL OR ngay_bat_dau IS NULL OR ngay_ket_thuc >= ngay_bat_dau)
-);
-
-CREATE TABLE dangky_lichhoc
-(
-    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-    lichhoc_id uuid NOT NULL REFERENCES lichhocs(id) ON DELETE CASCADE,
-    sinhvien_id uuid NOT NULL REFERENCES sinhviens(id) ON DELETE CASCADE,
-    CONSTRAINT uq_dangky_lichhoc UNIQUE (lichhoc_id, sinhvien_id)
-);
-
 -- =====================================================
 -- GIỜ HỌC / BUỔI HỌC
 -- =====================================================
@@ -238,14 +220,53 @@ CREATE TABLE giohocs
     CONSTRAINT chk_giohoc_time CHECK (thoi_gian_bat_dau IS NULL OR thoi_gian_ket_thuc IS NULL OR thoi_gian_ket_thuc > thoi_gian_bat_dau)
 );
 
+CREATE TABLE lophocphans
+(
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+    ma_lop_hoc_phan varchar(20) UNIQUE NOT NULL,
+    monhoc_id uuid NOT NULL REFERENCES monhocs(id) ON DELETE CASCADE,
+    kihoc_id uuid NOT NULL REFERENCES kihocs(id) ON DELETE CASCADE,
+    giang_vien_id uuid REFERENCES nhanviens(id),
+    so_luong_toi_da int CHECK (so_luong_toi_da > 0),
+    so_luong_hien_tai int DEFAULT 0,
+    trang_thai varchar(20) DEFAULT 'DANG_MO'
+    -- DANG_MO, DONG, HUY
+);
+
+
+CREATE TABLE lichhocs
+(
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+    ngay_bat_dau date,
+    ngay_ket_thuc date,
+    phonghoc_id uuid NOT NULL REFERENCES phonghocs(id),
+    kihoc_id uuid NOT NULL REFERENCES kihocs(id),
+    lophocphan_id uuid REFERENCES lophocphans(id) ON DELETE CASCADE,
+    CONSTRAINT chk_lichhoc_date CHECK (ngay_ket_thuc IS NULL OR ngay_bat_dau IS NULL OR ngay_ket_thuc >= ngay_bat_dau)
+);
+
+
+
 CREATE TABLE buoihocs
 (
     id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     ngay_hoc date,
     thu_trong_tuan thu_enum,
     giohoc_id uuid REFERENCES giohocs(id),
-    lichhoc_id uuid REFERENCES lichhocs(id)
+    lichhoc_id uuid REFERENCES lichhocs(id),
+    lophocphan_id uuid REFERENCES lophocphans(id)
 );
+
+
+CREATE TABLE dangky_lichhoc
+(
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+    lichhoc_id uuid NOT NULL REFERENCES lichhocs(id) ON DELETE CASCADE,
+    sinhvien_id uuid NOT NULL REFERENCES sinhviens(id) ON DELETE CASCADE,
+    CONSTRAINT uq_dangky_lichhoc UNIQUE (lichhoc_id, sinhvien_id)
+);
+
+
 
 -- =====================================================
 -- HỌC PHÍ / HỌC LẠI
@@ -300,7 +321,7 @@ CREATE TABLE baiviets
 CREATE TABLE ketquahoctaps
 (
     id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-    sinhvien_id uuid NOT NULL REFERENCES sinhviens(id) ON DELETE CASCADE,
+    sinhvien_id uuid NOT NULL REFERENCES sinhviens(id) ON DELETE CASCADE,   
     monhoc_id uuid NOT NULL REFERENCES monhocs(id) ON DELETE CASCADE,
     kihoc_id uuid NOT NULL REFERENCES kihocs(id) ON DELETE CASCADE,
     diem numeric(3,1) CHECK (diem >= 0 AND diem <= 10),
@@ -332,3 +353,6 @@ CREATE INDEX idx_nhanviens_sdt ON nhanviens(so_dien_thoai);
 CREATE INDEX idx_monhocs_ma ON monhocs(ma_mon_hoc);
 
 CREATE INDEX idx_users_username ON users(username);
+CREATE INDEX idx_users_userid ON users(id);
+CREATE INDEX idx_roles_marole ON roles(ma_role);
+CREATE INDEX idx_permissions_mapermission ON permissions(ma_permission);

@@ -35,7 +35,7 @@ public class Role {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "roles_permissions", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "permission_id"))
-    @JsonIgnoreProperties("roles") // tránh vòng lặp Role <-> Permission
+    @JsonIgnore
     private Set<Permission> permissions = new HashSet<>();
 
     @Override

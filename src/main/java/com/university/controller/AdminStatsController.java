@@ -18,6 +18,7 @@ public class AdminStatsController {
     private final MonHocRepository monHocRepository;
     private final BaiVietRepository baiVietRepository;
     private final UserRepository userRepository;
+    private final NhanVienRepository nhanVienRepository;
 
     @GetMapping("/stats")
     public AdminStatsResponse getStats() {
@@ -28,12 +29,25 @@ public class AdminStatsController {
         long monHocCount = monHocRepository.count();
         long baiVietCount = baiVietRepository.count();
         long userCount = userRepository.count();
+        long giangVienCount = nhanVienRepository.count();
+        // ======== Sửa tại đây =========
+        List<Object[]> rawNganh = sinhVienRepository.countByNganhRaw();
+        Map<String, Long> sinhVienTheoNganh = new LinkedHashMap<>();
+        for (Object[] row : rawNganh) {
+            sinhVienTheoNganh.put(
+                    (String) row[0], // tên ngành
+                    ((Number) row[1]).longValue() // số lượng
+            );
+        }
 
-        Map<String, Long> sinhVienTheoNganh = sinhVienRepository.countByNganh();
-        Map<Integer, Long> sinhVienTheoNamNhapHoc = sinhVienRepository.countByNamNhapHoc();
-
-        // Nếu chưa có giảng viên riêng thì set tạm = 0
-        long giangVienCount = 0L;
+        List<Object[]> rawNam = sinhVienRepository.countByNamNhapHocRaw();
+        Map<Integer, Long> sinhVienTheoNamNhapHoc = new LinkedHashMap<>();
+        for (Object[] row : rawNam) {
+            sinhVienTheoNamNhapHoc.put(
+                    ((Number) row[0]).intValue(), // năm nhập học
+                    ((Number) row[1]).longValue() // số lượng
+            );
+        }
 
         return new AdminStatsResponse(
                 sinhVienCount,
@@ -55,7 +69,8 @@ public class AdminStatsController {
 
         for (int i = 1; i <= 4; i++) {
             labels.add("Tuần " + i);
-            values.add((long) (Math.random() * 50 + 10));
+            values.add((long) sinhVienRepository.countByNgayTotNghiepIsNull()
+                    - sinhVienRepository.countByNgayTotNghiepIsNotNull());
         }
 
         return new WeeklyStatDTO(labels, values);

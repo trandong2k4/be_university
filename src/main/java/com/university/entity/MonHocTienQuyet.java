@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "monhoc_tienquyet", uniqueConstraints = {
         @UniqueConstraint(columnNames = { "monhoc_id", "monhoc_tienquyet_id" })
@@ -20,6 +22,7 @@ public class MonHocTienQuyet {
 
     @ManyToOne
     @JoinColumn(name = "monhoc_id", nullable = false)
+    @JsonIgnore
     private MonHoc monHoc;
 
     @ManyToOne

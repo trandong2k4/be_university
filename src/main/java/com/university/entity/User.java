@@ -1,5 +1,6 @@
 package com.university.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
@@ -34,7 +35,7 @@ public class User {
 
   @ManyToMany(fetch = FetchType.LAZY)
   @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-  @JsonIgnoreProperties("users") // tránh vòng lặp JSON
+  @JsonIgnore
   private Set<Role> roles = new HashSet<>();
 
   // equals / hashCode chỉ dùng id

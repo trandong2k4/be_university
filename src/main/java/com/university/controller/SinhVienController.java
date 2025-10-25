@@ -30,6 +30,12 @@ public class SinhVienController {
         return ResponseEntity.ok(sinhVienService.getById(id));
     }
 
+    // ✅ GET /api/sinhviens/by-user/{userId}
+    @GetMapping("/by-user/{userId}")
+    public ResponseEntity<SinhVienResponseDTO> getByUserId(@PathVariable UUID userId) {
+        return ResponseEntity.ok(sinhVienService.findByUserId(userId));
+    }
+
     // 🔹 Tìm kiếm theo từ khóa
     @GetMapping("/search")
     public ResponseEntity<List<SinhVienResponseDTO>> search(@RequestParam String keyword) {

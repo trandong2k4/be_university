@@ -16,4 +16,5 @@ public interface RoleRepository extends JpaRepository<Role, UUID> {
     List<Role> searchByMaRole(@Param("keyword") String keyword);
 
     Optional<Role> findByMaRole(String tenRole);
+
 }

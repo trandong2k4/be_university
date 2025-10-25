@@ -6,8 +6,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.3.4</version>
-		<!-- <version>3.5.5</version> -->
+		<version>3.5.5</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.university</groupId>
@@ -50,18 +49,19 @@
 
 		</dependency>
 
-		<!-- <dependency>
-			<groupId>org.springframework.ai</groupId>
-			<artifactId>spring-ai-openai-spring-boot-starter</artifactId>
-			<version>1.0.0-M2</version>
-		</dependency> -->
-
 		<!-- thuvien hotro chat -->
 		<dependency>
 			<groupId>dev.langchain4j</groupId>
 			<artifactId>langchain4j</artifactId>
 			<version>0.33.0</version>
 		</dependency>
+
+		<dependency>
+			<groupId>dev.langchain4j</groupId>
+			<artifactId>langchain4j-open-ai</artifactId>
+			<version>0.33.0</version>
+		</dependency>
+
 
 		<dependency>
 			<groupId>org.json</groupId>

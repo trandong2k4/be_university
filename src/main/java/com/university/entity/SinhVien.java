@@ -6,6 +6,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.util.UUID;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.time.LocalDate;
 
 @Entity
@@ -44,8 +47,10 @@ public class SinhVien {
 
     @OneToOne
     @JoinColumn(name = "user_id", unique = true, nullable = false)
+    @JsonIgnore
     private User user;
 
     @OneToOne(mappedBy = "sinhVien", cascade = CascadeType.ALL)
+    @JsonIgnore
     private ChiTietSinhVien chiTiet;
 }

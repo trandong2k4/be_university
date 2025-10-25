@@ -2,11 +2,15 @@ package com.university.service;
 
 import com.university.dto.reponse.NganhResponseDTO;
 import com.university.dto.request.NganhRequestDTO;
+import com.university.entity.Khoa;
 import com.university.entity.Nganh;
 import com.university.exception.DuplicateRequestException;
 import com.university.exception.ResourceNotFoundException;
 import com.university.mapper.NganhMapper;
+import com.university.repository.KhoaRepository;
 import com.university.repository.NganhRepository;
+
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
@@ -20,6 +24,7 @@ public class NganhService {
 
     private final NganhRepository nganhRepository;
     private final NganhMapper nganhMapper;
+    private final KhoaRepository khoaRepository;
 
     public NganhResponseDTO create(NganhRequestDTO dto) {
         if (nganhRepository.findByMaNganh(dto.getMaNganh()).isPresent()) {
@@ -50,10 +55,12 @@ public class NganhService {
     public NganhResponseDTO update(UUID id, NganhRequestDTO dto) {
         Nganh existing = nganhRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy ngành"));
+        Khoa khoa = khoaRepository.findById(dto.getKhoaId())
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy khoa" + dto.getKhoaId()));
 
         existing.setMaNganh(dto.getMaNganh());
         existing.setTenNganh(dto.getTenNganh());
-        existing.setKhoa(dto.getKhoa());
+        existing.setKhoa(khoa);
 
         return nganhMapper.toResponseDTO(nganhRepository.save(existing));
     }

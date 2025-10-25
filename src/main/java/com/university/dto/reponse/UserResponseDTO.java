@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 public class UserResponseDTO {
     private UUID id;
     private String username;
-    private String fullName;
+    private String firstName;
+    private String lastName;
     private LocalDate dateOfBirth;
 }

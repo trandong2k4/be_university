@@ -1,7 +1,6 @@
 package com.university.service;
 
 import com.university.dto.reponse.LichHocResponseDTO;
-import com.university.dto.reponse.TruongResponseDTO;
 import com.university.dto.request.LichHocRequestDTO;
 import com.university.entity.KiHoc;
 import com.university.entity.LichHoc;

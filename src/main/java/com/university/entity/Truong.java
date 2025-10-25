@@ -8,6 +8,9 @@ import lombok.NoArgsConstructor;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.time.LocalDate;
 
 @Entity
@@ -52,5 +55,6 @@ public class Truong {
     private String nguoiDaiDien;
 
     @OneToMany(mappedBy = "truong", cascade = CascadeType.ALL)
+    @JsonIgnore
     private Set<Khoa> khoas = new HashSet<>();
 }

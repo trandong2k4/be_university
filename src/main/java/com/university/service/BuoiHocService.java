@@ -1,7 +1,6 @@
 package com.university.service;
 
 import com.university.dto.reponse.BuoiHocResponseDTO;
-import com.university.dto.reponse.TruongResponseDTO;
 import com.university.dto.request.BuoiHocRequestDTO;
 import com.university.entity.BuoiHoc;
 import com.university.entity.GioHoc;
@@ -11,6 +10,8 @@ import com.university.mapper.BuoiHocMapper;
 import com.university.repository.BuoiHocRepository;
 import com.university.repository.GioHocRepository;
 import com.university.repository.LichHocRepository;
+
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
@@ -39,6 +40,7 @@ public class BuoiHocService {
                 return buoiHocMapper.toResponseDTO(buoiHocRepository.save(buoiHoc));
         }
 
+        @Transactional
         public List<BuoiHocResponseDTO> getAll() {
                 return buoiHocRepository.findAll().stream()
                                 .map(buoiHocMapper::toResponseDTO)

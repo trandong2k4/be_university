@@ -1,7 +1,6 @@
 package com.university.controller;
 
 import com.university.dto.reponse.BuoiHocResponseDTO;
-import com.university.dto.reponse.RoleResponseDTO;
 import com.university.dto.request.BuoiHocRequestDTO;
 import com.university.service.BuoiHocService;
 

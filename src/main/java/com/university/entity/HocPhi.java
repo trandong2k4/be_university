@@ -11,9 +11,7 @@ import java.util.UUID;
 import com.university.enums.HocPhiEnum;
 
 @Entity
-@Table(name = "hocphis", uniqueConstraints = {
-        @UniqueConstraint(columnNames = { "sinhvien_id", "kihoc_id" })
-})
+@Table(name = "hocphis", uniqueConstraints = @UniqueConstraint(columnNames = { "sinh_vien_id", "ki_hoc_id" }))
 @Data
 @Builder
 @NoArgsConstructor

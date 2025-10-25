@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import com.university.dto.reponse.ChiTietSinhVienResponseDTO;
-import com.university.dto.reponse.TruongResponseDTO;
 import com.university.dto.request.ChiTietSinhVienRequestDTO;
 import com.university.entity.ChiTietSinhVien;
 import com.university.entity.SinhVien;
@@ -32,6 +31,14 @@ public class ChiTietSinhVienService {
 
         ChiTietSinhVien ct = chiTietSinhVienMapper.toEntity(dto, sv);
         return chiTietSinhVienMapper.toResponseDTO(chiTietSinhVienRepository.save(ct));
+    }
+
+    public ChiTietSinhVienResponseDTO findByUserId(UUID userId) {
+        ChiTietSinhVien ct = chiTietSinhVienRepository.findBySinhVien_User_Id(userId)
+                .orElseThrow(
+                        () -> new ResourceNotFoundException("Không tìm thấy chi tiết sinh viên của userId: " + userId));
+
+        return chiTietSinhVienMapper.toResponseDTO(ct);
     }
 
     public List<ChiTietSinhVienResponseDTO> getAll() {

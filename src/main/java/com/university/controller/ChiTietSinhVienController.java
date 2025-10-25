@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.university.dto.reponse.ChiTietSinhVienResponseDTO;
-import com.university.dto.reponse.RoleResponseDTO;
 import com.university.dto.request.ChiTietSinhVienRequestDTO;
 import com.university.service.ChiTietSinhVienService;
 
@@ -38,6 +37,11 @@ public class ChiTietSinhVienController {
     @GetMapping
     public ResponseEntity<List<ChiTietSinhVienResponseDTO>> getAll() {
         return ResponseEntity.ok(chiTietSinhVienService.getAll());
+    }
+
+    @GetMapping("/by-user/{userId}")
+    public ResponseEntity<ChiTietSinhVienResponseDTO> getByUserId(@PathVariable UUID userId) {
+        return ResponseEntity.ok(chiTietSinhVienService.findByUserId(userId));
     }
 
     @GetMapping("/{id}")

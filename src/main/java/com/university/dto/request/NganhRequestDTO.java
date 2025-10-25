@@ -1,6 +1,8 @@
 package com.university.dto.request;
 
-import com.university.entity.Khoa;
+import java.util.UUID;
+
+import org.jetbrains.annotations.NotNull;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -11,6 +13,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class NganhRequestDTO {
+    @NotNull
+    private UUID id;
 
     @NotBlank(message = "Mã ngành không được để trống")
     private String maNganh;
@@ -18,5 +22,5 @@ public class NganhRequestDTO {
     @NotBlank(message = "Tên ngành không được để trống")
     private String tenNganh;
 
-    private Khoa khoa;
+    private UUID khoaId;
 }

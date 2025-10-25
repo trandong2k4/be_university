@@ -42,6 +42,6 @@ public class ChiTietSinhVien {
     private String sdtNguoiThan;
 
     @OneToOne
-    @JoinColumn(name = "sinhvien_id", nullable = false)
+    @JoinColumn(name = "sinh_vien_id", nullable = false)
     private SinhVien sinhVien;
 }

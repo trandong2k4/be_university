@@ -4,10 +4,11 @@ import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDate;
 import java.util.UUID;
+
 import com.university.enums.ThuEnum;
 
 @Entity
-@Table(name = "buoihocs", uniqueConstraints = @UniqueConstraint(columnNames = { "ngayHoc", "gio_hoc_id",
+@Table(name = "buoihocs", uniqueConstraints = @UniqueConstraint(columnNames = { "ngay_Hoc", "gio_hoc_id",
         "lich_hoc_id" }))
 @Data
 @Builder
