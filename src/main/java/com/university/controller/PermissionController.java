@@ -1,7 +1,6 @@
 package com.university.controller;
 
 import com.university.dto.reponse.PermissionResponseDTO;
-import com.university.dto.reponse.RoleResponseDTO;
 import com.university.dto.request.PermissionRequestDTO;
 import com.university.service.PermissionService;
 import jakarta.validation.Valid;

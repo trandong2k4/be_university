@@ -7,8 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class WeeklyStatDTO {
     private List<String> labels; // ["Tuần 1", "Tuần 2", ...]
     private List<Long> values; // [12, 18, 25, ...]
