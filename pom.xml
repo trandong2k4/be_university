@@ -77,12 +77,13 @@
 			<scope>runtime</scope>
 		</dependency>
 
-		<!-- SQL Driver (dùng cho SQL server) 
+		<!-- SQL Driver (dùng cho SQL server) -->
 		<dependency>
 			<groupId>com.microsoft.sqlserver</groupId>
 			<artifactId>mssql-jdbc</artifactId>
+			<version>12.6.1.jre11</version> <!-- Bạn có thể dùng phiên bản mới nhất -->
 			<scope>runtime</scope>
-		</dependency> -->
+		</dependency>
 
 		<!-- Lombok -->
 		<dependency>

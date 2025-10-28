@@ -1,17 +1,17 @@
-2025-10-25T15:03:31.485+07:00  INFO 24252 --- [main] com.university.ManagementApplication     : Starting ManagementApplication using Java 21.0.8 with PID 24252 (D:\DTU\LAPTRINH\CS_445 DOAN CHUYEN NGANH TICH HOP\ums\ums-backend\target\classes started by Nguye in D:\DTU\LAPTRINH\CS_445 DOAN CHUYEN NGANH TICH HOP\ums\ums-backend)
-2025-10-25T15:03:31.486+07:00 DEBUG 24252 --- [main] com.university.ManagementApplication     : Running with Spring Boot v3.5.5, Spring v6.2.10
-2025-10-25T15:03:31.486+07:00  INFO 24252 --- [main] com.university.ManagementApplication     : No active profile set, falling back to 1 default profile: "default"
-2025-10-25T15:03:32.225+07:00  INFO 24252 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2025-10-25T15:03:32.337+07:00  INFO 24252 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 103 ms. Found 24 JPA repository interfaces.
-2025-10-25T15:03:32.819+07:00  INFO 24252 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
-2025-10-25T15:03:32.889+07:00  INFO 24252 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1358 ms
-2025-10-25T15:03:33.053+07:00  INFO 24252 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2025-10-25T15:03:33.115+07:00  INFO 24252 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.26.Final
-2025-10-25T15:03:33.151+07:00  INFO 24252 --- [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2025-10-25T15:03:33.442+07:00  INFO 24252 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2025-10-25T15:03:35.629+07:00  INFO 24252 --- [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@1530d0f2
-2025-10-25T15:03:35.629+07:00  INFO 24252 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2025-10-25T15:03:36.807+07:00  INFO 24252 --- [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+2025-10-28T09:53:10.167+07:00  INFO 8960 --- [main] com.university.ManagementApplication     : Starting ManagementApplication using Java 21.0.8 with PID 8960 (D:\DTU\LAPTRINH\CS_445 DOAN CHUYEN NGANH TICH HOP\ums\ums-backend\target\classes started by Nguye in D:\DTU\LAPTRINH\CS_445 DOAN CHUYEN NGANH TICH HOP\ums\ums-backend)
+2025-10-28T09:53:10.172+07:00 DEBUG 8960 --- [main] com.university.ManagementApplication     : Running with Spring Boot v3.5.5, Spring v6.2.10
+2025-10-28T09:53:10.173+07:00  INFO 8960 --- [main] com.university.ManagementApplication     : No active profile set, falling back to 1 default profile: "default"
+2025-10-28T09:53:10.900+07:00  INFO 8960 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-10-28T09:53:11.045+07:00  INFO 8960 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 133 ms. Found 24 JPA repository interfaces.
+2025-10-28T09:53:11.533+07:00  INFO 8960 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-10-28T09:53:11.621+07:00  INFO 8960 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1406 ms
+2025-10-28T09:53:11.780+07:00  INFO 8960 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-10-28T09:53:11.841+07:00  INFO 8960 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.26.Final
+2025-10-28T09:53:11.876+07:00  INFO 8960 --- [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-10-28T09:53:12.152+07:00  INFO 8960 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-10-28T09:53:14.501+07:00  INFO 8960 --- [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@661db63e
+2025-10-28T09:53:14.502+07:00  INFO 8960 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-10-28T09:53:15.605+07:00  INFO 8960 --- [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
 	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
 	Database driver: undefined/unknown
 	Database version: 17.6
@@ -19,11 +19,192 @@
 	Isolation level: undefined/unknown
 	Minimum pool size: undefined/unknown
 	Maximum pool size: undefined/unknown
-2025-10-25T15:03:37.879+07:00  INFO 24252 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2025-10-25T15:03:38.100+07:00  INFO 24252 --- [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
-2025-10-25T15:03:40.130+07:00  INFO 24252 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
-2025-10-25T15:03:40.138+07:00  INFO 24252 --- [main] com.university.ManagementApplication     : Started ManagementApplication in 9.081 seconds (process running for 9.377)
-2025-10-25T15:22:56.062+07:00  INFO 24252 --- [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
-2025-10-25T15:22:56.067+07:00  INFO 24252 --- [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
-2025-10-25T15:22:56.074+07:00  INFO 24252 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2025-10-25T15:22:58.117+07:00  INFO 24252 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-10-28T09:53:16.642+07:00  INFO 8960 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-10-28T09:53:16.847+07:00  INFO 8960 --- [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-10-28T09:53:18.816+07:00  INFO 8960 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-10-28T09:53:18.821+07:00  INFO 8960 --- [main] com.university.ManagementApplication     : Started ManagementApplication in 9.07 seconds (process running for 9.374)
+2025-10-28T09:53:25.854+07:00  INFO 8960 --- [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-10-28T09:53:25.858+07:00  INFO 8960 --- [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-10-28T09:53:25.866+07:00  INFO 8960 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-10-28T09:53:27.774+07:00  INFO 8960 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-10-28T09:54:59.713+07:00  INFO 26208 --- [main] com.university.ManagementApplication     : Starting ManagementApplication using Java 21.0.8 with PID 26208 (D:\DTU\LAPTRINH\CS_445 DOAN CHUYEN NGANH TICH HOP\ums\ums-backend\target\classes started by Nguye in D:\DTU\LAPTRINH\CS_445 DOAN CHUYEN NGANH TICH HOP\ums\ums-backend)
+2025-10-28T09:54:59.714+07:00 DEBUG 26208 --- [main] com.university.ManagementApplication     : Running with Spring Boot v3.5.5, Spring v6.2.10
+2025-10-28T09:54:59.715+07:00  INFO 26208 --- [main] com.university.ManagementApplication     : No active profile set, falling back to 1 default profile: "default"
+2025-10-28T09:55:00.298+07:00  INFO 26208 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-10-28T09:55:00.378+07:00  INFO 26208 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 81 ms. Found 24 JPA repository interfaces.
+2025-10-28T09:55:00.772+07:00  INFO 26208 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-10-28T09:55:00.818+07:00  INFO 26208 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1076 ms
+2025-10-28T09:55:00.987+07:00  INFO 26208 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-10-28T09:55:01.030+07:00  INFO 26208 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.26.Final
+2025-10-28T09:55:01.048+07:00  INFO 26208 --- [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-10-28T09:55:01.245+07:00  INFO 26208 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-10-28T09:55:02.679+07:00  INFO 26208 --- [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: cd284570-2e0b-457d-b59f-58962ef93a2b
+2025-10-28T09:55:02.680+07:00  INFO 26208 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-10-28T09:55:03.279+07:00  INFO 26208 --- [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 16.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-10-28T09:55:04.210+07:00  INFO 26208 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-10-28T09:55:04.380+07:00  INFO 26208 --- [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-10-28T09:55:06.138+07:00  INFO 26208 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-10-28T09:55:06.144+07:00  INFO 26208 --- [main] com.university.ManagementApplication     : Started ManagementApplication in 6.769 seconds (process running for 6.997)
+2025-10-28T09:55:37.019+07:00  INFO 26208 --- [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-10-28T09:55:37.019+07:00  INFO 26208 --- [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-10-28T09:55:37.032+07:00  INFO 26208 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-10-28T09:55:37.032+07:00  INFO 26208 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-10-28T12:36:52.131+07:00  INFO 4252 --- [main] com.university.ManagementApplication     : Starting ManagementApplication using Java 21.0.8 with PID 4252 (D:\DTU\LAPTRINH\CS_445 DOAN CHUYEN NGANH TICH HOP\ums\ums-backend\target\classes started by Nguye in D:\DTU\LAPTRINH\CS_445 DOAN CHUYEN NGANH TICH HOP\ums\ums-backend)
+2025-10-28T12:36:52.132+07:00 DEBUG 4252 --- [main] com.university.ManagementApplication     : Running with Spring Boot v3.5.5, Spring v6.2.10
+2025-10-28T12:36:52.134+07:00  INFO 4252 --- [main] com.university.ManagementApplication     : No active profile set, falling back to 1 default profile: "default"
+2025-10-28T12:36:52.963+07:00  INFO 4252 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-10-28T12:36:53.073+07:00  INFO 4252 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 108 ms. Found 24 JPA repository interfaces.
+2025-10-28T12:36:53.581+07:00  INFO 4252 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-10-28T12:36:53.651+07:00  INFO 4252 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1476 ms
+2025-10-28T12:36:53.845+07:00  INFO 4252 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-10-28T12:36:53.909+07:00  INFO 4252 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.26.Final
+2025-10-28T12:36:53.944+07:00  INFO 4252 --- [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-10-28T12:36:54.225+07:00  INFO 4252 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-10-28T12:36:55.231+07:00  INFO 4252 --- [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: 04213e56-ba28-4655-987c-4904304b6f2f
+2025-10-28T12:36:55.234+07:00  INFO 4252 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-10-28T12:36:55.689+07:00  INFO 4252 --- [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 16.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-10-28T12:36:56.793+07:00  INFO 4252 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-10-28T12:36:57.004+07:00  INFO 4252 --- [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-10-28T12:36:59.035+07:00  INFO 4252 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-10-28T12:36:59.044+07:00  INFO 4252 --- [main] com.university.ManagementApplication     : Started ManagementApplication in 7.397 seconds (process running for 7.798)
+2025-10-28T12:37:25.902+07:00  INFO 4252 --- [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-10-28T12:37:25.902+07:00  INFO 4252 --- [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-10-28T12:37:25.923+07:00  INFO 4252 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-10-28T12:37:25.929+07:00  INFO 4252 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-10-28T12:37:56.595+07:00  INFO 8844 --- [main] com.university.ManagementApplication     : Starting ManagementApplication using Java 21.0.8 with PID 8844 (D:\DTU\LAPTRINH\CS_445 DOAN CHUYEN NGANH TICH HOP\ums\ums-backend\target\classes started by Nguye in D:\DTU\LAPTRINH\CS_445 DOAN CHUYEN NGANH TICH HOP\ums\ums-backend)
+2025-10-28T12:37:56.596+07:00 DEBUG 8844 --- [main] com.university.ManagementApplication     : Running with Spring Boot v3.5.5, Spring v6.2.10
+2025-10-28T12:37:56.597+07:00  INFO 8844 --- [main] com.university.ManagementApplication     : No active profile set, falling back to 1 default profile: "default"
+2025-10-28T12:37:57.184+07:00  INFO 8844 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-10-28T12:37:57.294+07:00  INFO 8844 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 98 ms. Found 24 JPA repository interfaces.
+2025-10-28T12:37:57.730+07:00  INFO 8844 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-10-28T12:37:57.786+07:00  INFO 8844 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1158 ms
+2025-10-28T12:37:57.844+07:00  WARN 8844 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Failed to initialize dependency 'dataSourceScriptDatabaseInitializer' of LoadTimeWeaverAware bean 'entityManagerFactory': Error creating bean with name 'dataSourceScriptDatabaseInitializer' defined in class path resource [org/springframework/boot/autoconfigure/sql/init/DataSourceInitializationConfiguration.class]: Unsatisfied dependency expressed through method 'dataSourceScriptDatabaseInitializer' parameter 0: Error creating bean with name 'dataSource' defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Hikari.class]: Failed to instantiate [com.zaxxer.hikari.HikariDataSource]: Factory method 'dataSource' threw exception with message: Cannot load driver class: org.postgresql.Driver
+2025-10-28T12:37:57.918+07:00  INFO 8844 --- [main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-10-28T12:37:57.934+07:00 ERROR 8844 --- [main] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Failed to initialize dependency 'dataSourceScriptDatabaseInitializer' of LoadTimeWeaverAware bean 'entityManagerFactory': Error creating bean with name 'dataSourceScriptDatabaseInitializer' defined in class path resource [org/springframework/boot/autoconfigure/sql/init/DataSourceInitializationConfiguration.class]: Unsatisfied dependency expressed through method 'dataSourceScriptDatabaseInitializer' parameter 0: Error creating bean with name 'dataSource' defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Hikari.class]: Failed to instantiate [com.zaxxer.hikari.HikariDataSource]: Factory method 'dataSource' threw exception with message: Cannot load driver class: org.postgresql.Driver
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:328) ~[spring-beans-6.2.10.jar:6.2.10]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:207) ~[spring-beans-6.2.10.jar:6.2.10]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:970) ~[spring-context-6.2.10.jar:6.2.10]
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'dataSourceScriptDatabaseInitializer' defined in class path resource [org/springframework/boot/autoconfigure/sql/init/DataSourceInitializationConfiguration.class]: Unsatisfied dependency expressed through method 'dataSourceScriptDatabaseInitializer' parameter 0: Error creating bean with name 'dataSource' defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Hikari.class]: Failed to instantiate [com.zaxxer.hikari.HikariDataSource]: Factory method 'dataSource' threw exception with message: Cannot load driver class: org.postgresql.Driver
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:804) ~[spring-beans-6.2.10.jar:6.2.10]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:546) ~[spring-beans-6.2.10.jar:6.2.10]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1375) ~[spring-beans-6.2.10.jar:6.2.10]
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'dataSource' defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Hikari.class]: Failed to instantiate [com.zaxxer.hikari.HikariDataSource]: Factory method 'dataSource' threw exception with message: Cannot load driver class: org.postgresql.Driver
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:657) ~[spring-beans-6.2.10.jar:6.2.10]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:645) ~[spring-beans-6.2.10.jar:6.2.10]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1375) ~[spring-beans-6.2.10.jar:6.2.10]
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.zaxxer.hikari.HikariDataSource]: Factory method 'dataSource' threw exception with message: Cannot load driver class: org.postgresql.Driver
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.lambda$instantiate$0(SimpleInstantiationStrategy.java:200) ~[spring-beans-6.2.10.jar:6.2.10]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiateWithFactoryMethod(SimpleInstantiationStrategy.java:89) ~[spring-beans-6.2.10.jar:6.2.10]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:169) ~[spring-beans-6.2.10.jar:6.2.10]
+Caused by: java.lang.IllegalStateException: Cannot load driver class: org.postgresql.Driver
+	at org.springframework.util.Assert.state(Assert.java:101) ~[spring-core-6.2.10.jar:6.2.10]
+	at org.springframework.boot.autoconfigure.jdbc.DataSourceProperties.findDriverClassName(DataSourceProperties.java:184) ~[spring-boot-autoconfigure-3.5.5.jar:3.5.5]
+	at org.springframework.boot.autoconfigure.jdbc.DataSourceProperties.determineDriverClassName(DataSourceProperties.java:174) ~[spring-boot-autoconfigure-3.5.5.jar:3.5.5]
+
+2025-10-28T12:39:54.701+07:00  INFO 9056 --- [main] com.university.ManagementApplication     : Starting ManagementApplication using Java 21.0.8 with PID 9056 (D:\DTU\LAPTRINH\CS_445 DOAN CHUYEN NGANH TICH HOP\ums\ums-backend\target\classes started by Nguye in D:\DTU\LAPTRINH\CS_445 DOAN CHUYEN NGANH TICH HOP\ums\ums-backend)
+2025-10-28T12:39:54.702+07:00 DEBUG 9056 --- [main] com.university.ManagementApplication     : Running with Spring Boot v3.5.5, Spring v6.2.10
+2025-10-28T12:39:54.702+07:00  INFO 9056 --- [main] com.university.ManagementApplication     : No active profile set, falling back to 1 default profile: "default"
+2025-10-28T12:39:55.281+07:00  INFO 9056 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-10-28T12:39:55.370+07:00  INFO 9056 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 83 ms. Found 24 JPA repository interfaces.
+2025-10-28T12:39:55.767+07:00  INFO 9056 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-10-28T12:39:55.819+07:00  INFO 9056 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1088 ms
+2025-10-28T12:39:55.955+07:00  INFO 9056 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-10-28T12:39:55.991+07:00  INFO 9056 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.26.Final
+2025-10-28T12:39:56.014+07:00  INFO 9056 --- [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-10-28T12:39:56.223+07:00  INFO 9056 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-10-28T12:39:58.170+07:00  INFO 9056 --- [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@42503099
+2025-10-28T12:39:58.172+07:00  INFO 9056 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-10-28T12:39:59.217+07:00  INFO 9056 --- [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 17.6
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-10-28T12:40:00.141+07:00  INFO 9056 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-10-28T12:40:00.320+07:00  INFO 9056 --- [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-10-28T12:40:02.140+07:00  INFO 9056 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-10-28T12:40:02.146+07:00  INFO 9056 --- [main] com.university.ManagementApplication     : Started ManagementApplication in 7.793 seconds (process running for 8.045)
+2025-10-28T12:40:07.848+07:00 ERROR 9056 --- [http-nio-8080-exec-1] o.h.engine.jdbc.spi.SqlExceptionHelper   : ERROR: relation "users" does not exist
+  Position: 99
+2025-10-28T12:41:01.855+07:00  INFO 9056 --- [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-10-28T12:41:01.856+07:00  INFO 9056 --- [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-10-28T12:41:01.867+07:00  INFO 9056 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-10-28T12:41:03.757+07:00  INFO 9056 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-10-28T12:42:00.915+07:00  INFO 5656 --- [main] com.university.ManagementApplication     : Starting ManagementApplication using Java 21.0.8 with PID 5656 (D:\DTU\LAPTRINH\CS_445 DOAN CHUYEN NGANH TICH HOP\ums\ums-backend\target\classes started by Nguye in D:\DTU\LAPTRINH\CS_445 DOAN CHUYEN NGANH TICH HOP\ums\ums-backend)
+2025-10-28T12:42:00.925+07:00 DEBUG 5656 --- [main] com.university.ManagementApplication     : Running with Spring Boot v3.5.5, Spring v6.2.10
+2025-10-28T12:42:00.925+07:00  INFO 5656 --- [main] com.university.ManagementApplication     : No active profile set, falling back to 1 default profile: "default"
+2025-10-28T12:42:01.532+07:00  INFO 5656 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-10-28T12:42:01.619+07:00  INFO 5656 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 85 ms. Found 24 JPA repository interfaces.
+2025-10-28T12:42:02.017+07:00  INFO 5656 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-10-28T12:42:02.075+07:00  INFO 5656 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1118 ms
+2025-10-28T12:42:02.189+07:00  INFO 5656 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-10-28T12:42:02.236+07:00  INFO 5656 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.26.Final
+2025-10-28T12:42:02.267+07:00  INFO 5656 --- [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-10-28T12:42:02.474+07:00  INFO 5656 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-10-28T12:42:04.465+07:00  INFO 5656 --- [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@70ee9d31
+2025-10-28T12:42:04.466+07:00  INFO 5656 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-10-28T12:42:05.565+07:00  INFO 5656 --- [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 17.6
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-10-28T12:42:06.477+07:00  INFO 5656 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-10-28T12:42:31.897+07:00  INFO 5656 --- [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-10-28T12:42:33.708+07:00  INFO 5656 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-10-28T12:42:33.723+07:00  INFO 5656 --- [main] com.university.ManagementApplication     : Started ManagementApplication in 33.163 seconds (process running for 33.422)
+2025-10-28T12:42:52.186+07:00  INFO 5656 --- [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-10-28T12:42:52.186+07:00  INFO 5656 --- [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-10-28T12:42:52.186+07:00  INFO 5656 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-10-28T12:42:54.086+07:00  INFO 5656 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-10-28T12:43:07.674+07:00  INFO 4708 --- [main] com.university.ManagementApplication     : Starting ManagementApplication using Java 21.0.8 with PID 4708 (D:\DTU\LAPTRINH\CS_445 DOAN CHUYEN NGANH TICH HOP\ums\ums-backend\target\classes started by Nguye in D:\DTU\LAPTRINH\CS_445 DOAN CHUYEN NGANH TICH HOP\ums\ums-backend)
+2025-10-28T12:43:07.675+07:00 DEBUG 4708 --- [main] com.university.ManagementApplication     : Running with Spring Boot v3.5.5, Spring v6.2.10
+2025-10-28T12:43:07.675+07:00  INFO 4708 --- [main] com.university.ManagementApplication     : No active profile set, falling back to 1 default profile: "default"
+2025-10-28T12:43:08.266+07:00  INFO 4708 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-10-28T12:43:08.348+07:00  INFO 4708 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 82 ms. Found 24 JPA repository interfaces.
+2025-10-28T12:43:08.743+07:00  INFO 4708 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-10-28T12:43:08.802+07:00  INFO 4708 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1094 ms
+2025-10-28T12:43:08.934+07:00  INFO 4708 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-10-28T12:43:08.973+07:00  INFO 4708 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.26.Final
+2025-10-28T12:43:08.997+07:00  INFO 4708 --- [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-10-28T12:43:09.213+07:00  INFO 4708 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-10-28T12:43:12.450+07:00  INFO 4708 --- [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@7bdb4f17
+2025-10-28T12:43:12.450+07:00  INFO 4708 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-10-28T12:43:13.507+07:00  INFO 4708 --- [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 17.6
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-10-28T12:43:14.367+07:00  INFO 4708 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-10-28T12:43:14.529+07:00  INFO 4708 --- [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-10-28T12:43:16.288+07:00  INFO 4708 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-10-28T12:43:16.288+07:00  INFO 4708 --- [main] com.university.ManagementApplication     : Started ManagementApplication in 8.956 seconds (process running for 9.208)
+2025-10-28T12:44:18.101+07:00  INFO 4708 --- [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-10-28T12:44:18.115+07:00  INFO 4708 --- [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-10-28T12:44:18.118+07:00  INFO 4708 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-10-28T12:44:20.466+07:00  INFO 4708 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
