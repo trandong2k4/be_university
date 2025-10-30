@@ -1,7 +1,6 @@
 package com.university.service;
 
 import com.university.dto.reponse.RoleResponseDTO;
-import com.university.dto.reponse.TruongResponseDTO;
 import com.university.dto.request.RoleRequestDTO;
 import com.university.entity.Role;
 import com.university.exception.ResourceNotFoundException;

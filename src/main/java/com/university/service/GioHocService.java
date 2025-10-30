@@ -1,7 +1,6 @@
 package com.university.service;
 
 import com.university.dto.reponse.GioHocResponseDTO;
-import com.university.dto.reponse.TruongResponseDTO;
 import com.university.dto.request.GioHocRequestDTO;
 import com.university.entity.GioHoc;
 import com.university.exception.ResourceNotFoundException;

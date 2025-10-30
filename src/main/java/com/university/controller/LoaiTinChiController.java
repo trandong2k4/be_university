@@ -1,7 +1,6 @@
 package com.university.controller;
 
 import com.university.dto.reponse.LoaiTinChiResponseDTO;
-import com.university.dto.reponse.RoleResponseDTO;
 import com.university.dto.request.LoaiTinChiRequestDTO;
 import com.university.service.LoaiTinChiService;
 

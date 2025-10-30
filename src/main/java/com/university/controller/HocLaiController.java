@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.university.dto.reponse.HocLaiResponseDTO;
-import com.university.dto.reponse.RoleResponseDTO;
 import com.university.dto.request.HocLaiRequestDTO;
 import com.university.service.HocLaiService;
 

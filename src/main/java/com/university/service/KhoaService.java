@@ -8,17 +8,11 @@ import com.university.exception.ResourceNotFoundException;
 import com.university.mapper.KhoaMapper;
 import com.university.repository.KhoaRepository;
 import com.university.repository.TruongRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor

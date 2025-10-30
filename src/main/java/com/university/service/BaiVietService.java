@@ -1,7 +1,6 @@
 package com.university.service;
 
 import com.university.dto.reponse.BaiVietResponseDTO;
-import com.university.dto.reponse.TruongResponseDTO;
 import com.university.dto.request.BaiVietRequestDTO;
 import com.university.entity.BaiViet;
 import com.university.entity.User;

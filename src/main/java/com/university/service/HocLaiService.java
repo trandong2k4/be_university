@@ -1,12 +1,10 @@
 package com.university.service;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import com.university.dto.reponse.HocLaiResponseDTO;
-import com.university.dto.reponse.TruongResponseDTO;
 import com.university.dto.request.HocLaiRequestDTO;
 import com.university.entity.HocLai;
 import com.university.entity.KiHoc;

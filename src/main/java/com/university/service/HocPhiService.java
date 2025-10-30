@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import com.university.dto.reponse.HocPhiResponseDTO;
-import com.university.dto.reponse.TruongResponseDTO;
 import com.university.dto.request.HocPhiRequestDTO;
 import com.university.entity.HocPhi;
 import com.university.entity.SinhVien;

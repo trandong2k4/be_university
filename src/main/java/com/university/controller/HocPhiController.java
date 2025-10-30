@@ -1,7 +1,6 @@
 package com.university.controller;
 
 import com.university.dto.reponse.HocPhiResponseDTO;
-import com.university.dto.reponse.RoleResponseDTO;
 import com.university.dto.request.HocPhiRequestDTO;
 import com.university.service.HocPhiService;
 import jakarta.validation.Valid;

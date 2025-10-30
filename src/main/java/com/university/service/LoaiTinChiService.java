@@ -1,7 +1,6 @@
 package com.university.service;
 
 import com.university.dto.reponse.LoaiTinChiResponseDTO;
-import com.university.dto.reponse.TruongResponseDTO;
 import com.university.dto.request.LoaiTinChiRequestDTO;
 import com.university.entity.LoaiTinChi;
 import com.university.exception.DuplicateRequestException;

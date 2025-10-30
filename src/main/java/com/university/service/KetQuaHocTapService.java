@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import com.university.dto.reponse.KetQuaHocTapResponseDTO;
-import com.university.dto.reponse.TruongResponseDTO;
 import com.university.dto.request.KetQuaHocTapRequestDTO;
 import com.university.entity.KetQuaHocTap;
 import com.university.entity.KiHoc;

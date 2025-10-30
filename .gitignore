@@ -1,9 +1,20 @@
-HELP.md
-target/
-.mvn/wrapper/maven-wrapper.jar
+# ========== Maven / Spring Boot ==========
+/target/
+!.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+*.log
 
+# ========== Config / Env ==========
+.env
+application-local.properties
+application-dev.properties
+application-prod.properties
+*.keystore
+*.jks
+*.p12
+
+# ========== IDEs ==========
 ### STS ###
 .apt_generated
 .classpath
@@ -31,3 +42,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# ========== OS ==========
+.DS_Store
+Thumbs.db

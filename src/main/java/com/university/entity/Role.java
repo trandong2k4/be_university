@@ -1,13 +1,9 @@
 package com.university.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -28,15 +24,6 @@ public class Role {
 
     @Column(length = 255)
     private String description;
-
-    @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
-    @JsonIgnore // tránh vòng lặp User <-> Role
-    private Set<User> users = new HashSet<>();
-
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "roles_permissions", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "permission_id"))
-    @JsonIgnore
-    private Set<Permission> permissions = new HashSet<>();
 
     @Override
     public boolean equals(Object o) {

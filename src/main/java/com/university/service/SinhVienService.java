@@ -3,7 +3,6 @@ package com.university.service;
 import com.university.config.SecurityConfig;
 import com.university.dto.reponse.SinhVienResponseDTO;
 import com.university.dto.request.SinhVienRequestDTO;
-import com.university.dto.request.UserRequestDTO;
 import com.university.entity.Nganh;
 import com.university.entity.Role;
 import com.university.entity.SinhVien;

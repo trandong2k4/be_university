@@ -1,7 +1,6 @@
 package com.university.controller;
 
 import com.university.dto.reponse.GioHocResponseDTO;
-import com.university.dto.reponse.RoleResponseDTO;
 import com.university.dto.request.GioHocRequestDTO;
 import com.university.service.GioHocService;
 

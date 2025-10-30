@@ -1,7 +1,6 @@
 package com.university.service;
 
 import com.university.dto.reponse.PermissionResponseDTO;
-import com.university.dto.reponse.TruongResponseDTO;
 import com.university.dto.request.PermissionRequestDTO;
 import com.university.entity.Permission;
 import com.university.exception.ResourceNotFoundException;

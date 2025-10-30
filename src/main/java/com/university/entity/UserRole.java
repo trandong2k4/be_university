@@ -2,7 +2,6 @@ package com.university.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
 import java.util.UUID;
 
 @Entity
@@ -15,7 +14,6 @@ public class UserRole {
 
     @Id
     @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id; // ✅ phải có và được generate tự động
 
     @ManyToOne
