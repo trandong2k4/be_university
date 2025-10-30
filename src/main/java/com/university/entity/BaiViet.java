@@ -4,9 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -15,8 +13,6 @@ import com.university.enums.BaiVietEnum;
 @Entity
 @Table(name = "baiviets")
 @Data
-@Getter
-@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -36,14 +32,14 @@ public class BaiViet {
     private String loaiBaiViet;
 
     @Column(name = "ngay_dang")
-    private LocalDate ngayDang = LocalDate.now();
+    public LocalDate ngayDang = LocalDate.now();
 
     @Column(name = "tac_gia", length = 100)
     private String tacGia;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "trang_thai")
-    private BaiVietEnum trangThai = BaiVietEnum.CONG_KHAI;
+    public BaiVietEnum trangThai = BaiVietEnum.CONG_KHAI;
 
     @Column(name = "hinh_anh_url", length = 255)
     private String hinhAnhUrl;

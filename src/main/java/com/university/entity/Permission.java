@@ -28,10 +28,6 @@ public class Permission {
     @Column(length = 255)
     private String description;
 
-    @ManyToMany(mappedBy = "permissions", fetch = FetchType.LAZY)
-    @JsonIgnore // tránh vòng lặp Permission <-> Role
-    private Set<Role> roles = new HashSet<>();
-
     @Override
     public boolean equals(Object o) {
         if (this == o)

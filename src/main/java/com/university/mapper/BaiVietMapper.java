@@ -15,15 +15,6 @@ public class BaiVietMapper {
 
     public BaiViet toEntity(BaiVietRequestDTO dto, User user) {
         return BaiViet.builder()
-                .tieuDe(dto.getTieuDe())
-                .noiDung(dto.getNoiDung())
-                .loaiBaiViet(dto.getLoaiBaiViet())
-                .ngayDang(LocalDate.now())
-                .tacGia(dto.getTacGia())
-                .trangThai(dto.getTrangThai() != null ? dto.getTrangThai() : BaiVietEnum.CONG_KHAI)
-                .hinhAnhUrl(dto.getHinhAnhUrl())
-                .fileDinhKemUrl(dto.getFileDinhKemUrl())
-                .user(user)
                 .build();
     }
 
