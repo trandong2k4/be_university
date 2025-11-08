@@ -3,15 +3,16 @@ package com.university.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Objects;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
 @Table(name = "roles")
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 @Builder
 public class Role {
 
@@ -25,17 +26,9 @@ public class Role {
     @Column(length = 255)
     private String description;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (!(o instanceof Role))
-            return false;
-        return Objects.equals(id, ((Role) o).id);
-    }
+    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
+    private Set<User> users = new HashSet<>();
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
+    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<RolePermission> rolePermissions = new HashSet<>();
 }

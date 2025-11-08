@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,7 +22,10 @@ public class UserService {
     private final UserMapper userMapper;
 
     public UserResponseDTO create(UserRequestDTO dto) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String hashed = encoder.encode(dto.getPassword());
         User user = userMapper.toEntity(dto);
+        user.setPassword(hashed);
         return userMapper.toResponseDTO(userRepository.save(user));
     }
 

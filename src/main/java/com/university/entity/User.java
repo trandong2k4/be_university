@@ -1,6 +1,5 @@
 package com.university.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDate;
@@ -11,34 +10,39 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "users")
-@Data
-@Getter
-@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 public class User {
 
   @Id
   @GeneratedValue(generator = "UUID")
   private UUID id;
 
-  @Column(length = 30, unique = true, nullable = false)
-  private String username;
+  @Column(name = "username", columnDefinition = "VARCHAR(30)", unique = true, nullable = false)
+  private String username; // Nếu username có thể chứa tiếng Việt, sử dụng NVARCHAR
 
-  @Column(length = 200, nullable = false)
+  @Column(columnDefinition = "VARCHAR(200)", nullable = false) // Password thường không cần Unicode
   private String password;
 
+  @Column(columnDefinition = "VARCHAR(100)")
+  private String email;
+
+  @Column(columnDefinition = "NVARCHAR(30)") // Hỗ trợ tiếng Việt cho tên
   private String firstName;
+
+  @Column(columnDefinition = "NVARCHAR(30)") // Hỗ trợ tiếng Việt cho họ
   private String lastName;
+
+  @Column(columnDefinition = "DATE")
   private LocalDate dateOfBirth;
 
-  @ManyToMany(fetch = FetchType.LAZY)
-  @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-  @JsonIgnore
-  private Set<Role> roles = new HashSet<>();
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "role_id")
+  private Role role;
 
-  // equals / hashCode chỉ dùng id
   @Override
   public boolean equals(Object o) {
     if (this == o)
@@ -52,4 +56,5 @@ public class User {
   public int hashCode() {
     return Objects.hash(id);
   }
+
 }

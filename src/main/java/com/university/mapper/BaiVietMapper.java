@@ -1,14 +1,11 @@
 package com.university.mapper;
 
-import java.time.LocalDate;
-
 import org.springframework.stereotype.Component;
 
 import com.university.dto.reponse.BaiVietResponseDTO;
 import com.university.dto.request.BaiVietRequestDTO;
 import com.university.entity.BaiViet;
 import com.university.entity.User;
-import com.university.enums.BaiVietEnum;
 
 @Component
 public class BaiVietMapper {

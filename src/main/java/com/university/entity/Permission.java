@@ -1,12 +1,9 @@
 package com.university.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -25,7 +22,7 @@ public class Permission {
     @Column(name = "ma_permission", length = 30, unique = true, nullable = false)
     private String maPermission;
 
-    @Column(length = 255)
+    @Column(length = 255, columnDefinition = "NVARCHAR(255)")
     private String description;
 
     @Override

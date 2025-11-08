@@ -49,7 +49,7 @@ public class SinhVienService {
                 .firstName(dto.getHoTen().split(" ")[0])
                 .lastName(dto.getHoTen().substring(dto.getHoTen().indexOf(" ") + 1))
                 .dateOfBirth(LocalDate.now())
-                .roles(Set.of(studentRole))
+                .role(studentRole)
                 .build();
 
         user = userRepository.save(user);

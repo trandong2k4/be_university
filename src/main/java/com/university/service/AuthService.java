@@ -3,7 +3,6 @@ package com.university.service;
 import com.university.dto.reponse.LoginResponseDTO;
 import com.university.dto.reponse.RegisterReponse;
 import com.university.dto.request.RegisterRequest;
-import com.university.entity.Role;
 import com.university.entity.User;
 import com.university.repository.UserRepository;
 import com.university.security.JwtService;
@@ -53,10 +52,7 @@ public class AuthService {
             if (!passwordEncoder.matches(rawPassword, user.getPassword())) {
                 throw new IllegalArgumentException("Sai mật khẩu");
             }
-            String maRole = user.getRoles().stream()
-                    .findFirst()
-                    .map(Role::getMaRole)
-                    .orElse("guest");
+            String maRole = user.getRole().getMaRole();// user chỉ có 1 role
 
             System.out.println("marole la: " + maRole);
             String token = "dummy-token";

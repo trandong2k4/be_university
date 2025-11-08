@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UserResponseDTO {
     private UUID id;
+    private String email;
     private String username;
     private String firstName;
     private String lastName;
