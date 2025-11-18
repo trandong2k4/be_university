@@ -32,12 +32,12 @@ public class AuthService {
         user.setPassword(passwordEncoder.encode(request.getPassword()).toString());
         user.setFirstName(request.getFirstName());
         user.setLastName(request.getLastName());
-        user.setDateOfBirth(request.getDateOfBirth());
+        user.setCreateDate(request.getDateOfBirth());
 
         user = userRepository.save(user);
 
         return new RegisterReponse(user.getId(), user.getUsername(), user.getFirstName() + " " + user.getLastName(),
-                user.getDateOfBirth());
+                user.getCreateDate());
     }
 
     @Transactional

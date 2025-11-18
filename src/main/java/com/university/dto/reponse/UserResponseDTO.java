@@ -17,5 +17,6 @@ public class UserResponseDTO {
     private String username;
     private String firstName;
     private String lastName;
-    private LocalDate dateOfBirth;
+    private boolean status;
+    private LocalDate createDate;
 }

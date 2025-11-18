@@ -17,7 +17,7 @@ public class SecurityConfig {
                 http
                                 .csrf(csrf -> csrf.disable()) // tắt CSRF
                                 .authorizeHttpRequests(auth -> auth
-                                                .requestMatchers("/api/**").permitAll() // cho phép tất cả các request
+                                                .requestMatchers("/**").permitAll() // cho phép tất cả các request
                                                 .anyRequest().authenticated());
                 return http.build();
         }
@@ -26,7 +26,7 @@ public class SecurityConfig {
         public PasswordEncoder passwordEncoder() {
                 return new BCryptPasswordEncoder();
 
-        }                       
+        }
 
         @Bean
         public AuthenticationManager authManager(AuthenticationConfiguration config) throws Exception {

@@ -42,7 +42,7 @@ public class Truong {
     @Column(length = 100)
     private String website;
 
-    @Column(name = "mo_ta", columnDefinition = "TEXT")
+    @Column(name = "mo_ta", columnDefinition = "VARCHAR(255)")
     private String moTa;
 
     @Column(name = "logo_url", length = 255)

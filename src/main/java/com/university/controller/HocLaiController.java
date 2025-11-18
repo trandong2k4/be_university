@@ -23,7 +23,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/hoclais")
+@RequestMapping("/hoclais")
 @RequiredArgsConstructor
 public class HocLaiController {
 

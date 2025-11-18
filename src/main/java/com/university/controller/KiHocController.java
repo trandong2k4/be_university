@@ -1,7 +1,6 @@
 package com.university.controller;
 
 import com.university.dto.reponse.KiHocResponseDTO;
-import com.university.dto.reponse.RoleResponseDTO;
 import com.university.dto.request.KiHocRequestDTO;
 import com.university.service.KiHocService;
 
@@ -16,7 +15,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/kihocs")
+@RequestMapping("/kihocs")
 @RequiredArgsConstructor
 public class KiHocController {
 

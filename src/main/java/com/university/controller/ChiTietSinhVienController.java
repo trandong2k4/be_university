@@ -23,7 +23,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/chitietsinhviens")
+@RequestMapping("/chitietsinhviens")
 @RequiredArgsConstructor
 public class ChiTietSinhVienController {
 

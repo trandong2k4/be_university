@@ -13,7 +13,7 @@ import java.util.UUID;
 public class MonHoc {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @Column(name = "ma_mon_hoc", length = 10, unique = true, nullable = false)

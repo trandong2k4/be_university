@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -48,7 +47,7 @@ public class SinhVienService {
                 .password(securityConfig.passwordEncoder().encode("123")) // ✅ Dùng BCrypt để mã hóa
                 .firstName(dto.getHoTen().split(" ")[0])
                 .lastName(dto.getHoTen().substring(dto.getHoTen().indexOf(" ") + 1))
-                .dateOfBirth(LocalDate.now())
+                .createDate(LocalDate.now())
                 .role(studentRole)
                 .build();
 

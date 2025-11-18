@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/chatbot")
+@RequestMapping("/chatbot")
 @RequiredArgsConstructor
 public class ChatbotController {
 

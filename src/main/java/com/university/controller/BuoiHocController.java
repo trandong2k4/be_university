@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/buoihocs")
+@RequestMapping("/buoihocs")
 @RequiredArgsConstructor
 public class BuoiHocController {
 

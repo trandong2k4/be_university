@@ -32,14 +32,14 @@ public class BaiViet {
     private String loaiBaiViet;
 
     @Column(name = "ngay_dang")
-    public LocalDate ngayDang = LocalDate.now();
+    public LocalDate ngayDang;
 
     @Column(name = "tac_gia", length = 100)
     private String tacGia;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "trang_thai")
-    public BaiVietEnum trangThai = BaiVietEnum.CONG_KHAI;
+    public BaiVietEnum trangThai;
 
     @Column(name = "hinh_anh_url", length = 255)
     private String hinhAnhUrl;

@@ -25,7 +25,8 @@ public class UserRequestDTO {
 
     private String firstName;
     private String lastName;
-    private LocalDate dateOfBirth;
+    private boolean status;
+    private LocalDate createDate;
 
     private Role role;
 }

@@ -18,7 +18,8 @@ public class UserMapper {
                 .email(dto.getEmail())
                 .firstName(dto.getFirstName())
                 .lastName(dto.getLastName())
-                .dateOfBirth(dto.getDateOfBirth())
+                .status(dto.isStatus())
+                .createDate(dto.getCreateDate())
                 .role(dto.getRole())
                 .build();
     }
@@ -30,7 +31,8 @@ public class UserMapper {
                 .username(user.getUsername())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
-                .dateOfBirth(user.getDateOfBirth())
+                .status(user.isStatus())
+                .createDate(user.getCreateDate())
                 .build();
     }
 }

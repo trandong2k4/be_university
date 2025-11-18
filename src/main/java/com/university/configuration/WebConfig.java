@@ -10,7 +10,7 @@ public class WebConfig implements WebMvcConfigurer {
     @SuppressWarnings("null")
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/api/**")
+        registry.addMapping("/**")
                 .allowedOrigins("*")
                 // Cho phep tat ca
                 // "https://university-two-gamma.vercel.app", // Cho phép domain Vercel của bạn

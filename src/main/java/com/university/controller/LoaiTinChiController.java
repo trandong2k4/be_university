@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/loaitinchis")
+@RequestMapping("/loaitinchis")
 @RequiredArgsConstructor
 public class LoaiTinChiController {
 

@@ -22,7 +22,7 @@ public class Permission {
     @Column(name = "ma_permission", length = 30, unique = true, nullable = false)
     private String maPermission;
 
-    @Column(length = 255, columnDefinition = "NVARCHAR(255)")
+    @Column(length = 255, columnDefinition = "VARCHAR(255)")
     private String description;
 
     @Override

@@ -31,7 +31,7 @@ public class ViTri {
     @Column(name = "ten_vi_tri", nullable = false, length = 50)
     private String tenViTri;
 
-    @Column(name = "mo_ta", length = 255, columnDefinition = "nvarchar")
+    @Column(name = "mo_ta", columnDefinition = "VARCHAR(255)")
     private String moTa;
 
     @Column(name = "muc_luong_co_ban", precision = 12, scale = 2)

@@ -54,7 +54,8 @@ public class UserService {
         existing.setPassword(dto.getPassword());
         existing.setFirstName(dto.getFirstName());
         existing.setLastName(dto.getLastName());
-        existing.setDateOfBirth(dto.getDateOfBirth());
+        existing.setStatus(dto.isStatus());
+        existing.setCreateDate(dto.getCreateDate());
         return userMapper.toResponseDTO(userRepository.save(existing));
     }
 

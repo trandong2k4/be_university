@@ -3,9 +3,7 @@ package com.university.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -22,22 +20,25 @@ public class User {
   private UUID id;
 
   @Column(name = "username", columnDefinition = "VARCHAR(30)", unique = true, nullable = false)
-  private String username; // Nếu username có thể chứa tiếng Việt, sử dụng NVARCHAR
+  private String username;
 
-  @Column(columnDefinition = "VARCHAR(200)", nullable = false) // Password thường không cần Unicode
+  @Column(columnDefinition = "VARCHAR(200)", nullable = false)
   private String password;
 
   @Column(columnDefinition = "VARCHAR(100)")
   private String email;
 
-  @Column(columnDefinition = "NVARCHAR(30)") // Hỗ trợ tiếng Việt cho tên
+  @Column(length = 30)
   private String firstName;
 
-  @Column(columnDefinition = "NVARCHAR(30)") // Hỗ trợ tiếng Việt cho họ
+  @Column(length = 30)
   private String lastName;
 
+  @Column(nullable = false)
+  private boolean status;
+
   @Column(columnDefinition = "DATE")
-  private LocalDate dateOfBirth;
+  private LocalDate createDate;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "role_id")

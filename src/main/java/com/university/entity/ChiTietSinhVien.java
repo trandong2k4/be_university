@@ -37,8 +37,8 @@ public class ChiTietSinhVien {
     @Column(name = "gioi_tinh")
     private GioiTinhEnum gioiTinh;
 
-    @Column(name = "quoc_tich", length = 50)
-    private String quocTich = "Viet Nam";
+    @Column(name = "quoc_tich", length = 30)
+    private String quocTich;
 
     @Column(name = "cccd", length = 12, unique = true)
     private String cccd;

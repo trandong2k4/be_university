@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/lichhocs")
+@RequestMapping("/lichhocs")
 @RequiredArgsConstructor
 public class LichHocController {
 

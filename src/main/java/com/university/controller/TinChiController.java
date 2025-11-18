@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/tinchis")
+@RequestMapping("/tinchis")
 public class TinChiController {
 
     private final TinChiService tinChiService;

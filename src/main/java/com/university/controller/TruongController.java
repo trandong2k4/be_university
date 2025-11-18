@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/truongs")
+@RequestMapping("/truongs")
 @RequiredArgsConstructor
 public class TruongController {
 

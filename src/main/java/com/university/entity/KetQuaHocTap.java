@@ -45,5 +45,5 @@ public class KetQuaHocTap {
     private String ghiChu;
 
     @Column(name = "ngay_cap_nhat")
-    private LocalDate ngayCapNhat = LocalDate.now();
+    private LocalDate ngayCapNhat;
 }

@@ -75,11 +75,11 @@
 		</dependency>
 
 		<!-- PostgreSQL Driver (dùng cho Render) -->
-		<!-- <dependency>
+		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
-		</dependency> -->
+		</dependency>
 
 		<!-- SQL Driver (dùng cho SQL server) -->
 		<dependency>
