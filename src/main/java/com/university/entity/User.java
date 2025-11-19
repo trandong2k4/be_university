@@ -34,7 +34,7 @@ public class User {
   @Column(length = 30)
   private String lastName;
 
-  @Column(nullable = false)
+  @Column
   private boolean status;
 
   @Column(columnDefinition = "DATE")

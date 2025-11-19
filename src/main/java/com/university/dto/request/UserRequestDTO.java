@@ -1,8 +1,6 @@
 package com.university.dto.request;
 
 import java.time.LocalDate;
-import java.util.UUID;
-
 import com.university.entity.Role;
 
 import jakarta.validation.constraints.NotBlank;
@@ -17,16 +15,12 @@ public class UserRequestDTO {
 
     @NotBlank(message = "Username không được để trống")
     private String username;
-
     @NotBlank(message = "Password không được để trống")
     private String password;
-
     private String email;
-
     private String firstName;
     private String lastName;
     private boolean status;
     private LocalDate createDate;
-
     private Role role;
 }
