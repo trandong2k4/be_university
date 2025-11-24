@@ -52,22 +52,28 @@ public class AuthService {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new EntityNotFoundException("Tài khoản không tồn tại"));
 
+
+        // 2. Tài khoản bị khóa → 401
+        if (user.isStatus()) {
+            throw new BadCredentialsException("Tài khoản đã bị khóa");
+            
+        }
         // Debug
         System.out.println("Raw: " + rawPassword);
         System.out.println("Encoded: " + user.getPassword());
         System.out.println("Match: " + passwordEncoder.matches(rawPassword, user.getPassword()));
 
-        // 2. Sai mật khẩu → 401
+        // 3. Sai mật khẩu → 401
         if (!passwordEncoder.matches(rawPassword, user.getPassword())) {
             throw new BadCredentialsException("Sai mật khẩu");
         }
 
-        // 3. Lấy role
+        // 4. Lấy role
         String maRole = user.getRole().getMaRole();
 
         System.out.println("marole la: " + maRole);
 
-        // 4. Tạo token thật từ JwtService
+        // 5. Tạo token thật từ JwtService
         String token = "my-secret-key";
         // String token = jwtService.generateToken(user);
 
