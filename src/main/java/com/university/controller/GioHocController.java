@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/giohocs")
+@RequestMapping("/class_times")
 @RequiredArgsConstructor
 public class GioHocController {
 

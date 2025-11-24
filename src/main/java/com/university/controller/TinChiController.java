@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/tinchis")
+@RequestMapping("/credits")
 public class TinChiController {
 
     private final TinChiService tinChiService;
@@ -47,17 +47,17 @@ public class TinChiController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/filter/monhoc")
+    @GetMapping("/filter/subject")
     public ResponseEntity<List<TinChiResponse>> filterByMonHoc(@RequestParam UUID monHocId) {
         return ResponseEntity.ok(tinChiService.filterByMonHoc(monHocId));
     }
 
-    @GetMapping("/filter/loai")
+    @GetMapping("/filter/type")
     public ResponseEntity<List<TinChiResponse>> filterByLoaiTinChi(@RequestParam UUID loaiTinChiId) {
         return ResponseEntity.ok(tinChiService.filterByLoaiTinChi(loaiTinChiId));
     }
 
-    @GetMapping("/filter/giatri")
+    @GetMapping("/filter/values")
     public ResponseEntity<List<TinChiResponse>> filterByGiaTri(@RequestParam BigDecimal minGiaTri) {
         return ResponseEntity.ok(tinChiService.filterByGiaTri(minGiaTri));
     }

@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/hocphis")
+@RequestMapping("/tuition_fees")
 @RequiredArgsConstructor
 public class HocPhiController {
 

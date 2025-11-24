@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/phongs")
+@RequestMapping("/rooms")
 @RequiredArgsConstructor
 public class PhongHocController {
 

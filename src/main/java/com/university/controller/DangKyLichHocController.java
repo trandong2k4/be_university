@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/dangky")
+@RequestMapping("/schedule_registrations")
 @RequiredArgsConstructor
 public class DangKyLichHocController {
 

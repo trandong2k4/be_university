@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/sinhviens")
+@RequestMapping("/students")
 @RequiredArgsConstructor
 public class SinhVienController {
 

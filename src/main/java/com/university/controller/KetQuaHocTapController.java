@@ -20,7 +20,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/ketquahoctaps")
+@RequestMapping("/academic_results")
 @RequiredArgsConstructor
 public class KetQuaHocTapController {
 

@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/nganhs")
+@RequestMapping("/majors")
 @RequiredArgsConstructor
 public class NganhController {
 

@@ -10,15 +10,16 @@ import com.university.security.JwtService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AuthService {
 
-    public final UserRepository userRepository;
-    public final PasswordEncoder passwordEncoder;
-    public final JwtService jwtService;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
 
     public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtService jwtService) {
         this.userRepository = userRepository;
@@ -29,38 +30,52 @@ public class AuthService {
     public RegisterReponse register(RegisterRequest request) {
         User user = new User();
         user.setUsername(request.getUsername());
-        user.setPassword(passwordEncoder.encode(request.getPassword()).toString());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setFirstName(request.getFirstName());
         user.setLastName(request.getLastName());
         user.setCreateDate(request.getDateOfBirth());
 
         user = userRepository.save(user);
 
-        return new RegisterReponse(user.getId(), user.getUsername(), user.getFirstName() + " " + user.getLastName(),
+        return new RegisterReponse(
+                user.getId(),
+                user.getUsername(),
+                user.getFirstName() + " " + user.getLastName(),
                 user.getCreateDate());
     }
 
     @Transactional
     public LoginResponseDTO authenticate(String username, String rawPassword) {
         System.out.println("Đang xác thực: " + username);
-        try {
-            User user = userRepository.findByUsername(username)
-                    .orElseThrow(() -> new EntityNotFoundException("Tài khoản không tồn tại"));
-            System.out.println("Raw: " + rawPassword);
-            System.out.println("Encoded: " + user.getPassword());
-            System.out.println("Match: " + passwordEncoder.matches(rawPassword, user.getPassword()));
-            if (!passwordEncoder.matches(rawPassword, user.getPassword())) {
-                throw new IllegalArgumentException("Sai mật khẩu");
-            }
-            String maRole = user.getRole().getMaRole();// user chỉ có 1 role
 
-            System.out.println("marole la: " + maRole);
-            String token = "dummy-token";
-            return new LoginResponseDTO(user.getUsername(), maRole, token, user.getId());
+        // 1. Tìm user
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new EntityNotFoundException("Tài khoản không tồn tại"));
 
-        } catch (Exception e) {
-            e.printStackTrace(); // 👈 In ra lỗi thật sự
-            throw e;
+        // Debug
+        System.out.println("Raw: " + rawPassword);
+        System.out.println("Encoded: " + user.getPassword());
+        System.out.println("Match: " + passwordEncoder.matches(rawPassword, user.getPassword()));
+
+        // 2. Sai mật khẩu → 401
+        if (!passwordEncoder.matches(rawPassword, user.getPassword())) {
+            throw new BadCredentialsException("Sai mật khẩu");
         }
+
+        // 3. Lấy role
+        String maRole = user.getRole().getMaRole();
+
+        System.out.println("marole la: " + maRole);
+
+        // 4. Tạo token thật từ JwtService
+        String token = "my-secret-key";
+        // String token = jwtService.generateToken(user);
+
+        // 5. Trả về
+        return new LoginResponseDTO(
+                user.getUsername(),
+                maRole,
+                token,
+                user.getId());
     }
 }

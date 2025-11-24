@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/nhanviens")
+@RequestMapping("/staffs")
 @RequiredArgsConstructor
 public class NhanVienController {
 

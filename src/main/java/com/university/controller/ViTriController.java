@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/vitris")
+@RequestMapping("/locations")
 @RequiredArgsConstructor
 public class ViTriController {
 
