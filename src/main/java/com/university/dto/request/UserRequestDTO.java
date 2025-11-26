@@ -21,6 +21,8 @@ public class UserRequestDTO {
     private String firstName;
     private String lastName;
     private boolean status;
+    private String note;
     private LocalDate createDate;
+    private LocalDate updateDate;
     private Role role;
 }

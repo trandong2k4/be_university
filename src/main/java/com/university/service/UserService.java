@@ -7,6 +7,8 @@ import com.university.exception.ResourceNotFoundException;
 import com.university.mapper.UserMapper;
 import com.university.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+
+import java.sql.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -25,6 +27,7 @@ public class UserService {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String hashed = encoder.encode(dto.getPassword());
         User user = userMapper.toEntity(dto);
+        user.setCreateDate(java.time.LocalDate.now());
         user.setPassword(hashed);
         return userMapper.toResponseDTO(userRepository.save(user));
     }
@@ -55,7 +58,9 @@ public class UserService {
         existing.setFirstName(dto.getFirstName());
         existing.setLastName(dto.getLastName());
         existing.setStatus(dto.isStatus());
-        existing.setCreateDate(dto.getCreateDate());
+        existing.setNote(dto.getNote());
+        // existing.setUpdateDate(new Date(System.currentTimeMillis()).toLocalDate());
+        existing.setUpdateDate(java.time.LocalDate.now());
         return userMapper.toResponseDTO(userRepository.save(existing));
     }
 

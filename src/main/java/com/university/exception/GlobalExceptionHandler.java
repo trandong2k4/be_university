@@ -1,6 +1,7 @@
 package com.university.exception;
 
 import java.util.Date;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -48,6 +49,13 @@ public class GlobalExceptionHandler {
                 .map(e -> e.getField() + ": " + e.getDefaultMessage())
                 .collect(Collectors.joining(", "));
         return ResponseEntity.badRequest().body(error);
+    }
+
+    @ExceptionHandler(SimpleMessageException.class)
+    public ResponseEntity<?> handleSimpleMessage(SimpleMessageException ex) {
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
+                .body(Map.of("message", ex.getMessage()));
     }
 
     // Có thể thêm các handler khác như MethodArgumentNotValidException, etc.

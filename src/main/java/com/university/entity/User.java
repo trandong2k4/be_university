@@ -19,13 +19,13 @@ public class User {
   @GeneratedValue(generator = "UUID")
   private UUID id;
 
-  @Column(name = "username", columnDefinition = "VARCHAR(30)", unique = true, nullable = false)
+  @Column(name = "username", length = 30, unique = true, nullable = false)
   private String username;
 
-  @Column(columnDefinition = "VARCHAR(200)", nullable = false)
+  @Column(length = 200, nullable = false)
   private String password;
 
-  @Column(columnDefinition = "VARCHAR(100)")
+  @Column(length = 50)
   private String email;
 
   @Column(length = 30)
@@ -37,8 +37,14 @@ public class User {
   @Column
   private boolean status;
 
+  @Column(length = 255)
+  private String note;
+
   @Column(columnDefinition = "DATE")
   private LocalDate createDate;
+  
+  @Column(columnDefinition = "DATE")
+  private LocalDate updateDate;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "role_id")

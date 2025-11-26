@@ -19,7 +19,9 @@ public class UserMapper {
                 .firstName(dto.getFirstName())
                 .lastName(dto.getLastName())
                 .status(dto.isStatus())
+                .note(dto.getNote())
                 .createDate(dto.getCreateDate())
+                .updateDate(dto.getUpdateDate())
                 .role(dto.getRole())
                 .build();
     }
@@ -32,7 +34,9 @@ public class UserMapper {
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .status(user.isStatus())
+                .note(user.getNote())
                 .createDate(user.getCreateDate())
+                .updateDate(user.getUpdateDate())
                 .build();
     }
 }

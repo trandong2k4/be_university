@@ -4,13 +4,15 @@ import com.university.dto.reponse.LoginResponseDTO;
 import com.university.dto.reponse.RegisterReponse;
 import com.university.dto.request.RegisterRequest;
 import com.university.entity.User;
+import com.university.exception.SimpleMessageException;
 import com.university.repository.UserRepository;
 import com.university.security.JwtService;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 
-import org.springframework.security.authentication.BadCredentialsException;
+// import org.springframework.security.authentication.BadCredentialsException;
+import com.university.exception.SimpleMessageException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -19,12 +21,12 @@ public class AuthService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final JwtService jwtService;
+    // private final JwtService jwtService;
 
     public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtService jwtService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
-        this.jwtService = jwtService;
+        // this.jwtService = jwtService;
     }
 
     public RegisterReponse register(RegisterRequest request) {
@@ -52,11 +54,9 @@ public class AuthService {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new EntityNotFoundException("Tài khoản không tồn tại"));
 
-
         // 2. Tài khoản bị khóa → 401
-        if (user.isStatus()) {
-            throw new BadCredentialsException("Tài khoản đã bị khóa");
-            
+        if (!user.isStatus()) {
+            throw new SimpleMessageException("Tài khoản đã bị khóa, nn: " + user.getNote());
         }
         // Debug
         System.out.println("Raw: " + rawPassword);
@@ -65,7 +65,7 @@ public class AuthService {
 
         // 3. Sai mật khẩu → 401
         if (!passwordEncoder.matches(rawPassword, user.getPassword())) {
-            throw new BadCredentialsException("Sai mật khẩu");
+            throw new SimpleMessageException("Sai mật khẩu");
         }
 
         // 4. Lấy role

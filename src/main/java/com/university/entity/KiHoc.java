@@ -19,7 +19,7 @@ public class KiHoc {
     @GeneratedValue(generator = "UUID")
     private UUID id;
 
-    @Column(name = "ma_ki_hoc", length = 10, unique = true, nullable = false)
+    @Column(name = "ma_ki_hoc", length = 15, unique = true, nullable = false)
     private String maKiHoc;
 
     @Column(name = "ten_ki_hoc", length = 50)
