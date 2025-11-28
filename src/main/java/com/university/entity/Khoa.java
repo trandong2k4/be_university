@@ -6,10 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.util.UUID;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import java.util.HashSet;
-import java.util.Set;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import java.util.List;
 
 @Entity
 @Table(name = "khoas")
@@ -28,11 +27,12 @@ public class Khoa {
     @Column(name = "ten_khoa", length = 100)
     private String tenKhoa;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "truong_id", nullable = false)
+    @JsonBackReference
     private Truong truong;
 
-    @OneToMany(mappedBy = "khoa", cascade = CascadeType.ALL)
-    @JsonIgnore
-    private Set<Nganh> nganhs = new HashSet<>();
+    @OneToMany(mappedBy = "khoa", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<Nganh> nganhs;
 }

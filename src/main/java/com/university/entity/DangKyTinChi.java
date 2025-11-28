@@ -5,20 +5,20 @@ import lombok.*;
 import java.util.UUID;
 
 @Entity
-@Table(name = "dangky_lichhoc", uniqueConstraints = @UniqueConstraint(columnNames = { "lich_hoc_id", "sinh_vien_id" }))
+@Table(name = "dangky_tinchi")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class DangKyLichHoc {
+public class DangKyTinChi {
 
     @Id
     @GeneratedValue(generator = "UUID")
     private UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "lich_hoc_id", nullable = false)
-    private LichHoc lichHoc;
+    @JoinColumn(name = "lop_hoc_phan_id", nullable = false)
+    private LopHocPhan lophocphan;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "sinh_vien_id", nullable = false)

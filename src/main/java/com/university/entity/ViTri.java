@@ -6,23 +6,21 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.UUID;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "vitris")
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class ViTri {
 
     @Id
-    @Column(name = "id", nullable = false, updatable = false, insertable = false)
+    @GeneratedValue(generator = "UUID")
     private UUID id;
 
     @Column(name = "ma_vi_tri", unique = true, nullable = false, length = 5)
@@ -37,8 +35,10 @@ public class ViTri {
     @Column(name = "muc_luong_co_ban", precision = 12, scale = 2)
     private BigDecimal mucLuongCoBan;
 
-    @OneToMany(mappedBy = "viTri")
-    @JsonIgnore
-    private Set<NhanVien> nhanViens;
+    // @OneToMany(mappedBy = "viTri")
+    // private Set<NhanVien> nhanVien = new HashSet<>();
+
+    // @OneToMany(mappedBy = "viTri")
+    // private Set<GiangVien> giangVien = new HashSet<>();
 
 }

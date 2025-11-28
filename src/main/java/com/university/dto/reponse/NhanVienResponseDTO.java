@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 public class NhanVienResponseDTO {
     private UUID id;
     private String hoTen;
-    private String email;
     private String soDienThoai;
     private LocalDate ngayVaoLam;
     private LocalDate ngayNghiViec;

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import com.university.dto.reponse.UserResponseDTO;
 import com.university.dto.request.UserRequestDTO;
 import com.university.entity.User;
-import com.university.service.RoleService;
+import com.university.service.auth.RoleService;
 
 @Component
 public class UserMapper {
@@ -16,8 +16,6 @@ public class UserMapper {
                 .username(dto.getUsername())
                 .password(dto.getPassword())
                 .email(dto.getEmail())
-                .firstName(dto.getFirstName())
-                .lastName(dto.getLastName())
                 .status(dto.isStatus())
                 .note(dto.getNote())
                 .createDate(dto.getCreateDate())
@@ -31,8 +29,6 @@ public class UserMapper {
                 .id(user.getId())
                 .email(user.getEmail())
                 .username(user.getUsername())
-                .firstName(user.getFirstName())
-                .lastName(user.getLastName())
                 .status(user.isStatus())
                 .note(user.getNote())
                 .createDate(user.getCreateDate())

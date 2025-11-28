@@ -5,7 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 import java.util.UUID;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "nganhs")
@@ -25,7 +30,13 @@ public class Nganh {
     @Column(name = "ten_nganh", length = 100)
     private String tenNganh;
 
-    @ManyToOne
+    @OneToMany(mappedBy = "nganh", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<SinhVien> sinhViens;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "khoa_id", nullable = false)
+    @JsonBackReference
     private Khoa khoa;
+
 }

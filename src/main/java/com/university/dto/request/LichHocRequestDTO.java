@@ -3,6 +3,8 @@ package com.university.dto.request;
 import java.time.LocalDate;
 import java.util.UUID;
 
+import com.university.enums.ThuEnum;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -14,24 +16,17 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class LichHocRequestDTO {
 
-    @NotNull(message = "Môn học không được để trống")
-    private UUID monHocId;
+    @NotNull(message = "Ngày học không được để trống")
+    private LocalDate ngayHoc;
 
-    @NotNull(message = "Phòng học không được để trống")
-    private UUID phongHocId;
+    @NotNull(message = "Thứ trong tuần không được để trống")
+    private ThuEnum thuTrongTuan;
 
-    @NotNull(message = "Kỳ học không được để trống")
-    private UUID kiHocId;
+    @NotNull(message = "Giờ học không được để trống")
+    private UUID gioHocId;
 
-    @NotBlank(message = "Thứ học không được để trống")
-    private String thu;
+    @NotNull(message = "Lịch học không được để trống")
+    private UUID lichHocId;
 
-    @NotBlank(message = "Ca học không được để trống")
-    private String caHoc;
-
-    @NotNull(message = "Ngày bắt đầu không được để trống")
-    private LocalDate ngayBatDau;
-
-    @NotNull(message = "Ngày kết thúc không được để trống")
-    private LocalDate ngayKetThuc;
+    private String ghiChu;
 }

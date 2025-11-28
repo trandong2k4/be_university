@@ -14,9 +14,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class RolePermission {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(generator = "UUID")
     private UUID id;
-
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id", nullable = false)

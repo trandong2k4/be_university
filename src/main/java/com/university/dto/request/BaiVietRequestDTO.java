@@ -1,7 +1,9 @@
 package com.university.dto.request;
 
 import java.util.UUID;
-import com.university.enums.BaiVietEnum;
+
+import com.university.enums.LoaiBaiVietEnum;
+import com.university.enums.TrangThaiBaiVietEnum;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -26,9 +28,9 @@ public class BaiVietRequestDTO {
     @NotBlank(message = "Nội dung không được để trống")
     private String noiDung;
 
-    private String loaiBaiViet;
+    private LoaiBaiVietEnum loaiBaiViet;
     private String tacGia;
-    private BaiVietEnum trangThai;
+    private TrangThaiBaiVietEnum trangThai;
     private String hinhAnhUrl;
     private String fileDinhKemUrl;
 

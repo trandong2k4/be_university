@@ -1,8 +1,9 @@
 package com.university.controller;
 
 import com.university.entity.ChatLog;
-import com.university.service.ChatLogService;
-import com.university.service.SmartChatService;
+import com.university.service.chatbot.ChatLogService;
+import com.university.service.chatbot.SmartChatService;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

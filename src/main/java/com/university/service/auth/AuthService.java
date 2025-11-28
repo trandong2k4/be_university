@@ -1,4 +1,4 @@
-package com.university.service;
+package com.university.service.auth;
 
 import com.university.dto.reponse.LoginResponseDTO;
 import com.university.dto.reponse.RegisterReponse;
@@ -31,16 +31,13 @@ public class AuthService {
         User user = new User();
         user.setUsername(request.getUsername());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setFirstName(request.getFirstName());
-        user.setLastName(request.getLastName());
-        user.setCreateDate(request.getDateOfBirth());
+        user.setCreateDate(request.getCreateDate());
 
         user = userRepository.save(user);
 
         return new RegisterReponse(
                 user.getId(),
                 user.getUsername(),
-                user.getFirstName() + " " + user.getLastName(),
                 user.getCreateDate());
     }
 
@@ -54,7 +51,7 @@ public class AuthService {
 
         // 2. Tài khoản bị khóa → 401
         if (!user.isStatus()) {
-            throw new SimpleMessageException("Tài khoản đã bị khóa, nn: " + user.getNote());
+            throw new SimpleMessageException("Tài khoản đã bị khóa!, note: " + user.getNote());
         }
         // Debug
         System.out.println("Raw: " + rawPassword);

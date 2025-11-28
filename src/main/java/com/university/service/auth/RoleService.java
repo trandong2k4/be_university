@@ -1,4 +1,4 @@
-package com.university.service;
+package com.university.service.auth;
 
 import com.university.dto.reponse.RoleResponseDTO;
 import com.university.dto.request.RoleRequestDTO;

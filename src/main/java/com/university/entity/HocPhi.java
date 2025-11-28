@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.university.enums.HocPhiEnum;
 
 @Entity
@@ -21,15 +23,10 @@ public class HocPhi {
     @GeneratedValue(generator = "UUID")
     private UUID id;
 
-    @ManyToOne
-    private SinhVien sinhVien;
-
-    @ManyToOne
-    private KiHoc kiHoc;
-
-    private BigDecimal soTien;
+    private int soTinChi;
     private BigDecimal giaTriTinChi;
     private LocalDate ngayTao;
+    private BigDecimal soTien;
     private LocalDate hanThanhToan;
     private LocalDate ngayThanhToan;
 
@@ -37,4 +34,14 @@ public class HocPhi {
     private HocPhiEnum trangThai;
 
     private String ghiChu;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "sinh_vien_id", nullable = false)
+    @JsonBackReference
+    private SinhVien sinhVien;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ki_hoc_id")
+    @JsonBackReference
+    private KiHoc kiHoc;
 }

@@ -1,4 +1,4 @@
-package com.university.service;
+package com.university.service.chatbot;
 
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.openai.OpenAiChatModel;

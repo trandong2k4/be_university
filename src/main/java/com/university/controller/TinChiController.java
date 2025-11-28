@@ -2,6 +2,7 @@ package com.university.controller;
 
 import com.university.dto.reponse.TinChiResponse;
 import com.university.dto.request.TinChiRequest;
+import com.university.enums.LoaiTinChiEnum;
 import com.university.service.TinChiService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,10 +53,11 @@ public class TinChiController {
         return ResponseEntity.ok(tinChiService.filterByMonHoc(monHocId));
     }
 
-    @GetMapping("/filter/type")
-    public ResponseEntity<List<TinChiResponse>> filterByLoaiTinChi(@RequestParam UUID loaiTinChiId) {
-        return ResponseEntity.ok(tinChiService.filterByLoaiTinChi(loaiTinChiId));
-    }
+    // @GetMapping("/filter/type")
+    // public ResponseEntity<List<TinChiResponse>> filterByLoaiTinChi(@RequestParam
+    // LoaiTinChiEnum loaiTinChiId) {
+    // return ResponseEntity.ok(tinChiService.filterByLoaiTinChi(loaiTinChiId));
+    // }
 
     @GetMapping("/filter/values")
     public ResponseEntity<List<TinChiResponse>> filterByGiaTri(@RequestParam BigDecimal minGiaTri) {

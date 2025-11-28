@@ -4,7 +4,8 @@ import com.university.dto.reponse.LoginResponseDTO;
 import com.university.dto.reponse.RegisterReponse;
 import com.university.dto.request.LoginRequestDTO;
 import com.university.dto.request.RegisterRequest;
-import com.university.service.AuthService;
+import com.university.service.auth.AuthService;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

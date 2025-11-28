@@ -6,19 +6,12 @@ import java.util.UUID;
 import com.university.enums.GioiTinhEnum;
 
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
+
 import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Data
-@Getter
-@Setter
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class ChiTietSinhVienRequestDTO {
 
     private String diaChi;

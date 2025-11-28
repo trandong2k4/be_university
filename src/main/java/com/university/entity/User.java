@@ -3,16 +3,17 @@ package com.university.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDate;
-import java.util.Objects;
+import java.util.List;
 import java.util.UUID;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "users")
+@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
 public class User {
 
   @Id
@@ -28,12 +29,6 @@ public class User {
   @Column(length = 50)
   private String email;
 
-  @Column(length = 30)
-  private String firstName;
-
-  @Column(length = 30)
-  private String lastName;
-
   @Column
   private boolean status;
 
@@ -42,7 +37,7 @@ public class User {
 
   @Column(columnDefinition = "DATE")
   private LocalDate createDate;
-  
+
   @Column(columnDefinition = "DATE")
   private LocalDate updateDate;
 
@@ -50,18 +45,21 @@ public class User {
   @JoinColumn(name = "role_id")
   private Role role;
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o)
-      return true;
-    if (!(o instanceof User))
-      return false;
-    return Objects.equals(id, ((User) o).id);
-  }
+  // 1 user -> 1 sinh viên
+  @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  @JsonManagedReference
+  private SinhVien sinhVien;
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(id);
-  }
+  // 1 user -> 1 giảng viên
+  @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  @JsonManagedReference
+  private GiangVien giangVien;
 
+  @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  @JsonManagedReference
+  private NhanVien nhanVien;
+
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  @JsonManagedReference
+  private List<BaiViet> baiViets;
 }

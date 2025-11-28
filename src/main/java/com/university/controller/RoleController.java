@@ -2,7 +2,7 @@ package com.university.controller;
 
 import com.university.dto.reponse.RoleResponseDTO;
 import com.university.dto.request.RoleRequestDTO;
-import com.university.service.RoleService;
+import com.university.service.auth.RoleService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

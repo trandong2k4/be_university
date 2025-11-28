@@ -4,32 +4,28 @@ import org.springframework.stereotype.Component;
 
 import com.university.dto.reponse.LichHocResponseDTO;
 import com.university.dto.request.LichHocRequestDTO;
-import com.university.entity.KiHoc;
+import com.university.entity.GioHoc;
 import com.university.entity.LichHoc;
-import com.university.entity.MonHoc;
-import com.university.entity.PhongHoc;
 
 @Component
 public class LichHocMapper {
 
-    public LichHoc toEntity(LichHocRequestDTO dto, MonHoc monHoc, PhongHoc phongHoc, KiHoc kiHoc) {
+    public LichHoc toEntity(LichHocRequestDTO dto, GioHoc gioHoc) {
         return LichHoc.builder()
-                .monHoc(monHoc)
-                .phongHoc(phongHoc)
-                .kiHoc(kiHoc)
-                .ngayBatDau(dto.getNgayBatDau())
-                .ngayKetThuc(dto.getNgayKetThuc())
+                .ngayHoc(dto.getNgayHoc())
+                // .thuTrongTuan(dto.getThuTrongTuan())
+                .gioHoc(gioHoc)
+                .ghiChu(dto.getGhiChu())
                 .build();
     }
 
     public LichHocResponseDTO toResponseDTO(LichHoc lichHoc) {
         return LichHocResponseDTO.builder()
                 .id(lichHoc.getId())
-                .tenMonHoc(lichHoc.getMonHoc().getTenMonHoc())
-                .tenPhongHoc(lichHoc.getPhongHoc().getTenPhong())
-                .tenKiHoc(lichHoc.getKiHoc().getTenKiHoc())
-                .ngayBatDau(lichHoc.getNgayBatDau())
-                .ngayKetThuc(lichHoc.getNgayKetThuc())
+                .ngayHoc(lichHoc.getNgayHoc())
+                // .thuTrongTuan(buoiHoc.getThuTrongTuan())
+                .tenGioHoc(lichHoc.getGioHoc().getTenGioHoc())
+                .ghiChu(lichHoc.getGhiChu())
                 .build();
     }
 }

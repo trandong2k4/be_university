@@ -16,14 +16,11 @@ import java.time.LocalDate;
 public class NhanVien {
 
     @Id
-    @Column(name = "id", nullable = false, updatable = false, insertable = false)
+    @GeneratedValue(generator = "UUID")
     private UUID id;
 
     @Column(name = "ho_ten", length = 50)
     private String hoTen;
-
-    @Column(name = "email", length = 50, unique = true)
-    private String email;
 
     @Column(name = "so_dien_thoai", length = 10, unique = true)
     private String soDienThoai;
@@ -41,5 +38,4 @@ public class NhanVien {
     @OneToOne
     @JoinColumn(name = "user_id", unique = true)
     private User user;
-
 }

@@ -5,15 +5,11 @@ import java.util.UUID;
 
 import com.university.enums.GioiTinhEnum;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class ChiTietSinhVienResponseDTO {
     private UUID id;
     private String hoTen;

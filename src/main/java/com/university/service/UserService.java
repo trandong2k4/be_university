@@ -8,7 +8,6 @@ import com.university.mapper.UserMapper;
 import com.university.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 
-import java.sql.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -55,12 +54,11 @@ public class UserService {
                 .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy user"));
         existing.setUsername(dto.getUsername());
         existing.setPassword(dto.getPassword());
-        existing.setFirstName(dto.getFirstName());
-        existing.setLastName(dto.getLastName());
         existing.setStatus(dto.isStatus());
         existing.setNote(dto.getNote());
         // existing.setUpdateDate(new Date(System.currentTimeMillis()).toLocalDate());
         existing.setUpdateDate(java.time.LocalDate.now());
+        existing.setRole(dto.getRole());
         return userMapper.toResponseDTO(userRepository.save(existing));
     }
 

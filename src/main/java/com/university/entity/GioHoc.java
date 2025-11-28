@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import java.time.LocalTime;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "giohocs")
 @Data
@@ -25,4 +27,8 @@ public class GioHoc {
     private String tenGioHoc;
     private LocalTime thoiGianBatDau;
     private LocalTime thoiGianKetThuc;
+
+    @OneToOne(mappedBy = "gioHoc", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private LichHoc lichHoc;
 }

@@ -5,10 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.time.LocalDate;
 import java.util.UUID;
-import com.university.enums.BaiVietEnum;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.university.enums.LoaiBaiVietEnum;
+import com.university.enums.TrangThaiBaiVietEnum;
 
 @Entity
 @Table(name = "baiviets")
@@ -28,8 +29,9 @@ public class BaiViet {
     @Column(name = "noi_dung", columnDefinition = "TEXT", nullable = false)
     private String noiDung;
 
-    @Column(name = "loai_bai_viet", length = 50)
-    private String loaiBaiViet;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "loai_bai_viet")
+    private LoaiBaiVietEnum loaiBaiViet;
 
     @Column(name = "ngay_dang")
     public LocalDate ngayDang;
@@ -39,7 +41,7 @@ public class BaiViet {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "trang_thai")
-    public BaiVietEnum trangThai;
+    public TrangThaiBaiVietEnum trangThai;
 
     @Column(name = "hinh_anh_url", length = 255)
     private String hinhAnhUrl;
@@ -47,7 +49,8 @@ public class BaiViet {
     @Column(name = "file_dinh_kem_url", length = 255)
     private String fileDinhKemUrl;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
+    @JsonBackReference
     private User user;
 }

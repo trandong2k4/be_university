@@ -6,7 +6,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "kihocs")
@@ -19,12 +22,20 @@ public class KiHoc {
     @GeneratedValue(generator = "UUID")
     private UUID id;
 
-    @Column(name = "ma_ki_hoc", length = 15, unique = true, nullable = false)
+    @Column(length = 15, unique = true, nullable = false)
     private String maKiHoc;
 
-    @Column(name = "ten_ki_hoc", length = 50)
+    @Column(length = 50)
     private String tenKiHoc;
 
     private LocalDate ngayBatDau;
     private LocalDate ngayKetThuc;
+
+    @OneToMany(mappedBy = "kiHoc", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<HocPhi> hocPhi;
+
+    @OneToMany(mappedBy = "kiHoc", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<LopHocPhan> lophocphans;
 }

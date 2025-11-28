@@ -6,9 +6,12 @@ import com.university.dto.reponse.BaiVietResponseDTO;
 import com.university.dto.request.BaiVietRequestDTO;
 import com.university.entity.BaiViet;
 import com.university.entity.User;
+import com.university.service.UserService;
 
 @Component
 public class BaiVietMapper {
+
+    UserService userService;
 
     public BaiViet toEntity(BaiVietRequestDTO dto, User user) {
         return BaiViet.builder()

@@ -2,7 +2,8 @@ package com.university.controller;
 
 import com.university.dto.reponse.PermissionResponseDTO;
 import com.university.dto.request.PermissionRequestDTO;
-import com.university.service.PermissionService;
+import com.university.service.auth.PermissionService;
+
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.util.UUID;
 
+import com.university.enums.LoaiTinChiEnum;
+
 @Entity
 @Table(name = "tinchi")
 @Data
@@ -23,14 +25,9 @@ public class TinChi {
     @Column(name = "gia_tri_tin_chi", nullable = false)
     private BigDecimal giaTriTinChi;
 
-    @Column(name = "ten_tin_chi", length = 50, nullable = false)
-    private String tenTinChi;
+    private LoaiTinChiEnum loaiTinChi;
 
-    @ManyToOne
-    @JoinColumn(name = "loaitinchi_id")
-    private LoaiTinChi loaiTinChi;
-
-    @ManyToOne
-    @JoinColumn(name = "monhoc_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "mon_hoc_id", nullable = false)
     private MonHoc monHoc;
 }

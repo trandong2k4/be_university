@@ -7,9 +7,12 @@ import com.university.service.LichHocService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -35,13 +38,22 @@ public class LichHocController {
         return ResponseEntity.ok(lichHocService.getById(id));
     }
 
-    @GetMapping("/search")
-    public ResponseEntity<List<LichHocResponseDTO>> search(@RequestParam String keyword) {
-        return ResponseEntity.ok(lichHocService.search(keyword));
-    }
+    // @GetMapping("/search")
+    // public ResponseEntity<List<LichHocResponseDTO>> search(@RequestParam String
+    // keyword) {
+    // return ResponseEntity.ok(lichHocService.search(keyword));
+    // }
+
+    // @GetMapping("/ngay")
+    // public ResponseEntity<List<LichHocResponseDTO>> getByNgayHoc(
+    // @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate
+    // ngayHoc) {
+    // return ResponseEntity.ok(lichHocService.getByNgayHoc(ngayHoc));
+    // }
 
     @PutMapping("/{id}")
-    public ResponseEntity<LichHocResponseDTO> update(@PathVariable UUID id, @RequestBody @Valid LichHocRequestDTO dto) {
+    public ResponseEntity<LichHocResponseDTO> update(@PathVariable UUID id,
+            @RequestBody @Valid LichHocRequestDTO dto) {
         return ResponseEntity.ok(lichHocService.update(id, dto));
     }
 

@@ -18,7 +18,6 @@ public interface SinhVienRepository extends JpaRepository<SinhVien, UUID> {
         Optional<SinhVien> findByMaSinhVien(String maSinhVien);
 
         Optional<SinhVien> findByUser_Id(UUID userId);
-        
 
         @Query("SELECT COUNT(sv) FROM SinhVien sv WHERE sv.ngayTotNghiep IS NULL")
         long countByNgayTotNghiepIsNull();

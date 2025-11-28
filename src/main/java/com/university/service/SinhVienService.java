@@ -43,10 +43,8 @@ public class SinhVienService {
                 .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy role STUDENT"));
 
         User user = User.builder()
-                .username(dto.getEmail()) // Username = Email sinh viên
+                .username(dto.getHoTen().toLowerCase())
                 .password(securityConfig.passwordEncoder().encode("123")) // ✅ Dùng BCrypt để mã hóa
-                .firstName(dto.getHoTen().split(" ")[0])
-                .lastName(dto.getHoTen().substring(dto.getHoTen().indexOf(" ") + 1))
                 .createDate(LocalDate.now())
                 .role(studentRole)
                 .build();
@@ -92,7 +90,6 @@ public class SinhVienService {
 
         sv.setMaSinhVien(dto.getMaSinhVien());
         sv.setHoTen(dto.getHoTen());
-        sv.setEmail(dto.getEmail());
         sv.setNgayNhapHoc(dto.getNgayNhapHoc());
 
         if (dto.getNganhId() != null) {

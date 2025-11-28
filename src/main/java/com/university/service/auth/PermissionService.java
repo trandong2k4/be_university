@@ -1,4 +1,4 @@
-package com.university.service;
+package com.university.service.auth;
 
 import com.university.dto.reponse.PermissionResponseDTO;
 import com.university.dto.request.PermissionRequestDTO;

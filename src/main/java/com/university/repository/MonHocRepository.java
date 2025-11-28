@@ -18,14 +18,14 @@ public interface MonHocRepository extends JpaRepository<MonHoc, UUID> {
 
     Optional<MonHoc> findByMaMonHoc(String maMonHoc);
 
-    @Query("""
-                SELECT m
-                FROM MonHoc m
-                JOIN LichHoc l ON l.monHoc.id = m.id
-                JOIN DangKyLichHoc dk ON dk.lichHoc.id = l.id
-                JOIN SinhVien s ON s.id = dk.sinhVien.id
-                WHERE s.user.id = :userId
-            """)
-    List<MonHoc> findByUserId(@Param("userId") UUID userId);
+    // @Query("""
+    // SELECT m
+    // FROM MonHoc m
+    // JOIN LichHoc l ON l.monHoc.id = m.id
+    // JOIN DangKyTinChi dk ON dk.lichHoc.id = l.id
+    // JOIN SinhVien s ON s.id = dk.sinhVien.id
+    // WHERE s.user.id = :userId
+    // """)
+    // List<MonHoc> findByUserId(@Param("userId") UUID userId);
 
 }

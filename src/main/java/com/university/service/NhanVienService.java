@@ -53,18 +53,11 @@ public class NhanVienService {
                 .toList();
     }
 
-    public List<NhanVienResponseDTO> search(String keyword) {
-        return nhanVienRepository
-                .findByHoTenContainingIgnoreCaseOrEmailContainingIgnoreCase(keyword, keyword)
-                .stream().map(nhanVienMapper::toResponseDTO)
-                .toList();
-    }
 
     public NhanVienResponseDTO update(UUID id, NhanVienRequestDTO dto) {
         NhanVien nv = nhanVienRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy nhân viên"));
         nv.setHoTen(dto.getHoTen());
-        nv.setEmail(dto.getEmail());
         nv.setSoDienThoai(dto.getSoDienThoai());
         nv.setNgayVaoLam(dto.getNgayVaoLam());
         nv.setNgayNghiViec(dto.getNgayNghiViec());

@@ -1,4 +1,4 @@
-package com.university.service;
+package com.university.service.auth;
 
 import com.university.entity.User;
 import com.university.repository.UserRepository;

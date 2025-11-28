@@ -11,8 +11,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoaiTinChiResponseDTO {
-    private UUID id;
-    private String maLoaiTinChi;
-    private String tenLoaiTinChi;
+public class DangKyTinChiResponseDTO {
+    UUID id;
+    UUID sinhvienId;
+    UUID lophocphanId;
+
 }

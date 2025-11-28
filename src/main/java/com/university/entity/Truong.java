@@ -4,12 +4,9 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.time.LocalDate;
 
@@ -54,7 +51,7 @@ public class Truong {
     @Column(name = "nguoi_dai_dien", length = 100)
     private String nguoiDaiDien;
 
-    @OneToMany(mappedBy = "truong", cascade = CascadeType.ALL)
-    @JsonIgnore
-    private Set<Khoa> khoas = new HashSet<>();
+    @OneToMany(mappedBy = "truong", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<Khoa> khoas;
 }

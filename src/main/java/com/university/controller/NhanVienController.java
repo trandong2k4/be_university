@@ -41,11 +41,6 @@ public class NhanVienController {
         return ResponseEntity.ok(nhanVienService.getAll());
     }
 
-    @GetMapping("/search")
-    public ResponseEntity<List<NhanVienResponseDTO>> search(@RequestParam String keyword) {
-        return ResponseEntity.ok(nhanVienService.search(keyword));
-    }
-
     @PutMapping("/{id}")
     public ResponseEntity<NhanVienResponseDTO> update(@PathVariable UUID id,
             @RequestBody @Valid NhanVienRequestDTO dto) {

@@ -11,14 +11,15 @@ import java.util.UUID;
 @Repository
 public interface LichHocRepository extends JpaRepository<LichHoc, UUID> {
 
-    @Query("SELECT l FROM LichHoc l WHERE LOWER(l.monHoc.tenMonHoc) LIKE LOWER(CONCAT('%', :keyword, '%'))")
-    List<LichHoc> searchByTenMonHoc(@Param("keyword") String keyword);
+    // @Query("SELECT l FROM LichHoc l WHERE LOWER(l.monHoc.tenMonHoc) LIKE
+    // LOWER(CONCAT('%', :keyword, '%'))")
+    // List<LichHoc> searchByTenMonHoc(@Param("keyword") String keyword);
 
-    // 🔹 Danh sách lịch học mà sinh viên đã đăng ký
-    @Query("""
-                SELECT lh FROM DangKyLichHoc dk
-                JOIN dk.lichHoc lh
-                WHERE dk.sinhVien.id = :sinhVienId
-            """)
-    List<LichHoc> findBySinhVienId(@Param("sinhVienId") UUID sinhVienId);
+    // // 🔹 Danh sách lịch học mà sinh viên đã đăng ký
+    // @Query("""
+    // SELECT lh FROM DangKyLichHoc dk
+    // JOIN dk.lichHoc lh
+    // WHERE dk.sinhVien.id = :sinhVienId
+    // """)
+    // List<LichHoc> findBySinhVienId(@Param("sinhVienId") UUID sinhVienId);
 }

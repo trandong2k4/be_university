@@ -1,5 +1,5 @@
 package com.university.enums;
 
-public enum BaiVietEnum {
+public enum TrangThaiBaiVietEnum {
     CONG_KHAI, RIENG_TU, NHAP
 }

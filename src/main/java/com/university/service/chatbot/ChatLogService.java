@@ -1,4 +1,4 @@
-package com.university.service;
+package com.university.service.chatbot;
 
 import com.university.entity.ChatLog;
 import com.university.repository.ChatLogRepository;

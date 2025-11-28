@@ -14,7 +14,6 @@ public class NhanVienMapper {
     public NhanVien toEntity(NhanVienRequestDTO dto, ViTri viTri, User user) {
         NhanVien nv = new NhanVien();
         nv.setHoTen(dto.getHoTen());
-        nv.setEmail(dto.getEmail());
         nv.setSoDienThoai(dto.getSoDienThoai());
         nv.setNgayVaoLam(dto.getNgayVaoLam());
         nv.setNgayNghiViec(dto.getNgayNghiViec());
@@ -27,7 +26,6 @@ public class NhanVienMapper {
         return new NhanVienResponseDTO(
                 nv.getId(),
                 nv.getHoTen(),
-                nv.getEmail(),
                 nv.getSoDienThoai(),
                 nv.getNgayVaoLam(),
                 nv.getNgayNghiViec(),
