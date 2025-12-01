@@ -10,12 +10,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
-@Table(name = "ketquahoctaps", uniqueConstraints = {
-        @UniqueConstraint(columnNames = { "sinhvien_id", "monhoc_id", "kihoc_id" })
-})
+@Table(name = "ketquahoctaps")
 @Getter
 @Setter
 @Builder

@@ -27,7 +27,7 @@ public class DangKyTinChiController {
     // 🔹 Đăng ký lịch học
     @PostMapping("/{sinhVienId}/{lophocphanId}")
     public ResponseEntity<DangKyTinChi> register(@PathVariable UUID sinhVienId, @PathVariable UUID lophocphanId) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.register(sinhVienId, lophocphanId));
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.DangKiTinChiSinhVien(sinhVienId, lophocphanId));
     }
 
     // 🔹 Hủy đăng ký

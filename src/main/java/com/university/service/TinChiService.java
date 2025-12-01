@@ -75,7 +75,7 @@ public class TinChiService {
     }
 
     // public List<TinChiResponse> filterByLoaiTinChi(LoaiTinChiEnum loaiTinChiId) {
-    // return tinChiRepository.findbyLoaiTinChi(loaiTinChiId).stream()
+    // return tinChiRepository.
     // .map(tinChiMapper::toResponse)
     // .collect(Collectors.toList());
     // }

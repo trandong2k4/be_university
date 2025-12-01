@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.math.BigDecimal;
 import java.util.UUID;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.university.enums.LoaiTinChiEnum;
 
 @Entity
@@ -27,10 +26,10 @@ public class TinChi {
     @Column(name = "gia_tri_tin_chi", nullable = false)
     private BigDecimal giaTriTinChi;
 
+    @Column(name = "loai_tin_chi", nullable = false)
     private LoaiTinChiEnum loaiTinChi;
 
     @ManyToOne
     @JoinColumn(name = "mon_hoc_id", nullable = false)
-    @JsonIgnore
     private MonHoc monHoc;
 }

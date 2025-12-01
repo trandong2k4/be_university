@@ -17,6 +17,7 @@ public class SinhVienResponseDTO {
     private UUID id;
     private String maSinhVien;
     private String hoTen;
+    private String email;
     private LocalDate ngaynhapHoc;
     private String soDienThoai;
     private String tenNganh;

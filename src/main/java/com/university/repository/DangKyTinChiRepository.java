@@ -14,15 +14,14 @@ import java.util.UUID;
 @Repository
 public interface DangKyTinChiRepository extends JpaRepository<DangKyTinChi, UUID> {
 
-    @Query("SELECT d FROM DangKyTinChi d WHERE d.sinhVien.id = :sinhVienId")
-    List<DangKyTinChi> findBySinhVienId(@Param("sinhVienId") UUID sinhVienId);
+  @Query("SELECT d FROM DangKyTinChi d WHERE d.sinhVien.id = :sinhVienId")
+  List<DangKyTinChi> findBySinhVienId(@Param("sinhVienId") UUID sinhVienId);
 
-    @Query("""
-            SELECT d FROM DangKyTinChi d
-            WHERE d.lophocphan.id = :lophocphanId
-              AND d.sinhVien.id = :sinhVienId
-            """)
-    Optional<DangKyTinChi> findByLophocphanIdAndSinhVienId(
-            @Param("lophocphanId") UUID lophocphanId,
-            @Param("sinhVienId") UUID sinhVienId);
+  @Query("SELECT d FROM DangKyTinChi d WHERE d.lopHocPhan.id = :lopHocPhanId")
+  List<DangKyTinChi> findByLopHocPhanId(@Param("lopHocPhanId") UUID lopHocPhanId);
+
+  @Query("SELECT d FROM DangKyTinChi d WHERE d.lopHocPhan.id = :lopHocPhanId AND d.sinhVien.id = :sinhVienId")
+  Optional<DangKyTinChi> findByLopHocPhanIdAndSinhVienId(@Param("lopHocPhanId") UUID lopHocPhanId,
+      @Param("sinhVienId") UUID sinhVienId);
+
 }

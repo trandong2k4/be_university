@@ -1,11 +1,7 @@
 package com.university.mapper;
 
-import java.sql.Date;
-import java.sql.Time;
 import java.time.LocalDate;
-
 import org.springframework.stereotype.Component;
-
 import com.university.dto.reponse.UserResponseDTO;
 import com.university.dto.request.UserRequestDTO;
 import com.university.entity.Role;

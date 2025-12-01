@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -67,6 +68,13 @@ public class SinhVienService {
                 .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy sinh viên với userId: " + userId));
 
         return sinhVienMapper.toResponseDTO(sv);
+    }
+
+    // Trong StudentService
+    public Optional<SinhVienResponseDTO> findByUserIdChatbot(UUID userId) {
+        SinhVien entity = sinhVienRepository.findByUser_Id(userId)
+                .orElseThrow(() -> new ResourceNotFoundException(""));
+        return entity != null ? Optional.of(sinhVienMapper.toResponseDTO(entity)) : Optional.empty();
     }
 
     // 🔹 Tìm kiếm theo từ khóa
