@@ -6,7 +6,10 @@ import com.university.dto.reponse.PermissionResponseDTO;
 import com.university.dto.request.PermissionRequestDTO;
 import com.university.entity.Permission;
 
+import lombok.RequiredArgsConstructor;
+
 @Component
+@RequiredArgsConstructor
 public class PermissionMapper {
 
     public Permission toEntity(PermissionRequestDTO dto) {

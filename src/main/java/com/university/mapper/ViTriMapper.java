@@ -6,7 +6,10 @@ import com.university.dto.reponse.ViTriResponseDTO;
 import com.university.dto.request.ViTriRequestDTO;
 import com.university.entity.ViTri;
 
+import lombok.RequiredArgsConstructor;
+
 @Component
+@RequiredArgsConstructor
 public class ViTriMapper {
 
     public ViTri toEntity(ViTriRequestDTO dto) {

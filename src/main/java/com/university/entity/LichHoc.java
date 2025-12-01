@@ -5,12 +5,10 @@ import lombok.*;
 import java.time.LocalDate;
 import java.util.UUID;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.university.enums.ThuEnum;
-
 @Entity
 @Table(name = "lichhocs")
-@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,19 +21,19 @@ public class LichHoc {
     @Column(nullable = false)
     private LocalDate ngayHoc;
 
-    // @Enumerated(EnumType.STRING)
-    // @Column(nullable = false)
-    // private ThuEnum thuTrongTuan;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "lop_hoc_phan_id", nullable = false)
-    private LopHocPhan lopHocPhan;
-
     @Column(length = 255)
     private String ghiChu;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "lop_hoc_phan_id")
+    private LopHocPhan lopHocPhan;
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "gio_hoc_id", nullable = false)
-    @JsonBackReference
     private GioHoc gioHoc;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "phong_hoc_id")
+    private PhongHoc phongHoc;
+
 }

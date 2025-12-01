@@ -1,16 +1,15 @@
 package com.university.controller;
 
 import com.university.entity.ChatLog;
+import com.university.entity.User;
 import com.university.service.chatbot.ChatLogService;
 import com.university.service.chatbot.SmartChatService;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
+
 
 @RestController
 @RequestMapping("/chatbot")
@@ -33,17 +32,17 @@ public class ChatbotController {
     }
 
     @PostMapping("/chat/{userId}")
-    public ResponseEntity<String> chat(@PathVariable UUID userId, @RequestBody Map<String, String> body) {
+    public ResponseEntity<String> chat(@PathVariable User user, @RequestBody Map<String, String> body) {
         String message = body.get("message");
 
         try {
             // Lưu tin nhắn user
-            chatLogService.save(userId, "user", message);
+            chatLogService.save(user, "user", message);
 
             String response = smartChatService.chat(message);
 
             // Lưu phản hồi AI
-            chatLogService.save(userId, "bot", response);
+            chatLogService.save(user, "bot", response);
 
             return ResponseEntity.ok(response);
 
@@ -53,8 +52,8 @@ public class ChatbotController {
     }
 
     @GetMapping("/history/{userId}")
-    public ResponseEntity<List<ChatLog>> getHistory(@PathVariable UUID userId) {
-        return ResponseEntity.ok(chatLogService.getHistory(userId));
+    public ResponseEntity<List<ChatLog>> getHistory(@PathVariable User user) {
+        return ResponseEntity.ok(chatLogService.getHistory(user));
     }
 
 }

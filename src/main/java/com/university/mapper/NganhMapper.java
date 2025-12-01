@@ -33,6 +33,7 @@ public class NganhMapper {
                 .maNganh(nganh.getMaNganh())
                 .tenNganh(nganh.getTenNganh())
                 .khoaId(nganh.getKhoa().getId())
+                .tenKhoa(nganh.getKhoa().getTenKhoa())
                 .build();
     }
 }

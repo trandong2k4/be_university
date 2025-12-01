@@ -1,12 +1,12 @@
 package com.university.dto.request;
 
 import java.time.LocalDate;
-
 import com.university.entity.Role;
+import lombok.Getter;
+import lombok.Setter;
 
-import lombok.Data;
-
-@Data
+@Getter
+@Setter
 public class RegisterRequest {
     private String username;
     private String password;

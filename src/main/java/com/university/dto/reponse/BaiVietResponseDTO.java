@@ -2,14 +2,14 @@ package com.university.dto.reponse;
 
 import java.time.LocalDate;
 import java.util.UUID;
-
 import com.university.enums.LoaiBaiVietEnum;
 import com.university.enums.TrangThaiBaiVietEnum;
-
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Builder
 public class BaiVietResponseDTO {
     private UUID id;

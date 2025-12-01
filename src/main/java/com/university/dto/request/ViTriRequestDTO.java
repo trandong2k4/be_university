@@ -1,15 +1,15 @@
 package com.university.dto.request;
 
 import java.math.BigDecimal;
-
 import com.university.entity.GiangVien;
 import com.university.entity.NhanVien;
-
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class ViTriRequestDTO {
 
     @NotBlank(message = "Mã vị trí không được để trống")

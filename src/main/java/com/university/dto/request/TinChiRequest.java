@@ -2,14 +2,14 @@ package com.university.dto.request;
 
 import java.math.BigDecimal;
 import java.util.UUID;
-
 import com.university.enums.LoaiTinChiEnum;
-
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class TinChiRequest {

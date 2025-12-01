@@ -3,18 +3,19 @@ package com.university.entity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.university.enums.HocPhiEnum;
 
 @Entity
 @Table(name = "hocphis", uniqueConstraints = @UniqueConstraint(columnNames = { "sinh_vien_id", "ki_hoc_id" }))
-@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -37,11 +38,9 @@ public class HocPhi {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sinh_vien_id", nullable = false)
-    @JsonBackReference
     private SinhVien sinhVien;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ki_hoc_id")
-    @JsonBackReference
     private KiHoc kiHoc;
 }

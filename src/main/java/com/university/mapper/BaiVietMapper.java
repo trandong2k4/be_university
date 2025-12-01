@@ -1,14 +1,15 @@
 package com.university.mapper;
 
 import org.springframework.stereotype.Component;
-
 import com.university.dto.reponse.BaiVietResponseDTO;
 import com.university.dto.request.BaiVietRequestDTO;
 import com.university.entity.BaiViet;
 import com.university.entity.User;
 import com.university.service.UserService;
+import lombok.RequiredArgsConstructor;
 
 @Component
+@RequiredArgsConstructor
 public class BaiVietMapper {
 
     UserService userService;

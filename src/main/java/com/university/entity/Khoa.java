@@ -2,17 +2,15 @@ package com.university.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import java.util.UUID;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import java.util.List;
 
 @Entity
 @Table(name = "khoas")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Khoa {
@@ -27,12 +25,8 @@ public class Khoa {
     @Column(name = "ten_khoa", length = 100)
     private String tenKhoa;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "truong_id", nullable = false)
-    @JsonBackReference
     private Truong truong;
 
-    @OneToMany(mappedBy = "khoa", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonManagedReference
-    private List<Nganh> nganhs;
 }

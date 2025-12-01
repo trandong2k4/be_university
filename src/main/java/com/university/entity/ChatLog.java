@@ -7,7 +7,8 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "chat_logs")
-@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,9 +18,6 @@ public class ChatLog {
     @GeneratedValue(generator = "UUID")
     private UUID id;
 
-    @Column(name = "user_id", nullable = false)
-    private UUID userId;
-
     @Column(nullable = false, length = 10)
     private String role; // "user" | "bot"
 
@@ -28,4 +26,8 @@ public class ChatLog {
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 }

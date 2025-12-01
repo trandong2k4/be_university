@@ -7,7 +7,10 @@ import com.university.dto.request.TinChiRequest;
 import com.university.entity.MonHoc;
 import com.university.entity.TinChi;
 
+import lombok.RequiredArgsConstructor;
+
 @Component
+@RequiredArgsConstructor
 public class TinChiMapper {
 
     public TinChi toEntity(TinChiRequest dto, MonHoc monHoc) {

@@ -34,7 +34,7 @@ public class ChiTietSinhVienService {
     }
 
     public ChiTietSinhVienResponseDTO findByUserId(UUID userId) {
-        ChiTietSinhVien ct = chiTietSinhVienRepository.findBySinhVien_User_Id(userId)
+        ChiTietSinhVien ct = chiTietSinhVienRepository.findBySinhVienId(userId)
                 .orElseThrow(
                         () -> new ResourceNotFoundException("Không tìm thấy chi tiết sinh viên của userId: " + userId));
 

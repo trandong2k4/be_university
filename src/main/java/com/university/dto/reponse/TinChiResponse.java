@@ -3,9 +3,11 @@ package com.university.dto.reponse;
 import java.math.BigDecimal;
 import java.util.UUID;
 import com.university.enums.LoaiTinChiEnum;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class TinChiResponse {
     private UUID id;
     private String tenTinChi;

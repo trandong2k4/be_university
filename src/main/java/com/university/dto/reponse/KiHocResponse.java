@@ -4,20 +4,22 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@Builder
-@NoArgsConstructor
 @AllArgsConstructor
-public class KiHocResponseDTO {
+@NoArgsConstructor
+public class KiHocResponse {
     private UUID id;
+    private String maKiHoc;
     private String tenKiHoc;
     private LocalDate ngayBatDau;
     private LocalDate ngayKetThuc;
-    private String ghiChu;
+    private int soLichHoc;
+    private int soHocPhi;
+    private int soHocLai;
+
 }

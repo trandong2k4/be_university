@@ -3,17 +3,18 @@ package com.university.entity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import java.time.LocalDate;
 import java.util.UUID;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.university.enums.LoaiBaiVietEnum;
 import com.university.enums.TrangThaiBaiVietEnum;
 
 @Entity
 @Table(name = "baiviets")
-@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -51,6 +52,5 @@ public class BaiViet {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    @JsonBackReference
     private User user;
 }

@@ -1,5 +1,5 @@
 package com.university.enums;
 
 public enum GioiTinhEnum {
-    NAM, NU, KHAC
+    NAM, NU
 }

@@ -3,21 +3,16 @@ package com.university.entity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
+import lombok.Setter;
 import java.util.UUID;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "sinhviens")
-@Data
+@Setter
+@Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -45,22 +40,12 @@ public class SinhVien {
     @Column(name = "ngay_tot_nghiep")
     private LocalDate ngayTotNghiep;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "nganh_id", nullable = false)
-    @JsonBackReference
     private Nganh nganh;
 
-
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", unique = true)
-    @JsonBackReference
     private User user;
 
-    @OneToOne(mappedBy = "sinhVien", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JsonManagedReference
-    private ChiTietSinhVien chiTiet;
-
-    @OneToMany(mappedBy = "sinhVien", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JsonManagedReference
-    private List<HocPhi> hocPhis;
 }

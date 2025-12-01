@@ -5,8 +5,10 @@ import org.springframework.stereotype.Component;
 import com.university.dto.reponse.MonHocResponseDTO;
 import com.university.dto.request.MonHocRequestDTO;
 import com.university.entity.MonHoc;
+import lombok.RequiredArgsConstructor;
 
 @Component
+@RequiredArgsConstructor
 public class MonHocMapper {
 
     public MonHoc toEntity(MonHocRequestDTO dto) {

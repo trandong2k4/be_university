@@ -1,26 +1,36 @@
 package com.university.mapper;
 
+import java.sql.Date;
+import java.sql.Time;
+import java.time.LocalDate;
+
 import org.springframework.stereotype.Component;
 
 import com.university.dto.reponse.UserResponseDTO;
 import com.university.dto.request.UserRequestDTO;
+import com.university.entity.Role;
 import com.university.entity.User;
-import com.university.service.auth.RoleService;
+import com.university.exception.ResourceNotFoundException;
+import com.university.repository.RoleRepository;
+import lombok.RequiredArgsConstructor;
 
 @Component
+@RequiredArgsConstructor
 public class UserMapper {
-    RoleService roleService;
+    RoleRepository roleRepository;
 
     public User toEntity(UserRequestDTO dto) {
+        Role role = roleRepository.findById(dto.getRoleId())
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy vai trò"));
+
         return User.builder()
                 .username(dto.getUsername())
                 .password(dto.getPassword())
                 .email(dto.getEmail())
                 .status(dto.isStatus())
+                .updateDate(LocalDate.now())
                 .note(dto.getNote())
-                .createDate(dto.getCreateDate())
-                .updateDate(dto.getUpdateDate())
-                .role(dto.getRole())
+                .role(role)
                 .build();
     }
 
@@ -33,6 +43,7 @@ public class UserMapper {
                 .note(user.getNote())
                 .createDate(user.getCreateDate())
                 .updateDate(user.getUpdateDate())
+                .roleId(user.getRole().getId())
                 .build();
     }
 }

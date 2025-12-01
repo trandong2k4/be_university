@@ -1,11 +1,12 @@
 package com.university.dto.request;
 
 import java.util.UUID;
-
 import jakarta.validation.constraints.NotNull;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class DangKyTinChiRequestDTO {
 
     @NotNull(message = "Lịch học không được để trống")

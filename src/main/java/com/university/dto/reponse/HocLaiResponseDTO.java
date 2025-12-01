@@ -2,15 +2,15 @@ package com.university.dto.reponse;
 
 import java.math.BigDecimal;
 import java.util.UUID;
-
 import com.university.enums.HocLaiEnum;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

@@ -2,15 +2,16 @@ package com.university.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-
+import lombok.Setter;
 import java.util.UUID;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "nhanviens")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class NhanVien {
@@ -31,11 +32,11 @@ public class NhanVien {
     @Column(name = "ngay_nghi_viec")
     private LocalDate ngayNghiViec;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "vitri_id")
     private ViTri viTri;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", unique = true)
     private User user;
 }

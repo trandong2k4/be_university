@@ -2,13 +2,12 @@ package com.university.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.Set;
 import java.util.UUID;
 
 @Entity
 @Table(name = "roles")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -23,10 +22,4 @@ public class Role {
 
     @Column(length = 255)
     private String description;
-
-    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
-    private Set<User> users;
-
-    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<RolePermission> rolePermissions;
 }

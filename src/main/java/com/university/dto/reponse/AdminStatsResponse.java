@@ -1,11 +1,12 @@
 package com.university.dto.reponse;
 
 import java.util.Map;
-
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 public class AdminStatsResponse {
     private long sinhVienCount;

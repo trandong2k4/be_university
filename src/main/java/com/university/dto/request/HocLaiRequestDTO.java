@@ -2,16 +2,16 @@ package com.university.dto.request;
 
 import java.math.BigDecimal;
 import java.util.UUID;
-
 import com.university.enums.HocLaiEnum;
-
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class HocLaiRequestDTO {

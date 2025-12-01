@@ -8,7 +8,10 @@ import com.university.entity.Nganh;
 import com.university.entity.SinhVien;
 import com.university.entity.User;
 
+import lombok.RequiredArgsConstructor;
+
 @Component
+@RequiredArgsConstructor
 public class SinhVienMapper {
 
     public SinhVien toEntity(SinhVienRequestDTO dto, Nganh nganh, User user) {

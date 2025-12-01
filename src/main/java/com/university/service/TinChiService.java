@@ -4,7 +4,6 @@ import com.university.dto.reponse.TinChiResponse;
 import com.university.dto.request.TinChiRequest;
 import com.university.entity.MonHoc;
 import com.university.entity.TinChi;
-import com.university.enums.LoaiTinChiEnum;
 import com.university.mapper.TinChiMapper;
 import com.university.repository.MonHocRepository;
 import com.university.repository.TinChiRepository;

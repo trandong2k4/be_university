@@ -2,13 +2,13 @@ package com.university.dto.reponse;
 
 import java.time.LocalDate;
 import java.util.UUID;
-
 import com.university.enums.GioiTinhEnum;
-
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Builder
 public class ChiTietSinhVienResponseDTO {
     private UUID id;

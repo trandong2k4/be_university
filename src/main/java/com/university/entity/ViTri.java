@@ -3,17 +3,16 @@ package com.university.entity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.util.HashSet;
-import java.util.Set;
+import lombok.Setter;
 import java.util.UUID;
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "vitris")
-@Data
+@Setter
+@Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,7 +22,7 @@ public class ViTri {
     @GeneratedValue(generator = "UUID")
     private UUID id;
 
-    @Column(name = "ma_vi_tri", unique = true, nullable = false, length = 5)
+    @Column(name = "ma_vi_tri", unique = true, nullable = false, length = 15)
     private String maViTri;
 
     @Column(name = "ten_vi_tri", nullable = false, length = 50)

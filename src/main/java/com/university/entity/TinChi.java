@@ -2,16 +2,18 @@ package com.university.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import java.math.BigDecimal;
 import java.util.UUID;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.university.enums.LoaiTinChiEnum;
 
 @Entity
 @Table(name = "tinchi")
-@Data
+@Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class TinChi {
@@ -27,7 +29,8 @@ public class TinChi {
 
     private LoaiTinChiEnum loaiTinChi;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "mon_hoc_id", nullable = false)
+    @JsonIgnore
     private MonHoc monHoc;
 }

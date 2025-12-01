@@ -6,8 +6,10 @@ import com.university.dto.reponse.ChiTietSinhVienResponseDTO;
 import com.university.dto.request.ChiTietSinhVienRequestDTO;
 import com.university.entity.ChiTietSinhVien;
 import com.university.entity.SinhVien;
+import lombok.RequiredArgsConstructor;
 
 @Component
+@RequiredArgsConstructor
 public class ChiTietSinhVienMapper {
 
     public ChiTietSinhVien toEntity(ChiTietSinhVienRequestDTO dto, SinhVien sv) {

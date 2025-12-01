@@ -2,17 +2,16 @@ package com.university.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import java.util.List;
+import lombok.Setter;
 import java.util.UUID;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "truongs")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Truong {
@@ -50,8 +49,4 @@ public class Truong {
 
     @Column(name = "nguoi_dai_dien", length = 100)
     private String nguoiDaiDien;
-
-    @OneToMany(mappedBy = "truong", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonManagedReference
-    private List<Khoa> khoas;
 }

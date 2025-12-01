@@ -2,12 +2,12 @@ package com.university.dto.reponse;
 
 import java.time.LocalDate;
 import java.util.UUID;
-
-import com.university.entity.Role;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Builder
 public class UserResponseDTO {
     private UUID id;
@@ -17,6 +17,5 @@ public class UserResponseDTO {
     private String note;
     private LocalDate createDate;
     private LocalDate updateDate;
-    private Role role;
-
+    private UUID roleId;
 }

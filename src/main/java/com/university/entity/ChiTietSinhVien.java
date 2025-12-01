@@ -3,16 +3,19 @@ package com.university.entity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.util.UUID;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.university.enums.GioiTinhEnum;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "chitietsinhviens")
-@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,11 +28,11 @@ public class ChiTietSinhVien {
     @Column(name = "dia_chi", length = 100)
     private String diaChi;
 
-    @Column(name = "ngay_sinh")
+    @Column
     private LocalDate ngaySinh;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "gioi_tinh")
+    @Column
     private GioiTinhEnum gioiTinh;
 
     @Column(name = "quoc_tich", length = 30)
@@ -41,8 +44,7 @@ public class ChiTietSinhVien {
     @Column(name = "sdt_nguoi_than", length = 10)
     private String sdtNguoiThan;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "sinh_vien_id", nullable = false)
-    @JsonBackReference
     private SinhVien sinhVien;
 }

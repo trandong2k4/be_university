@@ -1,18 +1,15 @@
 package com.university.controller;
 
+import com.university.dto.reponse.LichHocChiTietDTO;
 import com.university.dto.reponse.LichHocResponseDTO;
 import com.university.dto.request.LichHocRequestDTO;
 import com.university.service.LichHocService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -36,6 +33,21 @@ public class LichHocController {
     @GetMapping("/{id}")
     public ResponseEntity<LichHocResponseDTO> getById(@PathVariable UUID id) {
         return ResponseEntity.ok(lichHocService.getById(id));
+    }
+
+    @GetMapping("/student/{id}")
+    public ResponseEntity<List<LichHocChiTietDTO>> findLichHocBySinhvienId(@PathVariable UUID id) {
+        return ResponseEntity.ok(lichHocService.findLichHocDetailsBySinhVienId(id));
+    }
+
+    // @GetMapping("/lecture/{id}")
+    // public ResponseEntity<List<LichHoc>> findLichDayById(@PathVariable UUID id) {
+    // return ResponseEntity.ok(lichHocService.findLichDayByGiangVienId(id));
+    // }
+
+    @GetMapping("/detel")
+    public ResponseEntity<List<LichHocChiTietDTO>> findLichHocDetel() {
+        return ResponseEntity.ok(lichHocService.findAllLichHocDetails());
     }
 
     // @GetMapping("/search")

@@ -6,7 +6,10 @@ import com.university.dto.reponse.RoleResponseDTO;
 import com.university.dto.request.RoleRequestDTO;
 import com.university.entity.Role;
 
+import lombok.RequiredArgsConstructor;
+
 @Component
+@RequiredArgsConstructor
 public class RoleMapper {
 
     public Role toEntity(RoleRequestDTO dto) {

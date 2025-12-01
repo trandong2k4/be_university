@@ -1,10 +1,7 @@
 package com.university.entity;
 
-import java.util.List;
 import java.util.UUID;
-
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.*;
@@ -12,7 +9,8 @@ import lombok.*;
 
 @Entity
 @Table(name = "monhocs")
-@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -36,13 +34,6 @@ public class MonHoc {
     private int tongSoTinChi;
 
     @OneToOne()
-    @JoinColumn(name = "mon_hoc_id", nullable = false)
+    @JoinColumn(name = "mon_hoc_id")
     private MonHoc monHocTienQuyet;
-
-    @OneToMany(mappedBy = "monHoc", cascade = CascadeType.ALL)
-    @JsonManagedReference
-    private List<TinChi> tinChis;
-
-    @OneToMany(mappedBy = "monHoc", cascade = CascadeType.ALL)
-    private List<LopHocPhan> lophocphans;
 }
