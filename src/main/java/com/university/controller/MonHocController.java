@@ -33,11 +33,6 @@ public class MonHocController {
         return ResponseEntity.ok(monHocService.getById(id));
     }
 
-    @GetMapping("/search")
-    public ResponseEntity<List<MonHocResponseDTO>> search(@RequestParam String keyword) {
-        return ResponseEntity.ok(monHocService.search(keyword));
-    }
-
     @PutMapping("/{id}")
     public ResponseEntity<MonHocResponseDTO> update(@PathVariable UUID id,
             @RequestBody @Valid MonHocRequestDTO dto) {

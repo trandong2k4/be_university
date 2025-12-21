@@ -39,7 +39,7 @@ public class User {
   @Column(columnDefinition = "DATE")
   private LocalDate updateDate;
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "role_id")
   private Role role;
 

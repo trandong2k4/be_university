@@ -31,8 +31,6 @@ public interface LichHocRepository extends JpaRepository<LichHoc, UUID> {
                         "JOIN " +
                         "    public.monhocs mh ON lhp.mon_hoc_id = mh.id " +
                         "JOIN " +
-                        "    public.giangviens gv ON lhp.giang_vien_id = gv.id " +
-                        "LEFT JOIN " +
                         "    public.phonghocs ph ON lh.phong_hoc_id = ph.id " +
                         "JOIN " +
                         "    public.giohocs gh ON lh.gio_hoc_id = gh.id " +
@@ -58,8 +56,6 @@ public interface LichHocRepository extends JpaRepository<LichHoc, UUID> {
                         "JOIN " +
                         "    public.monhocs mh ON lhp.mon_hoc_id = mh.id " +
                         "JOIN " +
-                        "    public.giangviens gv ON lhp.giang_vien_id = gv.id " +
-                        "LEFT JOIN " +
                         "    public.phonghocs ph ON lh.phong_hoc_id = ph.id " +
                         "JOIN " +
                         "    public.giohocs gh ON lh.gio_hoc_id = gh.id " +

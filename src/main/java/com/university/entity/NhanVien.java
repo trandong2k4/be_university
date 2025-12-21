@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.util.UUID;
+
+import com.university.enums.ViTriEnum;
+
 import java.time.LocalDate;
 
 @Entity
@@ -20,6 +23,9 @@ public class NhanVien {
     @GeneratedValue(generator = "UUID")
     private UUID id;
 
+    @Column(name = "ma_nhan_vien", length = 15)
+    private String manNhanVien;
+
     @Column(name = "ho_ten", length = 50)
     private String hoTen;
 
@@ -32,11 +38,10 @@ public class NhanVien {
     @Column(name = "ngay_nghi_viec")
     private LocalDate ngayNghiViec;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "vitri_id")
-    private ViTri viTri;
+    @Enumerated(EnumType.STRING)
+    private ViTriEnum viTri;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", unique = true)
     private User user;
 }

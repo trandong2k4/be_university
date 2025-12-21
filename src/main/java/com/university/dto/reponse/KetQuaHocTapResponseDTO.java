@@ -17,11 +17,14 @@ import lombok.Setter;
 public class KetQuaHocTapResponseDTO {
     private UUID id;
     private String tenSinhVien;
-    private String maSinhVien;
     private String tenMonHoc;
     private String tenKiHoc;
-    private BigDecimal diem;
+    private BigDecimal chuyenCan;
+    private BigDecimal thuongKi;
+    private BigDecimal giuaKi;
+    private BigDecimal cuoiKi;
     private String danhGia;
     private String ghiChu;
     private LocalDate ngayCapNhat;
+
 }

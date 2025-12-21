@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.UUID;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.university.enums.GioiTinhEnum;
 import java.time.LocalDate;
 

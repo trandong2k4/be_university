@@ -1,10 +1,7 @@
 package com.university.dto.reponse;
 
-import java.util.List;
 import java.util.UUID;
-
 import com.university.enums.TrangThaiLHP;
-
 import lombok.*;
 
 @Getter
@@ -22,57 +19,20 @@ public class LopHocPhanResponseDTO {
 
     private Integer soLuongHienTai;
 
+    private Integer soTinCHi;
+
     private TrangThaiLHP trangThai;
 
-    private MonHocDTO monHoc;
+    private UUID monHocId;
 
-    private GiangVienDTO giangVien;
+    private String tenMonHoc;
 
-    private KiHocDTO kiHoc;
+    private UUID giangVienId;
 
-    private List<LichHocDTO> lichHocs;
+    private String tenGiangVien;
 
-    @Getter
-    @Setter
-    @NoArgsConstructor
-    @AllArgsConstructor
-    @Builder
-    public static class MonHocDTO {
-        private UUID id;
-        private String tenMonHoc;
-        private String maMonHoc;
-    }
+    private UUID kiHocId;
 
-    @Getter
-    @Setter
-    @NoArgsConstructor
-    @AllArgsConstructor
-    @Builder
-    public static class GiangVienDTO {
-        private UUID id;
-        private String hoTen;
-        private String email;
-    }
+    private String tenKiHoc;
 
-    @Getter
-    @Setter
-    @NoArgsConstructor
-    @AllArgsConstructor
-    @Builder
-    public static class KiHocDTO {
-        private UUID id;
-        private String tenKiHoc;
-    }
-
-    @Getter
-    @Setter
-    @NoArgsConstructor
-    @AllArgsConstructor
-    @Builder
-    public static class LichHocDTO {
-        private UUID id;
-        private String ngayHoc; // String hoặc LocalDate tùy bạn map
-        private UUID phongHocId;
-        private String ghiChu;
-    }
 }

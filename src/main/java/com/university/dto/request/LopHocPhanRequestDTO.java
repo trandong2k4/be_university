@@ -1,22 +1,21 @@
 package com.university.dto.request;
 
-import com.university.entity.GiangVien;
-import com.university.entity.KiHoc;
-import com.university.entity.LichHoc;
-import com.university.entity.MonHoc;
+import java.util.UUID;
 import com.university.enums.TrangThaiLHP;
+
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@Builder
 public class LopHocPhanRequestDTO {
-    String maLopHocPhan;
-    int so_luong_toi_da;
-    int so_luong_hien_tai;
-    TrangThaiLHP trang_thai;
-    MonHoc monHoc;
-    GiangVien giangVien;
-    KiHoc kiHoc;
-    LichHoc lichHoc;
+    private String maLopHocPhan;
+    private Integer so_luong_toi_da;
+    private Integer so_luong_hien_tai;
+    private TrangThaiLHP trang_thai;
+    private UUID monHocId;
+    private UUID giangVienId;
+    private UUID kiHocId;
 }

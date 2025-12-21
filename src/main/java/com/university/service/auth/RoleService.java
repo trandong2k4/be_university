@@ -6,11 +6,11 @@ import com.university.entity.Role;
 import com.university.exception.ResourceNotFoundException;
 import com.university.mapper.RoleMapper;
 import com.university.repository.RoleRepository;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -37,9 +37,16 @@ public class RoleService {
     }
 
     public List<RoleResponseDTO> search(String keyword) {
-        return roleRepository.searchByMaRole(keyword).stream()
+        if (keyword == null || keyword.trim().isEmpty()) {
+            return roleRepository.findAll()
+                    .stream()
+                    .map(roleMapper::toResponseDTO)
+                    .toList();
+        }
+        return roleRepository.searchByMaRole(keyword.trim())
+                .stream()
                 .map(roleMapper::toResponseDTO)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public RoleResponseDTO update(UUID id, RoleRequestDTO dto) {

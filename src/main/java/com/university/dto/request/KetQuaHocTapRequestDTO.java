@@ -20,14 +20,24 @@ public class KetQuaHocTapRequestDTO {
     private UUID sinhVienId;
 
     @NotNull(message = "Môn học không được để trống")
-    private UUID monHocId;
-
-    @NotNull(message = "Kỳ học không được để trống")
-    private UUID kiHocId;
+    private UUID dangKyTinChiId;
 
     @DecimalMin(value = "0.0", inclusive = true, message = "Điểm phải >= 0")
     @DecimalMax(value = "10.0", inclusive = true, message = "Điểm phải <= 10")
-    private BigDecimal diem;
+    private BigDecimal chuyenCan;
+
+    @DecimalMin(value = "0.0", inclusive = true, message = "Điểm phải >= 0")
+    @DecimalMax(value = "10.0", inclusive = true, message = "Điểm phải <= 10")
+    private BigDecimal thuongKi;
+
+    @DecimalMin(value = "0.0", inclusive = true, message = "Điểm phải >= 0")
+    @DecimalMax(value = "10.0", inclusive = true, message = "Điểm phải <= 10")
+
+    private BigDecimal giuaKi;
+
+    @DecimalMin(value = "0.0", inclusive = true, message = "Điểm phải >= 0")
+    @DecimalMax(value = "10.0", inclusive = true, message = "Điểm phải <= 10")
+    private BigDecimal cuoiKi;
 
     private String danhGia;
     private String ghiChu;

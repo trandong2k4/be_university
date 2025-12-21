@@ -13,6 +13,8 @@ import com.university.repository.SinhVienRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -125,9 +127,9 @@ public class DangKyTinChiService {
         LopHocPhan lop = dk.getLopHocPhan();
 
         // Kiểm tra có được phép hủy không (ví dụ: trước ngày bắt đầu kỳ học)
-        // if (LocalDate.now().isAfter(lop.getKiHoc().getNgayBatDau().minusDays(3))) {
-        // throw new BusinessException("Đã quá hạn hủy đăng ký!");
-        // }
+        if (LocalDate.now().isAfter(lop.getKiHoc().getNgayBatDau().minusDays(3))) {
+            throw new ResourceNotFoundException("Đã quá hạn hủy đăng ký!");
+        }
 
         dkRepo.delete(dk);
 

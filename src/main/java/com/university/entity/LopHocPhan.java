@@ -37,11 +37,11 @@ public class LopHocPhan {
     @JoinColumn(name = "mon_hoc_id", nullable = false)
     private MonHoc monHoc;
 
-    @ManyToOne
-    @JoinColumn(name = "giang_vien_id", nullable = false)
-    private GiangVien giangVien;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "giang_vien_id")
+    private NhanVien nhanVien;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ki_hoc_id", nullable = false)
     private KiHoc kiHoc;
 

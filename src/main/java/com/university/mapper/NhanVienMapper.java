@@ -6,21 +6,19 @@ import com.university.dto.reponse.NhanVienResponseDTO;
 import com.university.dto.request.NhanVienRequestDTO;
 import com.university.entity.NhanVien;
 import com.university.entity.User;
-import com.university.entity.ViTri;
-
 import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
 public class NhanVienMapper {
 
-    public NhanVien toEntity(NhanVienRequestDTO dto, ViTri viTri, User user) {
+    public NhanVien toEntity(NhanVienRequestDTO dto, User user) {
         NhanVien nv = new NhanVien();
         nv.setHoTen(dto.getHoTen());
         nv.setSoDienThoai(dto.getSoDienThoai());
         nv.setNgayVaoLam(dto.getNgayVaoLam());
         nv.setNgayNghiViec(dto.getNgayNghiViec());
-        nv.setViTri(viTri);
+        nv.setViTri(dto.getViTri());
         nv.setUser(user);
         return nv;
     }
@@ -32,7 +30,7 @@ public class NhanVienMapper {
                 nv.getSoDienThoai(),
                 nv.getNgayVaoLam(),
                 nv.getNgayNghiViec(),
-                nv.getViTri() != null ? nv.getViTri().getTenViTri() : null,
+                nv.getViTri() != null ? nv.getViTri() : null,
                 nv.getUser() != null ? nv.getUser().getUsername() : null);
     }
 }

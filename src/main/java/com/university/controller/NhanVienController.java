@@ -26,11 +26,6 @@ public class NhanVienController {
         return ResponseEntity.status(HttpStatus.CREATED).body(nhanVienService.create(dto));
     }
 
-    @GetMapping("/giangviens")
-    public ResponseEntity<List<NhanVienResponseDTO>> getAllGiangVien() {
-        return ResponseEntity.ok(nhanVienService.getAllGiangVien());
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<NhanVienResponseDTO> getById(@PathVariable UUID id) {
         return ResponseEntity.ok(nhanVienService.getById(id));

@@ -3,22 +3,13 @@ package com.university.service;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
-
 import org.springframework.stereotype.Service;
-
 import com.university.dto.reponse.KetQuaHocTapResponseDTO;
 import com.university.dto.request.KetQuaHocTapRequestDTO;
 import com.university.entity.KetQuaHocTap;
-import com.university.entity.KiHoc;
-import com.university.entity.MonHoc;
-import com.university.entity.SinhVien;
 import com.university.exception.ResourceNotFoundException;
 import com.university.mapper.KetQuaHocTapMapper;
 import com.university.repository.KetQuaHocTapRepository;
-import com.university.repository.KiHocRepository;
-import com.university.repository.MonHocRepository;
-import com.university.repository.SinhVienRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -26,20 +17,10 @@ import lombok.RequiredArgsConstructor;
 public class KetQuaHocTapService {
 
         private final KetQuaHocTapRepository ketQuaHocTapRepository;
-        private final SinhVienRepository sinhVienRepository;
-        private final MonHocRepository monHocRepository;
-        private final KiHocRepository kiHocRepository;
         private final KetQuaHocTapMapper ketQuaHocTapMapper;
 
         public KetQuaHocTapResponseDTO create(KetQuaHocTapRequestDTO dto) {
-                SinhVien sv = sinhVienRepository.findById(dto.getSinhVienId())
-                                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy sinh viên"));
-                MonHoc monHoc = monHocRepository.findById(dto.getMonHocId())
-                                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy môn học"));
-                KiHoc kiHoc = kiHocRepository.findById(dto.getKiHocId())
-                                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy kỳ học"));
-
-                KetQuaHocTap kq = ketQuaHocTapMapper.toEntity(dto, sv, monHoc, kiHoc);
+                KetQuaHocTap kq = ketQuaHocTapMapper.toEntity(dto);
                 return ketQuaHocTapMapper.toResponseDTO(ketQuaHocTapRepository.save(kq));
         }
 
@@ -55,21 +36,16 @@ public class KetQuaHocTapService {
                 return ketQuaHocTapMapper.toResponseDTO(kq);
         }
 
-        public List<KetQuaHocTapResponseDTO> search(String keyword) {
-                return ketQuaHocTapRepository.searchByTenSinhVien(keyword).stream()
-                                .map(ketQuaHocTapMapper::toResponseDTO)
-                                .collect(Collectors.toList());
-        }
-
         public KetQuaHocTapResponseDTO update(UUID id, KetQuaHocTapRequestDTO dto) {
                 KetQuaHocTap existing = ketQuaHocTapRepository.findById(id)
                                 .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy kết quả học tập"));
-
-                existing.setDiem(dto.getDiem());
+                existing.setChuyenCan(dto.getChuyenCan());
+                existing.setThuongKi(dto.getThuongKi());
+                existing.setGiuaKi(dto.getGiuaKi());
+                existing.setCuoiKi(dto.getCuoiKi());
                 existing.setDanhGia(dto.getDanhGia());
                 existing.setGhiChu(dto.getGhiChu());
                 existing.setNgayCapNhat(LocalDate.now());
-
                 return ketQuaHocTapMapper.toResponseDTO(ketQuaHocTapRepository.save(existing));
         }
 

@@ -17,23 +17,22 @@ import lombok.Setter;
 @AllArgsConstructor
 public class HocPhiRequestDTO {
 
-    @NotNull(message = "Sinh viên không được để trống")
-    private UUID sinhVienId;
-
-    @NotNull(message = "Kỳ học không được để trống")
-    private UUID kiHocId;
+    @NotNull(message = "Số tín chỉ không trống, >=1")
+    private int soTinChi;
 
     @DecimalMin(value = "0.0", inclusive = true, message = "Số tiền phải >= 0")
     private BigDecimal soTien;
 
-    @DecimalMin(value = "0.0", inclusive = true, message = "Giá trị tín chỉ phải >= 0")
-    private BigDecimal giaTriTinChi;
-
+    private LocalDate ngayTao;
     private LocalDate hanThanhToan;
     private LocalDate ngayThanhToan;
 
-    private String ghiChu;
-
     @NotNull(message = "Trạng thái không được để trống")
     private HocPhiEnum trangThai;
+
+    @NotNull(message = "Sinh viên không được để trống")
+    private UUID sinhVienId;
+
+    private String ghiChu;
+
 }

@@ -10,10 +10,8 @@ import com.university.dto.request.HocPhiRequestDTO;
 import com.university.entity.HocPhi;
 import com.university.entity.SinhVien;
 import com.university.exception.ResourceNotFoundException;
-import com.university.entity.KiHoc;
 import com.university.mapper.HocPhiMapper;
 import com.university.repository.HocPhiRepository;
-import com.university.repository.KiHocRepository;
 import com.university.repository.SinhVienRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -23,16 +21,13 @@ public class HocPhiService {
 
     private final HocPhiRepository hocPhiRepository;
     private final SinhVienRepository sinhVienRepository;
-    private final KiHocRepository kiHocRepository;
     private final HocPhiMapper hocPhiMapper;
 
     public HocPhiResponseDTO create(HocPhiRequestDTO dto) {
         SinhVien sv = sinhVienRepository.findById(dto.getSinhVienId())
                 .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy sinh viên"));
-        KiHoc kiHoc = kiHocRepository.findById(dto.getKiHocId())
-                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy kỳ học"));
 
-        HocPhi hp = hocPhiMapper.toEntity(dto, sv, kiHoc);
+        HocPhi hp = hocPhiMapper.toEntity(dto, sv);
         return hocPhiMapper.toResponseDTO(hocPhiRepository.save(hp));
     }
 
@@ -57,9 +52,8 @@ public class HocPhiService {
     public HocPhiResponseDTO update(UUID id, HocPhiRequestDTO dto) {
         HocPhi existing = hocPhiRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy học phí"));
-
+        existing.setSoTinChi(dto.getSoTinChi());
         existing.setSoTien(dto.getSoTien());
-        existing.setGiaTriTinChi(dto.getGiaTriTinChi());
         existing.setHanThanhToan(dto.getHanThanhToan());
         existing.setNgayThanhToan(dto.getNgayThanhToan());
         existing.setTrangThai(dto.getTrangThai());

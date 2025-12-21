@@ -5,23 +5,20 @@ import org.springframework.stereotype.Component;
 import com.university.dto.reponse.HocPhiResponseDTO;
 import com.university.dto.request.HocPhiRequestDTO;
 import com.university.entity.HocPhi;
-import com.university.entity.KiHoc;
 import com.university.entity.SinhVien;
 
 @Component
 public class HocPhiMapper {
 
-    public HocPhi toEntity(HocPhiRequestDTO dto, SinhVien sv, KiHoc kiHoc) {
+    public HocPhi toEntity(HocPhiRequestDTO dto, SinhVien sv) {
         return HocPhi.builder()
-                .sinhVien(sv)
-                .kiHoc(kiHoc)
                 .soTien(dto.getSoTien())
-                .giaTriTinChi(dto.getGiaTriTinChi())
+                .ngayTao(LocalDate.now())
                 .hanThanhToan(dto.getHanThanhToan())
                 .ngayThanhToan(dto.getNgayThanhToan())
                 .ghiChu(dto.getGhiChu())
                 .trangThai(dto.getTrangThai())
-                .ngayTao(LocalDate.now())
+                .sinhVien(sv)
                 .build();
     }
 
@@ -30,13 +27,12 @@ public class HocPhiMapper {
                 .id(hp.getId())
                 .tenSinhVien(hp.getSinhVien().getHoTen())
                 .maSinhVien(hp.getSinhVien().getMaSinhVien())
-                .tenKiHoc(hp.getKiHoc().getTenKiHoc())
                 .soTien(hp.getSoTien())
-                .giaTriTinChi(hp.getGiaTriTinChi())
                 .hanThanhToan(hp.getHanThanhToan())
                 .ngayThanhToan(hp.getNgayThanhToan())
                 .trangThai(hp.getTrangThai())
                 .ghiChu(hp.getGhiChu())
                 .build();
     }
+
 }

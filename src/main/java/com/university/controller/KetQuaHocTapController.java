@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.university.dto.reponse.KetQuaHocTapResponseDTO;
 import com.university.dto.request.KetQuaHocTapRequestDTO;
@@ -39,11 +38,6 @@ public class KetQuaHocTapController {
     @GetMapping("/{id}")
     public ResponseEntity<KetQuaHocTapResponseDTO> getById(@PathVariable UUID id) {
         return ResponseEntity.ok(ketQuaHocTapService.getById(id));
-    }
-
-    @GetMapping("/search")
-    public ResponseEntity<List<KetQuaHocTapResponseDTO>> search(@RequestParam String keyword) {
-        return ResponseEntity.ok(ketQuaHocTapService.search(keyword));
     }
 
     @PutMapping("/{id}")

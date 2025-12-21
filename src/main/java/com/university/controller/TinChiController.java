@@ -2,7 +2,6 @@ package com.university.controller;
 
 import com.university.dto.reponse.TinChiResponse;
 import com.university.dto.request.TinChiRequest;
-import com.university.enums.LoaiTinChiEnum;
 import com.university.service.TinChiService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

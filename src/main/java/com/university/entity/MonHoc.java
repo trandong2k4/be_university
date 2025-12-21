@@ -33,7 +33,7 @@ public class MonHoc {
     @Column(name = "tong_so_tin_chi")
     private int tongSoTinChi;
 
-    @OneToOne()
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "mon_hoc_id")
     private MonHoc monHocTienQuyet;
 }

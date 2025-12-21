@@ -17,11 +17,11 @@ public class DangKyTinChi {
     @GeneratedValue(generator = "UUID")
     private UUID id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "lop_hoc_phan_id", nullable = false)
     private LopHocPhan lopHocPhan;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "sinh_vien_id", nullable = false)
     private SinhVien sinhVien;
 }

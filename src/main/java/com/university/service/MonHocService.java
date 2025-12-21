@@ -36,12 +36,6 @@ public class MonHocService {
         return monHocMapper.toResponseDTO(monHoc);
     }
 
-    public List<MonHocResponseDTO> search(String keyword) {
-        return monHocRepository.searchByTenMonHoc(keyword).stream()
-                .map(monHocMapper::toResponseDTO)
-                .collect(Collectors.toList());
-    }
-
     public MonHocResponseDTO update(UUID id, MonHocRequestDTO dto) {
         MonHoc existing = monHocRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy môn học"));

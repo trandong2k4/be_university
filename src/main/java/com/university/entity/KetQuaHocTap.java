@@ -23,8 +23,17 @@ public class KetQuaHocTap {
     @GeneratedValue(generator = "UUID")
     private UUID id;
 
-    @Column(name = "diem", precision = 3, scale = 1)
-    private BigDecimal diem;
+    @Column(precision = 3, scale = 1)
+    private BigDecimal chuyenCan;
+
+    @Column(precision = 3, scale = 1)
+    private BigDecimal thuongKi;
+
+    @Column(precision = 3, scale = 1)
+    private BigDecimal giuaKi;
+
+    @Column(precision = 3, scale = 1)
+    private BigDecimal cuoiKi;
 
     @Column(name = "danh_gia", length = 50)
     private String danhGia;
@@ -35,15 +44,8 @@ public class KetQuaHocTap {
     @Column(name = "ngay_cap_nhat")
     private LocalDate ngayCapNhat;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "sinhvien_id", nullable = false)
-    private SinhVien sinhVien;
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "dang_ky_tin_chi_id")
+    private DangKyTinChi dangKyTinChi;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "monhoc_id", nullable = false)
-    private MonHoc monHoc;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "kihoc_id", nullable = false)
-    private KiHoc kiHoc;
 }

@@ -10,7 +10,7 @@ import java.util.UUID;
 import com.university.enums.LoaiTinChiEnum;
 
 @Entity
-@Table(name = "tinchi")
+@Table(name = "tinchis")
 @Setter
 @Getter
 @NoArgsConstructor

@@ -5,13 +5,18 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
-
-import com.university.dto.reponse.MonHocResponseDTO;
-import com.university.dto.request.MonHocRequestDTO;
+import com.university.dto.reponse.LopHocPhanResponseDTO;
+import com.university.dto.request.LopHocPhanRequestDTO;
+import com.university.entity.KiHoc;
+import com.university.entity.LopHocPhan;
 import com.university.entity.MonHoc;
+import com.university.entity.NhanVien;
 import com.university.exception.ResourceNotFoundException;
-import com.university.mapper.MonHocMapper;
+import com.university.mapper.LopHocPhanMapper;
+import com.university.repository.KiHocRepository;
+import com.university.repository.LopHocPhanRepository;
 import com.university.repository.MonHocRepository;
+import com.university.repository.NhanVienRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -19,43 +24,54 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class LopHocPhanService {
 
+    private final LopHocPhanRepository lopHocPhanRepository;
     private final MonHocRepository monHocRepository;
-    private final MonHocMapper monHocMapper;
+    private final KiHocRepository kiHocRepository;
+    private final NhanVienRepository nhanVienRepository;
+    private final LopHocPhanMapper lopHocPhanMapper;
 
-    public MonHocResponseDTO create(MonHocRequestDTO dto) {
-        MonHoc monHoc = monHocMapper.toEntity(dto);
-        return monHocMapper.toResponseDTO(monHocRepository.save(monHoc));
+    public LopHocPhanResponseDTO create(LopHocPhanRequestDTO dto) {
+        LopHocPhan lopHocPhan = lopHocPhanMapper.toEntity(dto);
+        return lopHocPhanMapper.toResponseDTO(lopHocPhanRepository.save(lopHocPhan));
     }
 
-    public List<MonHocResponseDTO> getAll() {
-        return monHocRepository.findAll().stream()
-                .map(monHocMapper::toResponseDTO)
+    public List<LopHocPhanResponseDTO> getAll() {
+        return lopHocPhanRepository.findAll().stream()
+                .map(lopHocPhanMapper::toResponseDTO)
                 .collect(Collectors.toList());
     }
 
-    public MonHocResponseDTO getById(UUID id) {
+    public LopHocPhanResponseDTO getById(UUID id) {
+        LopHocPhan lopHocPhan = lopHocPhanRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy lớp học phần"));
+        return lopHocPhanMapper.toResponseDTO(lopHocPhan);
+    }
+
+    public LopHocPhanResponseDTO update(UUID id, LopHocPhanRequestDTO dto) {
+
+        LopHocPhan existing = lopHocPhanRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy lớp học phần"));
+
         MonHoc monHoc = monHocRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy môn học"));
-        return monHocMapper.toResponseDTO(monHoc);
-    }
 
-    public List<MonHocResponseDTO> search(String keyword) {
-        return monHocRepository.searchByTenMonHoc(keyword).stream()
-                .map(monHocMapper::toResponseDTO)
-                .collect(Collectors.toList());
-    }
+        KiHoc kiHoc = kiHocRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy kì học"));
 
-    public MonHocResponseDTO update(UUID id, MonHocRequestDTO dto) {
-        MonHoc existing = monHocRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy môn học"));
-        existing.setMaMonHoc(dto.getMaMonHoc());
-        existing.setTenMonHoc(dto.getTenMonHoc());
-        existing.setMoTa(dto.getMoTa());
-        existing.setTongSoTinChi(dto.getTongSoTinChi());
-        return monHocMapper.toResponseDTO(monHocRepository.save(existing));
+        NhanVien nhanVien = nhanVienRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy nhân viên"));
+
+        existing.setMaLopHocPhan(dto.getMaLopHocPhan());
+        existing.setSoLuongHienTai(dto.getSo_luong_hien_tai());
+        existing.setSoLuongToiDa(dto.getSo_luong_toi_da());
+        existing.setTrangThai(dto.getTrang_thai());
+        existing.setMonHoc(monHoc);
+        existing.setNhanVien(nhanVien);
+        existing.setKiHoc(kiHoc);
+        return lopHocPhanMapper.toResponseDTO(lopHocPhanRepository.save(existing));
     }
 
     public void delete(UUID id) {
-        monHocRepository.deleteById(id);
+        lopHocPhanRepository.deleteById(id);
     }
 }

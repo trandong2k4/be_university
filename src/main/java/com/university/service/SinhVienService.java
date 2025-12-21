@@ -1,6 +1,7 @@
 package com.university.service;
 
 import com.university.config.SecurityConfig;
+import com.university.dto.reponse.RoleResponseDTO;
 import com.university.dto.reponse.SinhVienResponseDTO;
 import com.university.dto.request.SinhVienRequestDTO;
 import com.university.entity.Nganh;
@@ -8,6 +9,7 @@ import com.university.entity.Role;
 import com.university.entity.SinhVien;
 import com.university.entity.User;
 import com.university.exception.ResourceNotFoundException;
+import com.university.mapper.RoleMapper;
 import com.university.mapper.SinhVienMapper;
 import com.university.repository.NganhRepository;
 import com.university.repository.RoleRepository;
@@ -29,6 +31,7 @@ public class SinhVienService {
     private final SinhVienRepository sinhVienRepository;
     private final NganhRepository nganhRepository;
     private final UserRepository userRepository;
+    private final RoleMapper roleMapper;
     private final SinhVienMapper sinhVienMapper;
     private final RoleRepository roleRepository;
     private final SecurityConfig securityConfig;
@@ -40,14 +43,15 @@ public class SinhVienService {
                 .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy ngành"));
 
         // 2️⃣ Tạo user mới cho sinh viên
-        Role studentRole = roleRepository.findByMaRole("STUDENT")
+        Role Role = roleRepository.searchByMaRole("STUDENT")
+                .stream()
+                .findFirst()
                 .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy role STUDENT"));
-
         User user = User.builder()
                 .username(dto.getHoTen().toLowerCase())
                 .password(securityConfig.passwordEncoder().encode("123")) // ✅ Dùng BCrypt để mã hóa
                 .createDate(LocalDate.now())
-                .role(studentRole)
+                .role(Role) // Gán role STUDENT mặc định
                 .build();
 
         user = userRepository.save(user);

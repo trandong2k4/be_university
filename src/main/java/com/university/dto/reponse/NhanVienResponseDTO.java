@@ -2,6 +2,9 @@ package com.university.dto.reponse;
 
 import java.time.LocalDate;
 import java.util.UUID;
+
+import com.university.enums.ViTriEnum;
+
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Getter;
@@ -17,6 +20,6 @@ public class NhanVienResponseDTO {
     private String soDienThoai;
     private LocalDate ngayVaoLam;
     private LocalDate ngayNghiViec;
-    private String tenViTri;
+    private ViTriEnum ViTri;
     private String tenNguoiDung;
 }
