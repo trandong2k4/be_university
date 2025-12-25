@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserService {
 
+    private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final UserMapper userMapper;
@@ -54,6 +55,7 @@ public class UserService {
     }
 
     public UserResponseDTO update(UUID id, UserRequestDTO dto) {
+
         User existing = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy user"));
 
@@ -61,6 +63,9 @@ public class UserService {
         existing.setStatus(dto.isStatus());
         existing.setNote(dto.getNote());
         existing.setUpdateDate(LocalDate.now());
+        if (dto.getPassword() != null) {
+            existing.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
+        }
 
         // Nếu muốn đổi password
         if (dto.getPassword() != null && !dto.getPassword().isEmpty()) {

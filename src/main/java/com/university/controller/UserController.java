@@ -31,7 +31,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.create(dto));
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/getbyId/{id}")
     public ResponseEntity<UserResponseDTO> getById(@PathVariable UUID id) {
         return ResponseEntity.ok(userService.getById(id));
     }

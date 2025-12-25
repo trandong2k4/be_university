@@ -4,8 +4,10 @@ import org.springframework.stereotype.Component;
 
 import com.university.dto.reponse.SinhVienResponseDTO;
 import com.university.dto.request.SinhVienRequestDTO;
+import com.university.entity.Khoa;
 import com.university.entity.Nganh;
 import com.university.entity.SinhVien;
+import com.university.entity.Truong;
 import com.university.entity.User;
 
 import lombok.RequiredArgsConstructor;
@@ -27,14 +29,19 @@ public class SinhVienMapper {
     }
 
     public SinhVienResponseDTO toResponseDTO(SinhVien sv) {
+        Nganh nganh = sv.getNganh();
+        Khoa khoa = nganh.getKhoa();
+        Truong truong = khoa.getTruong();
         return SinhVienResponseDTO.builder()
                 .id(sv.getId())
                 .maSinhVien(sv.getMaSinhVien())
                 .hoTen(sv.getHoTen())
                 .soDienThoai(sv.getSoDienThoai())
-                .tenNganh(sv.getNganh().getTenNganh())
-                .tenKhoa(sv.getNganh().getKhoa().getTenKhoa())
-                .tenTruong(sv.getNganh().getKhoa().getTruong().getTenTruong())
+                .ngayNhapHoc(sv.getNgayNhapHoc())
+                .ngayTotNghiep(sv.getNgayTotNghiep())
+                .tenNganh(nganh.getTenNganh())
+                .tenKhoa(khoa.getTenKhoa())
+                .tenTruong(truong.getTenTruong())
                 .build();
     }
 }

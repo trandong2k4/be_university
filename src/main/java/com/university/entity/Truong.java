@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 import java.util.UUID;
 import java.time.LocalDate;
 
@@ -49,4 +51,7 @@ public class Truong {
 
     @Column(name = "nguoi_dai_dien", length = 100)
     private String nguoiDaiDien;
+
+    @OneToMany(mappedBy = "truong")
+    private List<LienHe> lienHe;
 }

@@ -13,6 +13,8 @@ public class AdminStatsResponse {
     private long sinhVienDangHoc;
     private long sinhVienTotNghiep;
     private long nganhCount;
+    private long khoaCount;
+    private long truongCount;
     private long monHocCount;
     private long baiVietCount;
     private long userCount;

@@ -28,9 +28,6 @@ public class SinhVien {
     @Column(name = "ho_ten", length = 50)
     private String hoTen;
 
-    @Column(length = 50, unique = true)
-    private String email;
-
     @Column(name = "so_dien_thoai", length = 10, unique = true)
     private String soDienThoai;
 
@@ -44,7 +41,7 @@ public class SinhVien {
     @JoinColumn(name = "nganh_id", nullable = false)
     private Nganh nganh;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", unique = true)
     private User user;
 

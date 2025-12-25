@@ -1,5 +1,6 @@
-package com.university.controller.configuration;
+package com.university.configuration;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -7,15 +8,18 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
+    @Value("${FRONTEND_URL}")
+    private String fontendURL;
+
     @SuppressWarnings("null")
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOrigins("*",
-                        "https://university-two-gamma.vercel.app" // Cho phép domain Vercel của bạn
+                        fontendURL // Cho phép domain Vercel của bạn
                 // "http://localhost:3000", // (Tùy chọn) Cho phép cả domain FE local để test
                 // "http://localhost:5173", // (Tùy chọn) Hoặc port 5173 nếu dùng Vite
-                // "http://localhost:5500" // React dev server khác (nếu dùng)
+                // "http://localhost:5500", // (Tùy chọn) React dev server khác (nếu dùng)
                 )
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")
                 .allowedHeaders("*")

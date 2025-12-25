@@ -1,23 +1,19 @@
 package com.university.service;
 
-import com.university.config.SecurityConfig;
-import com.university.dto.reponse.RoleResponseDTO;
 import com.university.dto.reponse.SinhVienResponseDTO;
 import com.university.dto.request.SinhVienRequestDTO;
 import com.university.entity.Nganh;
-import com.university.entity.Role;
 import com.university.entity.SinhVien;
 import com.university.entity.User;
 import com.university.exception.ResourceNotFoundException;
-import com.university.mapper.RoleMapper;
 import com.university.mapper.SinhVienMapper;
 import com.university.repository.NganhRepository;
-import com.university.repository.RoleRepository;
 import com.university.repository.SinhVienRepository;
 import com.university.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -31,10 +27,7 @@ public class SinhVienService {
     private final SinhVienRepository sinhVienRepository;
     private final NganhRepository nganhRepository;
     private final UserRepository userRepository;
-    private final RoleMapper roleMapper;
     private final SinhVienMapper sinhVienMapper;
-    private final RoleRepository roleRepository;
-    private final SecurityConfig securityConfig;
 
     // 🔹 Tạo mới sinh viên
     public SinhVienResponseDTO create(SinhVienRequestDTO dto) {
@@ -42,21 +35,8 @@ public class SinhVienService {
         Nganh nganh = nganhRepository.findById(dto.getNganhId())
                 .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy ngành"));
 
-        // 2️⃣ Tạo user mới cho sinh viên
-        Role Role = roleRepository.searchByMaRole("STUDENT")
-                .stream()
-                .findFirst()
-                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy role STUDENT"));
-        User user = User.builder()
-                .username(dto.getHoTen().toLowerCase())
-                .password(securityConfig.passwordEncoder().encode("123")) // ✅ Dùng BCrypt để mã hóa
-                .createDate(LocalDate.now())
-                .role(Role) // Gán role STUDENT mặc định
-                .build();
-
-        user = userRepository.save(user);
-
-        SinhVien sv = sinhVienMapper.toEntity(dto, nganh, user);
+        dto.setNgayNhapHoc(LocalDate.now());
+        SinhVien sv = sinhVienMapper.toEntity(dto, nganh, null);
         return sinhVienMapper.toResponseDTO(sinhVienRepository.save(sv));
     }
 

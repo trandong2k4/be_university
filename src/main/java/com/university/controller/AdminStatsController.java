@@ -19,6 +19,8 @@ public class AdminStatsController {
     private final BaiVietRepository baiVietRepository;
     private final UserRepository userRepository;
     private final NhanVienRepository nhanVienRepository;
+    private final KhoaRepository khoaRepository;
+    private final TruongRepository truongRepository;
 
     @GetMapping("/stats")
     public AdminStatsResponse getStats() {
@@ -26,6 +28,8 @@ public class AdminStatsController {
         long sinhVienDangHoc = sinhVienRepository.countByNgayTotNghiepIsNull();
         long sinhVienTotNghiep = sinhVienRepository.countByNgayTotNghiepIsNotNull();
         long nganhCount = nganhRepository.count();
+        long khoaCount = khoaRepository.count();
+        long truongCount = truongRepository.count();
         long monHocCount = monHocRepository.count();
         long baiVietCount = baiVietRepository.count();
         long userCount = userRepository.count();
@@ -54,6 +58,8 @@ public class AdminStatsController {
                 sinhVienDangHoc,
                 sinhVienTotNghiep,
                 nganhCount,
+                khoaCount,
+                truongCount,
                 monHocCount,
                 baiVietCount,
                 userCount,
