@@ -6,8 +6,8 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import com.university.dto.reponse.ChiTietSinhVienResponseDTO;
 import com.university.dto.request.ChiTietSinhVienRequestDTO;
+import com.university.dto.response.ChiTietSinhVienResponseDTO;
 import com.university.entity.ChiTietSinhVien;
 import com.university.entity.SinhVien;
 import com.university.exception.ResourceNotFoundException;
@@ -33,10 +33,10 @@ public class ChiTietSinhVienService {
         return chiTietSinhVienMapper.toResponseDTO(chiTietSinhVienRepository.save(ct));
     }
 
-    public ChiTietSinhVienResponseDTO findByUserId(UUID userId) {
-        ChiTietSinhVien ct = chiTietSinhVienRepository.findBySinhVienId(userId)
+    public ChiTietSinhVienResponseDTO findBySinhVienId(UUID svId) {
+        ChiTietSinhVien ct = chiTietSinhVienRepository.findBySinhVien_Id(svId)
                 .orElseThrow(
-                        () -> new ResourceNotFoundException("Không tìm thấy chi tiết sinh viên của userId: " + userId));
+                        () -> new ResourceNotFoundException("Không tìm thấy chi tiết sinh viên của userId: " + svId));
 
         return chiTietSinhVienMapper.toResponseDTO(ct);
     }
@@ -62,7 +62,6 @@ public class ChiTietSinhVienService {
     public ChiTietSinhVienResponseDTO update(UUID id, ChiTietSinhVienRequestDTO dto) {
         ChiTietSinhVien existing = chiTietSinhVienRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy chi tiết sinh viên"));
-
         existing.setDiaChi(dto.getDiaChi());
         existing.setNgaySinh(dto.getNgaySinh());
         existing.setGioiTinh(dto.getGioiTinh());

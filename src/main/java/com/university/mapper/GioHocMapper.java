@@ -2,8 +2,8 @@ package com.university.mapper;
 
 import org.springframework.stereotype.Component;
 
-import com.university.dto.reponse.GioHocResponseDTO;
 import com.university.dto.request.GioHocRequestDTO;
+import com.university.dto.response.GioHocResponseDTO;
 import com.university.entity.GioHoc;
 
 @Component

@@ -1,4 +1,4 @@
-package com.university.dto.reponse;
+package com.university.dto.response;
 
 import java.util.UUID;
 import lombok.AllArgsConstructor;
@@ -12,7 +12,7 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ContactReponse {
+public class ContactResponseDTO {
     private UUID id;
     private String email;
     private String soDienThoai;

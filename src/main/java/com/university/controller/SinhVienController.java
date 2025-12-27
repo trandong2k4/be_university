@@ -1,7 +1,8 @@
 package com.university.controller;
 
-import com.university.dto.reponse.SinhVienResponseDTO;
 import com.university.dto.request.SinhVienRequestDTO;
+import com.university.dto.response.SinhVienAdminResponseDTO;
+import com.university.dto.response.SinhVienResponseDTO;
 import com.university.service.SinhVienService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,12 @@ public class SinhVienController {
     @GetMapping
     public ResponseEntity<List<SinhVienResponseDTO>> getAll() {
         return ResponseEntity.ok(sinhVienService.getAll());
+    }
+
+    // 🔹 Lấy tất cả sinh viên
+    @GetMapping("/admin")
+    public ResponseEntity<List<SinhVienAdminResponseDTO>> getAllAdmin() {
+        return ResponseEntity.ok(sinhVienService.getAllAdmin());
     }
 
     // 🔹 Lấy theo ID

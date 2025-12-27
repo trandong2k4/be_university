@@ -5,8 +5,8 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
-import com.university.dto.reponse.HocPhiResponseDTO;
 import com.university.dto.request.HocPhiRequestDTO;
+import com.university.dto.response.HocPhiResponseDTO;
 import com.university.entity.HocPhi;
 import com.university.entity.SinhVien;
 import com.university.exception.ResourceNotFoundException;

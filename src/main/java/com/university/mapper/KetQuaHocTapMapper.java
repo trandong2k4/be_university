@@ -4,8 +4,8 @@ import java.time.LocalDate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.ResourceAccessException;
 
-import com.university.dto.reponse.KetQuaHocTapResponseDTO;
 import com.university.dto.request.KetQuaHocTapRequestDTO;
+import com.university.dto.response.KetQuaHocTapResponseDTO;
 import com.university.entity.DangKyTinChi;
 import com.university.entity.KetQuaHocTap;
 import com.university.entity.KiHoc;

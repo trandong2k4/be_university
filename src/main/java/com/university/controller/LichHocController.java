@@ -1,8 +1,8 @@
 package com.university.controller;
 
-import com.university.dto.reponse.LichHocChiTietDTO;
-import com.university.dto.reponse.LichHocResponseDTO;
 import com.university.dto.request.LichHocRequestDTO;
+import com.university.dto.response.LichHocChiTietResponseDTO;
+import com.university.dto.response.LichHocResponseDTO;
 import com.university.service.LichHocService;
 
 import jakarta.validation.Valid;
@@ -36,7 +36,7 @@ public class LichHocController {
     }
 
     @GetMapping("/student/{id}")
-    public ResponseEntity<List<LichHocChiTietDTO>> findLichHocBySinhvienId(@PathVariable UUID id) {
+    public ResponseEntity<List<LichHocChiTietResponseDTO>> findLichHocBySinhvienId(@PathVariable UUID id) {
         return ResponseEntity.ok(lichHocService.findLichHocDetailsBySinhVienId(id));
     }
 
@@ -46,7 +46,7 @@ public class LichHocController {
     // }
 
     @GetMapping("/detel")
-    public ResponseEntity<List<LichHocChiTietDTO>> findLichHocDetel() {
+    public ResponseEntity<List<LichHocChiTietResponseDTO>> findLichHocDetel() {
         return ResponseEntity.ok(lichHocService.findAllLichHocDetails());
     }
 

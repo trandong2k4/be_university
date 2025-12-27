@@ -1,7 +1,7 @@
 package com.university.service.auth;
 
-import com.university.dto.reponse.PermissionResponseDTO;
 import com.university.dto.request.PermissionRequestDTO;
+import com.university.dto.response.PermissionResponseDTO;
 import com.university.entity.Permission;
 import com.university.exception.ResourceNotFoundException;
 import com.university.mapper.PermissionMapper;

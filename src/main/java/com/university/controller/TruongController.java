@@ -1,7 +1,7 @@
 package com.university.controller;
 
-import com.university.dto.reponse.TruongResponseDTO;
 import com.university.dto.request.TruongRequestDTO;
+import com.university.dto.response.TruongResponseDTO;
 import com.university.service.TruongService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

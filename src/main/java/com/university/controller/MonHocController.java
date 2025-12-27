@@ -1,7 +1,7 @@
 package com.university.controller;
 
-import com.university.dto.reponse.MonHocResponseDTO;
 import com.university.dto.request.MonHocRequestDTO;
+import com.university.dto.response.MonHocResponseDTO;
 import com.university.service.MonHocService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

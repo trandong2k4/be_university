@@ -1,6 +1,5 @@
-package com.university.dto.reponse;
+package com.university.dto.response;
 
-import java.time.LocalDate;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,15 +12,11 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class LichHocResponseDTO {
+public class PhongHocResponseDTO {
     private UUID id;
-    private LocalDate ngayHoc;
-    private String tenLop;
-    private String tenGiangVien;
-    private String tengioHoc;
-    private String tenMonHoc;
+    private String maPhong;
     private String tenPhong;
-    private int tang;
     private String toaNha;
-    private String ghiChu;
+    private int tang;
+    private int sucChua;
 }

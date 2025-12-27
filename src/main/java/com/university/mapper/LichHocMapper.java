@@ -3,8 +3,8 @@ package com.university.mapper;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.ResourceAccessException;
 
-import com.university.dto.reponse.LichHocResponseDTO;
 import com.university.dto.request.LichHocRequestDTO;
+import com.university.dto.response.LichHocResponseDTO;
 import com.university.entity.GioHoc;
 import com.university.entity.LichHoc;
 import com.university.entity.LopHocPhan;

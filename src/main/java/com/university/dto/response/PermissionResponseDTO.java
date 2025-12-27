@@ -1,4 +1,4 @@
-package com.university.dto.reponse;
+package com.university.dto.response;
 
 import java.util.UUID;
 import lombok.AllArgsConstructor;
@@ -12,10 +12,8 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MonHocResponseDTO {
+public class PermissionResponseDTO {
     private UUID id;
-    private String maMonHoc;
-    private String tenMonHoc;
+    private String tenPermission;
     private String moTa;
-    private int tongSoTinChi;
 }

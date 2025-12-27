@@ -17,7 +17,6 @@ public interface ChiTietSinhVienRepository extends JpaRepository<ChiTietSinhVien
     @Query("SELECT c FROM ChiTietSinhVien c WHERE LOWER(c.sinhVien.hoTen) LIKE LOWER(CONCAT('%', :keyword, '%'))")
     List<ChiTietSinhVien> searchByTenSinhVien(@Param("keyword") String keyword);
 
-    Optional<ChiTietSinhVien> findBySinhVienId(UUID sinhVienId);
+    Optional<ChiTietSinhVien> findBySinhVien_Id(UUID sinhVienId);
 
-    Optional<ChiTietSinhVien> findBySinhVien_User_Id(UUID userId);
 }

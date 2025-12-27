@@ -1,4 +1,4 @@
-package com.university.dto.reponse;
+package com.university.dto.response;
 
 import java.time.LocalDate;
 import java.util.UUID;

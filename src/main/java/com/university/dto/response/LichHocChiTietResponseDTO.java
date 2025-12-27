@@ -1,4 +1,4 @@
-package com.university.dto.reponse;
+package com.university.dto.response;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -12,7 +12,7 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class LichHocChiTietDTO {
+public class LichHocChiTietResponseDTO {
     private String maLopHocPhan;
     private String tenMonHoc;
     private String tenGiangVien;

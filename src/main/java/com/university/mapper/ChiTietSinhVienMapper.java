@@ -2,8 +2,8 @@ package com.university.mapper;
 
 import org.springframework.stereotype.Component;
 
-import com.university.dto.reponse.ChiTietSinhVienResponseDTO;
 import com.university.dto.request.ChiTietSinhVienRequestDTO;
+import com.university.dto.response.ChiTietSinhVienResponseDTO;
 import com.university.entity.ChiTietSinhVien;
 import com.university.entity.SinhVien;
 import lombok.RequiredArgsConstructor;
@@ -27,8 +27,6 @@ public class ChiTietSinhVienMapper {
     public ChiTietSinhVienResponseDTO toResponseDTO(ChiTietSinhVien ct) {
         return ChiTietSinhVienResponseDTO.builder()
                 .id(ct.getId())
-                .hoTen(ct.getSinhVien().getHoTen())
-                .maSinhVien(ct.getSinhVien().getMaSinhVien())
                 .ngaySinh(ct.getNgaySinh())
                 .gioiTinh(ct.getGioiTinh())
                 .diaChi(ct.getDiaChi())

@@ -1,7 +1,7 @@
 package com.university.service.auth;
 
-import com.university.dto.reponse.RoleResponseDTO;
 import com.university.dto.request.RoleRequestDTO;
+import com.university.dto.response.RoleResponseDTO;
 import com.university.entity.Role;
 import com.university.exception.ResourceNotFoundException;
 import com.university.mapper.RoleMapper;

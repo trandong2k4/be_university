@@ -1,7 +1,7 @@
 package com.university.service;
 
-import com.university.dto.reponse.PhongHocResponseDTO;
 import com.university.dto.request.PhongHocRequestDTO;
+import com.university.dto.response.PhongHocResponseDTO;
 import com.university.entity.PhongHoc;
 import com.university.exception.DuplicateRequestException;
 import com.university.exception.ResourceNotFoundException;

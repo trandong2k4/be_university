@@ -1,7 +1,7 @@
 package com.university.service;
 
-import com.university.dto.reponse.TinChiResponse;
 import com.university.dto.request.TinChiRequest;
+import com.university.dto.response.TinChiResponseDTO;
 import com.university.entity.MonHoc;
 import com.university.entity.TinChi;
 import com.university.mapper.TinChiMapper;
@@ -29,7 +29,7 @@ public class TinChiService {
         this.tinChiMapper = tinChiMapper;
     }
 
-    public TinChiResponse create(TinChiRequest request) {
+    public TinChiResponseDTO create(TinChiRequest request) {
         MonHoc mon = monHocRepository.findById(request.getMonHocId())
                 .orElseThrow(() -> new EntityNotFoundException("Môn học không tồn tại"));
 
@@ -38,19 +38,19 @@ public class TinChiService {
         return tinChiMapper.toResponse(entity);
     }
 
-    public List<TinChiResponse> getAll() {
+    public List<TinChiResponseDTO> getAll() {
         return tinChiRepository.findAll().stream()
                 .map(tinChiMapper::toResponse)
                 .collect(Collectors.toList());
     }
 
-    public TinChiResponse getById(UUID id) {
+    public TinChiResponseDTO getById(UUID id) {
         TinChi entity = tinChiRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Tín chỉ không tồn tại"));
         return tinChiMapper.toResponse(entity);
     }
 
-    public TinChiResponse update(UUID id, TinChiRequest request) {
+    public TinChiResponseDTO update(UUID id, TinChiRequest request) {
         TinChi entity = tinChiRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Tín chỉ không tồn tại"));
         MonHoc mon = monHocRepository.findById(request.getMonHocId())
@@ -68,7 +68,7 @@ public class TinChiService {
         tinChiRepository.deleteById(id);
     }
 
-    public List<TinChiResponse> filterByMonHoc(UUID monHocId) {
+    public List<TinChiResponseDTO> filterByMonHoc(UUID monHocId) {
         return tinChiRepository.findByMonHocId(monHocId).stream()
                 .map(tinChiMapper::toResponse)
                 .collect(Collectors.toList());
@@ -80,7 +80,7 @@ public class TinChiService {
     // .collect(Collectors.toList());
     // }
 
-    public List<TinChiResponse> filterByGiaTri(BigDecimal minGiaTri) {
+    public List<TinChiResponseDTO> filterByGiaTri(BigDecimal minGiaTri) {
         return tinChiRepository.findByGiaTriTinChiGreaterThanEqual(minGiaTri).stream()
                 .map(tinChiMapper::toResponse)
                 .collect(Collectors.toList());

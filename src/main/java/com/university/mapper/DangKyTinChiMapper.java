@@ -1,6 +1,6 @@
 package com.university.mapper;
 
-import com.university.dto.reponse.DangKyTinChiResponseDTO;
+import com.university.dto.response.DangKyTinChiResponseDTO;
 import com.university.entity.DangKyTinChi;
 
 public class DangKyTinChiMapper {

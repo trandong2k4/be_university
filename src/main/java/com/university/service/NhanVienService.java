@@ -1,13 +1,16 @@
 package com.university.service;
 
-import com.university.dto.reponse.NhanVienResponseDTO;
 import com.university.dto.request.NhanVienRequestDTO;
+import com.university.dto.response.NhanVienResponseDTO;
+import com.university.dto.response.NhanVienResponseDTO.NhanVienView;
 import com.university.entity.NhanVien;
 import com.university.entity.User;
+import com.university.enums.ViTriEnum;
 import com.university.exception.ResourceNotFoundException;
 import com.university.mapper.NhanVienMapper;
 import com.university.repository.NhanVienRepository;
 import com.university.repository.UserRepository;
+
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
@@ -35,8 +38,20 @@ public class NhanVienService {
         return nhanVienMapper.toResponseDTO(nv);
     }
 
+    public NhanVienView getNhanVienByUserId(UUID userId) {
+        NhanVienView nhanVienView = nhanVienRepository.findByUserId(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy nhân viên"));
+        return nhanVienView;
+    }
+
     public List<NhanVienResponseDTO> getAll() {
         return nhanVienRepository.findAll().stream()
+                .map(nhanVienMapper::toResponseDTO)
+                .toList();
+    }
+
+    public List<NhanVienResponseDTO> getAllNhanVien(ViTriEnum viTri) {
+        return nhanVienRepository.findByViTri(viTri).stream()
                 .map(nhanVienMapper::toResponseDTO)
                 .toList();
     }

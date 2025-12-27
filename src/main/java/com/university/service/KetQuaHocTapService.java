@@ -4,8 +4,9 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.stereotype.Service;
-import com.university.dto.reponse.KetQuaHocTapResponseDTO;
+
 import com.university.dto.request.KetQuaHocTapRequestDTO;
+import com.university.dto.response.KetQuaHocTapResponseDTO;
 import com.university.entity.KetQuaHocTap;
 import com.university.exception.ResourceNotFoundException;
 import com.university.mapper.KetQuaHocTapMapper;

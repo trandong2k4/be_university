@@ -1,19 +1,20 @@
 package com.university.service;
 
-import com.university.dto.reponse.SinhVienResponseDTO;
 import com.university.dto.request.SinhVienRequestDTO;
+import com.university.dto.response.SinhVienAdminResponseDTO;
+import com.university.dto.response.SinhVienResponseDTO;
+import com.university.entity.ChiTietSinhVien;
 import com.university.entity.Nganh;
 import com.university.entity.SinhVien;
 import com.university.entity.User;
 import com.university.exception.ResourceNotFoundException;
 import com.university.mapper.SinhVienMapper;
+import com.university.repository.ChiTietSinhVienRepository;
 import com.university.repository.NganhRepository;
 import com.university.repository.SinhVienRepository;
 import com.university.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -25,6 +26,7 @@ import java.util.stream.Collectors;
 public class SinhVienService {
 
     private final SinhVienRepository sinhVienRepository;
+    private final ChiTietSinhVienRepository chiTietSinhVienRepository;
     private final NganhRepository nganhRepository;
     private final UserRepository userRepository;
     private final SinhVienMapper sinhVienMapper;
@@ -34,9 +36,20 @@ public class SinhVienService {
         // 1️⃣ Tìm ngành
         Nganh nganh = nganhRepository.findById(dto.getNganhId())
                 .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy ngành"));
-
-        dto.setNgayNhapHoc(LocalDate.now());
+        if (dto.getNgayNhapHoc() == null) {
+            dto.setNgayNhapHoc(LocalDate.now());
+        }
+        if (dto.getMaSinhVien() == null || dto.getMaSinhVien().isEmpty()) {
+            long count = sinhVienRepository.count();
+            String generatedMaSV = "SV" + String.format("%05d", count + 1);
+            dto.setMaSinhVien(generatedMaSV);
+        }
         SinhVien sv = sinhVienMapper.toEntity(dto, nganh, null);
+        if (dto.getUserId() != null) {
+            User user = userRepository.findById(dto.getUserId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy user"));
+            sv.setUser(user);
+        }
         return sinhVienMapper.toResponseDTO(sinhVienRepository.save(sv));
     }
 
@@ -75,6 +88,13 @@ public class SinhVienService {
                 .collect(Collectors.toList());
     }
 
+    // 🔹 Lấy tất cả sinh viên
+    public List<SinhVienAdminResponseDTO> getAllAdmin() {
+        return sinhVienRepository.findAll().stream()
+                .map(sinhVienMapper::toResponseAdminDTO)
+                .collect(Collectors.toList());
+    }
+
     // 🔹 Cập nhật sinh viên
     public SinhVienResponseDTO update(UUID id, SinhVienRequestDTO dto) {
         SinhVien sv = sinhVienRepository.findById(id)
@@ -83,6 +103,9 @@ public class SinhVienService {
         sv.setMaSinhVien(dto.getMaSinhVien());
         sv.setHoTen(dto.getHoTen());
         sv.setNgayNhapHoc(dto.getNgayNhapHoc());
+        if (dto.getNgayTotNghiep() != null) {
+            dto.setNgayTotNghiep(dto.getNgayTotNghiep());
+        }
 
         if (dto.getNganhId() != null) {
             Nganh nganh = nganhRepository.findById(dto.getNganhId())
@@ -104,6 +127,10 @@ public class SinhVienService {
         if (!sinhVienRepository.existsById(id)) {
             throw new ResourceNotFoundException("Không tìm thấy sinh viên để xóa");
         }
+        ChiTietSinhVien ct = chiTietSinhVienRepository.findBySinhVien_Id(id)
+                .orElse(null);
+        if (ct != null)
+            chiTietSinhVienRepository.delete(ct);
         sinhVienRepository.deleteById(id);
     }
 }

@@ -1,8 +1,8 @@
 package com.university.service;
 
-import com.university.dto.reponse.LichHocChiTietDTO;
-import com.university.dto.reponse.LichHocResponseDTO;
 import com.university.dto.request.LichHocRequestDTO;
+import com.university.dto.response.LichHocChiTietResponseDTO;
+import com.university.dto.response.LichHocResponseDTO;
 import com.university.entity.GioHoc;
 import com.university.entity.LichHoc;
 import com.university.exception.ResourceNotFoundException;
@@ -70,7 +70,7 @@ public class LichHocService {
         // return lichDay;
         // }
 
-        public List<LichHocChiTietDTO> findAllLichHocDetails() {
+        public List<LichHocChiTietResponseDTO> findAllLichHocDetails() {
                 List<Object[]> results = lichHocRepository.findFullLichHocDetailsNative();
 
                 return results.stream()
@@ -80,7 +80,7 @@ public class LichHocService {
                                         LocalTime gioBatDau = ((Time) row[6]).toLocalTime();
                                         LocalTime gioKetThuc = ((Time) row[7]).toLocalTime();
 
-                                        return new LichHocChiTietDTO(
+                                        return new LichHocChiTietResponseDTO(
                                                         (String) row[0], // ma_lop_hoc_phan
                                                         (String) row[1], // ten_mon_hoc
                                                         (String) row[2], // ten_giang_vien
@@ -94,7 +94,7 @@ public class LichHocService {
                                 .collect(Collectors.toList());
         }
 
-        public List<LichHocChiTietDTO> findLichHocDetailsBySinhVienId(UUID sinhVienId) {
+        public List<LichHocChiTietResponseDTO> findLichHocDetailsBySinhVienId(UUID sinhVienId) {
                 List<Object[]> results = lichHocRepository.findFullLichHocDetailsBySinhVienIdNative(sinhVienId);
 
                 return results.stream()
@@ -104,7 +104,7 @@ public class LichHocService {
                                         LocalTime gioBatDau = (row[6] != null) ? ((Time) row[6]).toLocalTime() : null;
                                         LocalTime gioKetThuc = (row[7] != null) ? ((Time) row[7]).toLocalTime() : null;
 
-                                        return new LichHocChiTietDTO(
+                                        return new LichHocChiTietResponseDTO(
                                                         (String) row[0], // ma_lop_hoc_phan
                                                         (String) row[1], // ten_mon_hoc
                                                         (String) row[2], // ten_giang_vien

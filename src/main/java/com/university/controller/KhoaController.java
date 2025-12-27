@@ -1,7 +1,7 @@
 package com.university.controller;
 
-import com.university.dto.reponse.KhoaResponseDTO;
 import com.university.dto.request.KhoaRequestDTO;
+import com.university.dto.response.KhoaResponseDTO;
 import com.university.service.KhoaService;
 
 import jakarta.validation.Valid;

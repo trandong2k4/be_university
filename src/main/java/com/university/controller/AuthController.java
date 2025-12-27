@@ -1,9 +1,9 @@
 package com.university.controller;
 
-import com.university.dto.reponse.LoginResponseDTO;
-import com.university.dto.reponse.RegisterReponse;
 import com.university.dto.request.LoginRequestDTO;
 import com.university.dto.request.RegisterRequest;
+import com.university.dto.response.LoginResponseDTO;
+import com.university.dto.response.RegisterResponseDTO;
 import com.university.service.auth.AuthService;
 
 import org.springframework.http.HttpStatus;
@@ -28,7 +28,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<RegisterReponse> register(@RequestBody RegisterRequest request) {
+    public ResponseEntity<RegisterResponseDTO> register(@RequestBody RegisterRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(authService.register(request));
     }
 }

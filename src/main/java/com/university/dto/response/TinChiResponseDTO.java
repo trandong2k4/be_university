@@ -1,4 +1,4 @@
-package com.university.dto.reponse;
+package com.university.dto.response;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -8,7 +8,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class TinChiResponse {
+public class TinChiResponseDTO {
     private UUID id;
     private String tenTinChi;
     private Integer soTinChi;

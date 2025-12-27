@@ -1,7 +1,7 @@
 package com.university.controller;
 
-import com.university.dto.reponse.NganhResponseDTO;
 import com.university.dto.request.NganhRequestDTO;
+import com.university.dto.response.NganhResponseDTO;
 import com.university.service.NganhService;
 
 import jakarta.validation.Valid;

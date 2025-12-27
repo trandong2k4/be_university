@@ -2,8 +2,9 @@ package com.university.mapper;
 
 import java.time.LocalDate;
 import org.springframework.stereotype.Component;
-import com.university.dto.reponse.HocPhiResponseDTO;
+
 import com.university.dto.request.HocPhiRequestDTO;
+import com.university.dto.response.HocPhiResponseDTO;
 import com.university.entity.HocPhi;
 import com.university.entity.SinhVien;
 

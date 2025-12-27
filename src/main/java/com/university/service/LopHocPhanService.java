@@ -5,8 +5,9 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
-import com.university.dto.reponse.LopHocPhanResponseDTO;
+
 import com.university.dto.request.LopHocPhanRequestDTO;
+import com.university.dto.response.LopHocPhanResponseDTO;
 import com.university.entity.KiHoc;
 import com.university.entity.LopHocPhan;
 import com.university.entity.MonHoc;
@@ -36,9 +37,7 @@ public class LopHocPhanService {
     }
 
     public List<LopHocPhanResponseDTO> getAll() {
-        return lopHocPhanRepository.findAll().stream()
-                .map(lopHocPhanMapper::toResponseDTO)
-                .collect(Collectors.toList());
+        return lopHocPhanRepository.findAllLopHocPhanResponse();
     }
 
     public LopHocPhanResponseDTO getById(UUID id) {
@@ -59,7 +58,7 @@ public class LopHocPhanService {
                 .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy kì học"));
 
         NhanVien nhanVien = nhanVienRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy nhân viên"));
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy giảng viên"));
 
         existing.setMaLopHocPhan(dto.getMaLopHocPhan());
         existing.setSoLuongHienTai(dto.getSo_luong_hien_tai());

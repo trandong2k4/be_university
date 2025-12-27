@@ -1,7 +1,7 @@
 package com.university.controller;
 
-import com.university.dto.reponse.PhongHocResponseDTO;
 import com.university.dto.request.PhongHocRequestDTO;
+import com.university.dto.response.PhongHocResponseDTO;
 import com.university.service.PhongHocService;
 
 import jakarta.validation.Valid;

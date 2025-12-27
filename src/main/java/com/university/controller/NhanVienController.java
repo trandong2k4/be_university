@@ -1,12 +1,15 @@
 package com.university.controller;
 
-import com.university.dto.reponse.NhanVienResponseDTO;
 import com.university.dto.request.NhanVienRequestDTO;
+import com.university.dto.response.NhanVienResponseDTO;
+import com.university.dto.response.NhanVienResponseDTO.NhanVienView;
+import com.university.enums.ViTriEnum;
 import com.university.service.NhanVienService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,9 +34,19 @@ public class NhanVienController {
         return ResponseEntity.ok(nhanVienService.getById(id));
     }
 
+    @GetMapping("/by-userId")
+    public ResponseEntity<NhanVienView> getByUserId(@Param("userId") UUID userId) {
+        return ResponseEntity.ok(nhanVienService.getNhanVienByUserId(userId));
+    }
+
     @GetMapping
     public ResponseEntity<List<NhanVienResponseDTO>> getAll() {
         return ResponseEntity.ok(nhanVienService.getAll());
+    }
+
+    @GetMapping("/by-vitri")
+    public ResponseEntity<List<NhanVienResponseDTO>> getAllNhanVienByViTri(@RequestParam ViTriEnum viTri) {
+        return ResponseEntity.ok(nhanVienService.getAllNhanVien(viTri));
     }
 
     @PutMapping("/{id}")

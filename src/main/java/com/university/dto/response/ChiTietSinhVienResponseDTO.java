@@ -1,4 +1,4 @@
-package com.university.dto.reponse;
+package com.university.dto.response;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -12,8 +12,6 @@ import lombok.Setter;
 @Builder
 public class ChiTietSinhVienResponseDTO {
     private UUID id;
-    private String hoTen;
-    private String maSinhVien;
     private LocalDate ngaySinh;
     private GioiTinhEnum gioiTinh;
     private String diaChi;

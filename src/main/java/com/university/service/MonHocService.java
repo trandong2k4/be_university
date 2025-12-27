@@ -1,7 +1,7 @@
 package com.university.service;
 
-import com.university.dto.reponse.MonHocResponseDTO;
 import com.university.dto.request.MonHocRequestDTO;
+import com.university.dto.response.MonHocResponseDTO;
 import com.university.entity.MonHoc;
 import com.university.exception.ResourceNotFoundException;
 import com.university.mapper.MonHocMapper;

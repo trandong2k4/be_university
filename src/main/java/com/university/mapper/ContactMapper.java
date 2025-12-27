@@ -1,8 +1,9 @@
 package com.university.mapper;
 
 import org.springframework.stereotype.Component;
-import com.university.dto.reponse.ContactReponse;
+
 import com.university.dto.request.ContactRequest;
+import com.university.dto.response.ContactResponseDTO;
 import com.university.entity.LienHe;
 import com.university.entity.Truong;
 import com.university.repository.TruongRepository;
@@ -24,8 +25,8 @@ public class ContactMapper {
                 .build();
     }
 
-    public ContactReponse toResponseDTO(LienHe dto) {
-        return ContactReponse.builder()
+    public ContactResponseDTO toResponseDTO(LienHe dto) {
+        return ContactResponseDTO.builder()
                 .id(dto.getId())
                 .email(dto.getEmail())
                 .soDienThoai(dto.getSoDienThoai())

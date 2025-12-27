@@ -1,8 +1,9 @@
 package com.university.mapper;
 
 import org.springframework.stereotype.Component;
-import com.university.dto.reponse.KiHocResponseDTO;
+
 import com.university.dto.request.KiHocRequestDTO;
+import com.university.dto.response.KiHocResponseDTO;
 import com.university.entity.KiHoc;
 
 @Component

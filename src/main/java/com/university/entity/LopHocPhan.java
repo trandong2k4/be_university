@@ -33,15 +33,15 @@ public class LopHocPhan {
     @Column
     private TrangThaiLHP trangThai;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mon_hoc_id", nullable = false)
     private MonHoc monHoc;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "giang_vien_id")
     private NhanVien nhanVien;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ki_hoc_id", nullable = false)
     private KiHoc kiHoc;
 

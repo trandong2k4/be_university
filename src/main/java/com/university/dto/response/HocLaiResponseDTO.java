@@ -1,10 +1,8 @@
-package com.university.dto.reponse;
+package com.university.dto.response;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.UUID;
-
-import com.university.enums.HocPhiEnum;
+import com.university.enums.HocLaiEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
@@ -16,15 +14,14 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class HocPhiResponseDTO {
+public class HocLaiResponseDTO {
     private UUID id;
     private String tenSinhVien;
     private String maSinhVien;
+    private String tenMonHoc;
     private String tenKiHoc;
-    private BigDecimal soTien;
-    private BigDecimal giaTriTinChi;
-    private LocalDate hanThanhToan;
-    private LocalDate ngayThanhToan;
-    private HocPhiEnum trangThai;
-    private String ghiChu;
+    private int lanHoc;
+    private BigDecimal diemCu;
+    private HocLaiEnum trangThai;
+    private String lyDo;
 }

@@ -1,7 +1,7 @@
 package com.university.service;
 
-import com.university.dto.reponse.KhoaResponseDTO;
 import com.university.dto.request.KhoaRequestDTO;
+import com.university.dto.response.KhoaResponseDTO;
 import com.university.entity.Khoa;
 import com.university.entity.Truong;
 import com.university.exception.ResourceNotFoundException;

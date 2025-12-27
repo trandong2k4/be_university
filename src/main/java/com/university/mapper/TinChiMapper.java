@@ -2,8 +2,8 @@ package com.university.mapper;
 
 import org.springframework.stereotype.Component;
 
-import com.university.dto.reponse.TinChiResponse;
 import com.university.dto.request.TinChiRequest;
+import com.university.dto.response.TinChiResponseDTO;
 import com.university.entity.MonHoc;
 import com.university.entity.TinChi;
 
@@ -29,8 +29,8 @@ public class TinChiMapper {
         entity.setMonHoc(monHoc);
     }
 
-    public TinChiResponse toResponse(TinChi entity) {
-        TinChiResponse response = new TinChiResponse();
+    public TinChiResponseDTO toResponse(TinChi entity) {
+        TinChiResponseDTO response = new TinChiResponseDTO();
         response.setId(entity.getId());
         response.setSoTinChi(entity.getSoTinChi());
         response.setGiaTriTinChi(entity.getGiaTriTinChi());

@@ -1,6 +1,8 @@
-package com.university.dto.reponse;
+package com.university.dto.response;
 
+import java.time.LocalDate;
 import java.util.UUID;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
@@ -12,8 +14,10 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PermissionResponseDTO {
+public class KiHocResponseDTO {
     private UUID id;
-    private String tenPermission;
-    private String moTa;
+    private String tenKiHoc;
+    private LocalDate ngayBatDau;
+    private LocalDate ngayKetThuc;
+    private String ghiChu;
 }

@@ -1,4 +1,4 @@
-package com.university.dto.reponse;
+package com.university.dto.response;
 
 import java.util.List;
 import lombok.AllArgsConstructor;

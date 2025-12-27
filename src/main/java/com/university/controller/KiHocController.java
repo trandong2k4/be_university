@@ -1,7 +1,7 @@
 package com.university.controller;
 
-import com.university.dto.reponse.KiHocResponseDTO;
 import com.university.dto.request.KiHocRequestDTO;
+import com.university.dto.response.KiHocResponseDTO;
 import com.university.service.KiHocService;
 
 import jakarta.validation.Valid;

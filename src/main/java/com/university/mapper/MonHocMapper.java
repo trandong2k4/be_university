@@ -2,8 +2,8 @@ package com.university.mapper;
 
 import org.springframework.stereotype.Component;
 
-import com.university.dto.reponse.MonHocResponseDTO;
 import com.university.dto.request.MonHocRequestDTO;
+import com.university.dto.response.MonHocResponseDTO;
 import com.university.entity.MonHoc;
 import lombok.RequiredArgsConstructor;
 

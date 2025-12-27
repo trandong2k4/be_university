@@ -2,8 +2,8 @@ package com.university.mapper;
 
 import org.springframework.stereotype.Component;
 
-import com.university.dto.reponse.RoleResponseDTO;
 import com.university.dto.request.RoleRequestDTO;
+import com.university.dto.response.RoleResponseDTO;
 import com.university.entity.Role;
 
 import lombok.RequiredArgsConstructor;

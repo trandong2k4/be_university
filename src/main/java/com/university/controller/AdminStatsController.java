@@ -1,7 +1,7 @@
 package com.university.controller;
 
-import com.university.dto.reponse.AdminStatsResponse;
-import com.university.dto.reponse.WeeklyStatDTO;
+import com.university.dto.response.AdminStatsResponseDTO;
+import com.university.dto.response.WeeklyStatDTO;
 import com.university.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +23,7 @@ public class AdminStatsController {
     private final TruongRepository truongRepository;
 
     @GetMapping("/stats")
-    public AdminStatsResponse getStats() {
+    public AdminStatsResponseDTO getStats() {
         long sinhVienCount = sinhVienRepository.count();
         long sinhVienDangHoc = sinhVienRepository.countByNgayTotNghiepIsNull();
         long sinhVienTotNghiep = sinhVienRepository.countByNgayTotNghiepIsNotNull();
@@ -53,7 +53,7 @@ public class AdminStatsController {
             );
         }
 
-        return new AdminStatsResponse(
+        return new AdminStatsResponseDTO(
                 sinhVienCount,
                 sinhVienDangHoc,
                 sinhVienTotNghiep,

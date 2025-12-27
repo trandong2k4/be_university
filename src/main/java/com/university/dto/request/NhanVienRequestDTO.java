@@ -26,7 +26,6 @@ public class NhanVienRequestDTO {
 
     private LocalDate ngayVaoLam;
     private LocalDate ngayNghiViec;
-
     private ViTriEnum viTri;
 
     @NotNull(message = "User ID không được để trống")

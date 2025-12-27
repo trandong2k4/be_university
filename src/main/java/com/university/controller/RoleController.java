@@ -1,7 +1,7 @@
 package com.university.controller;
 
-import com.university.dto.reponse.RoleResponseDTO;
 import com.university.dto.request.RoleRequestDTO;
+import com.university.dto.response.RoleResponseDTO;
 import com.university.service.auth.RoleService;
 
 import jakarta.validation.Valid;

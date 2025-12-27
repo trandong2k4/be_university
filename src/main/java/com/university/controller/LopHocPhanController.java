@@ -1,7 +1,7 @@
 package com.university.controller;
 
-import com.university.dto.reponse.LopHocPhanResponseDTO;
 import com.university.dto.request.LopHocPhanRequestDTO;
+import com.university.dto.response.LopHocPhanResponseDTO;
 import com.university.service.LopHocPhanService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -42,6 +42,6 @@ public class LopHocPhanController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable UUID id) {
         lopHocPhanService.delete(id);
-        return ResponseEntity.ok("Đã lớp học phầnhọc!");
+        return ResponseEntity.ok("Đã xóa lớp học phần!");
     }
 }

@@ -1,7 +1,7 @@
 package com.university.controller;
 
-import com.university.dto.reponse.GioHocResponseDTO;
 import com.university.dto.request.GioHocRequestDTO;
+import com.university.dto.response.GioHocResponseDTO;
 import com.university.service.GioHocService;
 
 import jakarta.validation.Valid;

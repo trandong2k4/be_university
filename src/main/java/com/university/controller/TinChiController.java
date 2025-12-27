@@ -1,7 +1,7 @@
 package com.university.controller;
 
-import com.university.dto.reponse.TinChiResponse;
 import com.university.dto.request.TinChiRequest;
+import com.university.dto.response.TinChiResponseDTO;
 import com.university.service.TinChiService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,22 +22,22 @@ public class TinChiController {
     }
 
     @PostMapping
-    public ResponseEntity<TinChiResponse> create(@RequestBody TinChiRequest request) {
+    public ResponseEntity<TinChiResponseDTO> create(@RequestBody TinChiRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(tinChiService.create(request));
     }
 
     @GetMapping
-    public ResponseEntity<List<TinChiResponse>> getAll() {
+    public ResponseEntity<List<TinChiResponseDTO>> getAll() {
         return ResponseEntity.ok(tinChiService.getAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TinChiResponse> getById(@PathVariable UUID id) {
+    public ResponseEntity<TinChiResponseDTO> getById(@PathVariable UUID id) {
         return ResponseEntity.ok(tinChiService.getById(id));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TinChiResponse> update(@PathVariable UUID id, @RequestBody TinChiRequest request) {
+    public ResponseEntity<TinChiResponseDTO> update(@PathVariable UUID id, @RequestBody TinChiRequest request) {
         return ResponseEntity.ok(tinChiService.update(id, request));
     }
 
@@ -48,7 +48,7 @@ public class TinChiController {
     }
 
     @GetMapping("/filter/subject")
-    public ResponseEntity<List<TinChiResponse>> filterByMonHoc(@RequestParam UUID monHocId) {
+    public ResponseEntity<List<TinChiResponseDTO>> filterByMonHoc(@RequestParam UUID monHocId) {
         return ResponseEntity.ok(tinChiService.filterByMonHoc(monHocId));
     }
 
@@ -59,7 +59,7 @@ public class TinChiController {
     // }
 
     @GetMapping("/filter/values")
-    public ResponseEntity<List<TinChiResponse>> filterByGiaTri(@RequestParam BigDecimal minGiaTri) {
+    public ResponseEntity<List<TinChiResponseDTO>> filterByGiaTri(@RequestParam BigDecimal minGiaTri) {
         return ResponseEntity.ok(tinChiService.filterByGiaTri(minGiaTri));
     }
 

@@ -2,8 +2,8 @@ package com.university.mapper;
 
 import org.springframework.stereotype.Component;
 
-import com.university.dto.reponse.PermissionResponseDTO;
 import com.university.dto.request.PermissionRequestDTO;
+import com.university.dto.response.PermissionResponseDTO;
 import com.university.entity.Permission;
 
 import lombok.RequiredArgsConstructor;

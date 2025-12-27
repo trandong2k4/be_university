@@ -1,25 +1,25 @@
-package com.university.dto.reponse;
+package com.university.dto.response;
 
 import java.time.LocalDate;
 import java.util.UUID;
-
-import com.university.enums.ViTriEnum;
-
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class NhanVienResponseDTO {
+public class SinhVienAdminResponseDTO {
     private UUID id;
+    private String maSinhVien;
     private String hoTen;
+    private LocalDate ngayNhapHoc;
+    private LocalDate ngayTotNghiep;
     private String soDienThoai;
-    private LocalDate ngayVaoLam;
-    private LocalDate ngayNghiViec;
-    private ViTriEnum ViTri;
-    private String tenNguoiDung;
+    private UUID nganhId;
+    private String tenNganh;
 }

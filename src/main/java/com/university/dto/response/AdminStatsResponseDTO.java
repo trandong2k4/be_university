@@ -1,4 +1,4 @@
-package com.university.dto.reponse;
+package com.university.dto.response;
 
 import java.util.Map;
 import lombok.AllArgsConstructor;
@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class AdminStatsResponse {
+public class AdminStatsResponseDTO {
     private long sinhVienCount;
     private long sinhVienDangHoc;
     private long sinhVienTotNghiep;

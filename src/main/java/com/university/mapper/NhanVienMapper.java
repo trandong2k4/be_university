@@ -2,8 +2,8 @@ package com.university.mapper;
 
 import org.springframework.stereotype.Component;
 
-import com.university.dto.reponse.NhanVienResponseDTO;
 import com.university.dto.request.NhanVienRequestDTO;
+import com.university.dto.response.NhanVienResponseDTO;
 import com.university.entity.NhanVien;
 import com.university.entity.User;
 import lombok.RequiredArgsConstructor;
@@ -24,13 +24,16 @@ public class NhanVienMapper {
     }
 
     public NhanVienResponseDTO toResponseDTO(NhanVien nv) {
-        return new NhanVienResponseDTO(
-                nv.getId(),
-                nv.getHoTen(),
-                nv.getSoDienThoai(),
-                nv.getNgayVaoLam(),
-                nv.getNgayNghiViec(),
-                nv.getViTri() != null ? nv.getViTri() : null,
-                nv.getUser() != null ? nv.getUser().getUsername() : null);
+        NhanVienResponseDTO nhanVienResponseDTO = new NhanVienResponseDTO();
+        nhanVienResponseDTO.setId(nv.getId());
+        nhanVienResponseDTO.setMaNhanVien(nv.getMaNhanVien());
+        nhanVienResponseDTO.setHoTen(nv.getHoTen());
+        nhanVienResponseDTO.setNgayNghiViec(nv.getNgayNghiViec());
+        nhanVienResponseDTO.setNgayVaoLam(nv.getNgayVaoLam());
+        nhanVienResponseDTO.setSoDienThoai(nv.getSoDienThoai());
+        nhanVienResponseDTO.setTenNguoiDung("Chua set");
+        nhanVienResponseDTO.setViTri(nv.getViTri());
+
+        return nhanVienResponseDTO;
     }
 }

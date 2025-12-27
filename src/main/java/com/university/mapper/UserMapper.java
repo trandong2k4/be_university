@@ -2,8 +2,9 @@ package com.university.mapper;
 
 import java.time.LocalDate;
 import org.springframework.stereotype.Component;
-import com.university.dto.reponse.UserResponseDTO;
+
 import com.university.dto.request.UserRequestDTO;
+import com.university.dto.response.UserResponseDTO;
 import com.university.entity.Role;
 import com.university.entity.User;
 import com.university.exception.ResourceNotFoundException;

@@ -2,8 +2,8 @@ package com.university.mapper;
 
 import org.springframework.stereotype.Component;
 
-import com.university.dto.reponse.KhoaResponseDTO;
 import com.university.dto.request.KhoaRequestDTO;
+import com.university.dto.response.KhoaResponseDTO;
 import com.university.entity.Khoa;
 import com.university.entity.Truong;
 

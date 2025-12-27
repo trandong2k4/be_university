@@ -1,7 +1,7 @@
 package com.university.service;
 
-import com.university.dto.reponse.BaiVietResponseDTO;
 import com.university.dto.request.BaiVietRequestDTO;
+import com.university.dto.response.BaiVietResponseDTO;
 import com.university.entity.BaiViet;
 import com.university.entity.User;
 import com.university.exception.ResourceNotFoundException;

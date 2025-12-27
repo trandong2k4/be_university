@@ -12,14 +12,14 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MonHocRequestDTO {
-    @NotBlank
+    @NotBlank(message = "Mã môn học không được để trống")
     private String maMonHoc;
 
-    @NotBlank
+    @NotBlank(message = "Tên môn học không được để trống")
     private String tenMonHoc;
 
     private String moTa;
 
-    @Min(0)
+    @Min(1) // Assuming minimum 1 credit
     private int tongSoTinChi;
 }

@@ -2,8 +2,9 @@ package com.university.mapper;
 
 import org.springframework.stereotype.Component;
 
-import com.university.dto.reponse.SinhVienResponseDTO;
 import com.university.dto.request.SinhVienRequestDTO;
+import com.university.dto.response.SinhVienAdminResponseDTO;
+import com.university.dto.response.SinhVienResponseDTO;
 import com.university.entity.Khoa;
 import com.university.entity.Nganh;
 import com.university.entity.SinhVien;
@@ -42,6 +43,19 @@ public class SinhVienMapper {
                 .tenNganh(nganh.getTenNganh())
                 .tenKhoa(khoa.getTenKhoa())
                 .tenTruong(truong.getTenTruong())
+                .build();
+    }
+
+    public SinhVienAdminResponseDTO toResponseAdminDTO(SinhVien sv) {
+        return SinhVienAdminResponseDTO.builder()
+                .id(sv.getId())
+                .maSinhVien(sv.getMaSinhVien())
+                .hoTen(sv.getHoTen())
+                .soDienThoai(sv.getSoDienThoai())
+                .ngayNhapHoc(sv.getNgayNhapHoc())
+                .ngayTotNghiep(sv.getNgayTotNghiep())
+                .nganhId(sv.getNganh().getId())
+                .tenNganh(sv.getNganh().getTenNganh())
                 .build();
     }
 }

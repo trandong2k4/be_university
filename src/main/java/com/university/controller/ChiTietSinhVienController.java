@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.university.dto.reponse.ChiTietSinhVienResponseDTO;
 import com.university.dto.request.ChiTietSinhVienRequestDTO;
+import com.university.dto.response.ChiTietSinhVienResponseDTO;
 import com.university.service.ChiTietSinhVienService;
 
 import jakarta.validation.Valid;
@@ -39,9 +39,10 @@ public class ChiTietSinhVienController {
         return ResponseEntity.ok(chiTietSinhVienService.getAll());
     }
 
-    @GetMapping("/by-user/{userId}")
-    public ResponseEntity<ChiTietSinhVienResponseDTO> getByUserId(@PathVariable UUID userId) {
-        return ResponseEntity.ok(chiTietSinhVienService.findByUserId(userId));
+    @GetMapping("/by-sv/{sinhVienId}")
+    public ResponseEntity<ChiTietSinhVienResponseDTO> getBySinhVienId(
+            @PathVariable UUID sinhVienId) {
+        return ResponseEntity.ok(chiTietSinhVienService.findBySinhVienId(sinhVienId));
     }
 
     @GetMapping("/{id}")

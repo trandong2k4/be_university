@@ -1,7 +1,7 @@
 package com.university.controller;
 
-import com.university.dto.reponse.BaiVietResponseDTO;
 import com.university.dto.request.BaiVietRequestDTO;
+import com.university.dto.response.BaiVietResponseDTO;
 import com.university.service.BaiVietService;
 
 import jakarta.validation.Valid;

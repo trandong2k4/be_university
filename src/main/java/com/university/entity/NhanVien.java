@@ -24,7 +24,7 @@ public class NhanVien {
     private UUID id;
 
     @Column(name = "ma_nhan_vien", length = 15)
-    private String manNhanVien;
+    private String maNhanVien;
 
     @Column(name = "ho_ten", length = 50)
     private String hoTen;
@@ -41,7 +41,7 @@ public class NhanVien {
     @Enumerated(EnumType.STRING)
     private ViTriEnum viTri;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", unique = true)
     private User user;
 }

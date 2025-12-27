@@ -1,7 +1,7 @@
 package com.university.service;
 
-import com.university.dto.reponse.NganhResponseDTO;
 import com.university.dto.request.NganhRequestDTO;
+import com.university.dto.response.NganhResponseDTO;
 import com.university.entity.Khoa;
 import com.university.entity.Nganh;
 import com.university.exception.DuplicateRequestException;

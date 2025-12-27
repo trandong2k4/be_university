@@ -1,7 +1,7 @@
 package com.university.service;
 
-import com.university.dto.reponse.TruongResponseDTO;
 import com.university.dto.request.TruongRequestDTO;
+import com.university.dto.response.TruongResponseDTO;
 import com.university.entity.Truong;
 import com.university.repository.TruongRepository;
 import lombok.RequiredArgsConstructor;

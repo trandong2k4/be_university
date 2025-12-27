@@ -1,7 +1,7 @@
 package com.university.service;
 
-import com.university.dto.reponse.GioHocResponseDTO;
 import com.university.dto.request.GioHocRequestDTO;
+import com.university.dto.response.GioHocResponseDTO;
 import com.university.entity.GioHoc;
 import com.university.exception.ResourceNotFoundException;
 import com.university.mapper.GioHocMapper;

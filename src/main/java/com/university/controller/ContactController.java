@@ -16,6 +16,7 @@ public class ContactController {
     @PostMapping
     public String sendContact(@RequestBody ContactMessageRequest request) {
         contactService.sendContactEmail(request);
-        return "Thông tin liên hệ đã được gửi thành công!";
+        return " Cảm ơn bạn đã liên hệ với chúng tôi!" +
+                " Chúng tôi sẽ phản hồi trong thời gian sớm nhất đến " + request.getEmail() + ".";
     }
 }
