@@ -21,7 +21,6 @@ public interface DangKyTinChiRepository extends JpaRepository<DangKyTinChi, UUID
   List<DangKyTinChi> findByLopHocPhanId(@Param("lopHocPhanId") UUID lopHocPhanId);
 
   @Query("SELECT d FROM DangKyTinChi d WHERE d.lopHocPhan.id = :lopHocPhanId AND d.sinhVien.id = :sinhVienId")
-  Optional<DangKyTinChi> findByLopHocPhanIdAndSinhVienId(@Param("lopHocPhanId") UUID lopHocPhanId,
-      @Param("sinhVienId") UUID sinhVienId);
+  Optional<DangKyTinChi> findByLopHocPhanIdAndSinhVienId(@Param("lopHocPhanId") UUID lopHocPhanId,@Param("sinhVienId") UUID sinhVienId);
 
 }

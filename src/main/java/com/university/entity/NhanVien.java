@@ -41,7 +41,7 @@ public class NhanVien {
     @Enumerated(EnumType.STRING)
     private ViTriEnum viTri;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", unique = true)
     private User user;
 }

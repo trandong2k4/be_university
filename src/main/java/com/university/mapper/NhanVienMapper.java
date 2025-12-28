@@ -31,9 +31,9 @@ public class NhanVienMapper {
         nhanVienResponseDTO.setNgayNghiViec(nv.getNgayNghiViec());
         nhanVienResponseDTO.setNgayVaoLam(nv.getNgayVaoLam());
         nhanVienResponseDTO.setSoDienThoai(nv.getSoDienThoai());
-        nhanVienResponseDTO.setTenNguoiDung("Chua set");
+        nhanVienResponseDTO.setUserId(nv.getUser().getId());
+        nhanVienResponseDTO.setTenNguoiDung(nv.getUser().getUsername());
         nhanVienResponseDTO.setViTri(nv.getViTri());
-
         return nhanVienResponseDTO;
     }
 }

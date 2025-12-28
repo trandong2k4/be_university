@@ -20,9 +20,6 @@ public class LichHocRequestDTO {
     @NotNull(message = "Giờ học không được để trống")
     private UUID gioHocId;
 
-    @NotNull(message = "Lịch học không được để trống")
-    private UUID lichHocId;
-
     private UUID lopHocPhanId;
 
     @NotNull(message = "Phòng học phần không được để trống")

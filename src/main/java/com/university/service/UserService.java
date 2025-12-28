@@ -28,9 +28,11 @@ public class UserService {
     private final UserMapper userMapper;
 
     public UserResponseDTO create(UserRequestDTO dto) {
+        Role role = roleRepository.findById(dto.getRoleId())
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy vai trò"));
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String hashed = encoder.encode(dto.getPassword());
-        User user = userMapper.toEntity(dto);
+        User user = userMapper.toEntity(dto, role);
         user.setCreateDate(java.time.LocalDate.now());
         user.setPassword(hashed);
         return userMapper.toResponseDTO(userRepository.save(user));

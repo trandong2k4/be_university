@@ -20,6 +20,7 @@ public class NhanVienResponseDTO {
     private LocalDate ngayVaoLam;
     private LocalDate ngayNghiViec;
     private ViTriEnum ViTri;
+    private UUID userId;
     private String tenNguoiDung;
 
     public interface NhanVienView {

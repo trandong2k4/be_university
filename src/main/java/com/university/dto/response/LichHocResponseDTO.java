@@ -1,6 +1,7 @@
 package com.university.dto.response;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,7 +22,29 @@ public class LichHocResponseDTO {
     private String tengioHoc;
     private String tenMonHoc;
     private String tenPhong;
+    private String tenGioHoc;
     private int tang;
     private String toaNha;
     private String ghiChu;
+
+    public interface LichHocViewDTO {
+        String getMaLopHocPhan();
+
+        String getTenMonHoc();
+
+        String getTenGiangVien();
+
+        String getTenPhong();
+
+        String getToaNha();
+
+        String getTenGioHoc();
+
+        LocalDate getNgayHoc();
+
+        LocalTime getGioBatDau();
+
+        LocalTime getGioKetThuc();
+    }
+
 }

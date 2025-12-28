@@ -26,8 +26,11 @@ public class NhanVienService {
     private final NhanVienMapper nhanVienMapper;
 
     public NhanVienResponseDTO create(NhanVienRequestDTO dto) {
-        User user = userRepository.findById(dto.getUserId())
-                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy người dùng"));
+        User user = new User();
+        if (!dto.getUserId().equals(null)) {
+            user = userRepository.findById(dto.getUserId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy người dùng"));
+        }
         NhanVien nv = nhanVienMapper.toEntity(dto, user);
         return nhanVienMapper.toResponseDTO(nhanVienRepository.save(nv));
     }

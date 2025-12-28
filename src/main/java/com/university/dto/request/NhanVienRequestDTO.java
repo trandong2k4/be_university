@@ -6,7 +6,6 @@ import java.util.UUID;
 import com.university.enums.ViTriEnum;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Getter;
@@ -28,6 +27,5 @@ public class NhanVienRequestDTO {
     private LocalDate ngayNghiViec;
     private ViTriEnum viTri;
 
-    @NotNull(message = "User ID không được để trống")
     private UUID userId;
 }

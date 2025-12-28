@@ -7,18 +7,13 @@ import com.university.dto.request.UserRequestDTO;
 import com.university.dto.response.UserResponseDTO;
 import com.university.entity.Role;
 import com.university.entity.User;
-import com.university.exception.ResourceNotFoundException;
-import com.university.repository.RoleRepository;
 import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
 public class UserMapper {
-    RoleRepository roleRepository;
 
-    public User toEntity(UserRequestDTO dto) {
-        Role role = roleRepository.findById(dto.getRoleId())
-                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy vai trò"));
+    public User toEntity(UserRequestDTO dto, Role role) {
 
         return User.builder()
                 .username(dto.getUsername())

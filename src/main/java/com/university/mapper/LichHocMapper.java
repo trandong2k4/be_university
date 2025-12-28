@@ -28,13 +28,7 @@ public class LichHocMapper {
         NhanVienRepository nhanVienRepository;
         MonHocRepository monHocRepository;
 
-        public LichHoc toEntity(LichHocRequestDTO dto) {
-                GioHoc gioHoc = gioHocRepository.findById(dto.getGioHocId())
-                                .orElseThrow(() -> new SimpleMessageException("Không tìm thấy giờ học"));
-                PhongHoc phongHoc = phongHocRepository.findById(dto.getPhongHocId())
-                                .orElseThrow(() -> new SimpleMessageException("Không tìm thấy phòng học"));
-                LopHocPhan lopHocPhan = lopHocPhanRepository.findById(dto.getLopHocPhanId())
-                                .orElseThrow(() -> new SimpleMessageException("Không tìm thấy lớp học phần"));
+        public LichHoc toEntity(LichHocRequestDTO dto, GioHoc gioHoc, PhongHoc phongHoc, LopHocPhan lopHocPhan) {
                 return LichHoc.builder()
                                 .ngayHoc(dto.getNgayHoc())
                                 .gioHoc(gioHoc)
@@ -44,23 +38,32 @@ public class LichHocMapper {
                                 .build();
         }
 
-        public LichHocResponseDTO toResponseDTO(LichHoc lichHoc) {
-                MonHoc monHoc = monHocRepository.findById(lichHoc.getLopHocPhan().getMonHoc().getId())
-                                .orElseThrow(() -> new ResourceAccessException("Không tìm thấy môn học"));
+        public LichHocResponseDTO toResponseDTO(LichHoc lh) {
+                LopHocPhan lhp = lh.getLopHocPhan();
 
-                NhanVien giangVien = nhanVienRepository.findById(lichHoc.getLopHocPhan().getNhanVien().getId())
-                                .orElseThrow(() -> new ResourceAccessException("Không tìm thấy giảng viên"));
                 return LichHocResponseDTO.builder()
-                                .id(lichHoc.getId())
-                                .ngayHoc(lichHoc.getNgayHoc())
-                                .tenLop(lichHoc.getLopHocPhan().getMaLopHocPhan())
-                                .tenGiangVien(giangVien.getHoTen())
-                                .tengioHoc(lichHoc.getGioHoc().getTenGioHoc())
-                                .tenMonHoc(monHoc.getTenMonHoc())
-                                .tenPhong(lichHoc.getPhongHoc() != null ? lichHoc.getPhongHoc().getTenPhong() : null)
-                                .tang(lichHoc.getPhongHoc() != null ? lichHoc.getPhongHoc().getTang() : 0)
-                                .toaNha(lichHoc.getPhongHoc() != null ? lichHoc.getPhongHoc().getToaNha() : null)
-                                .ghiChu(lichHoc.getGhiChu())
+                                .id(lh.getId())
+                                .ngayHoc(lh.getNgayHoc())
+                                .tenLop(lhp.getMaLopHocPhan())
+                                .tenMonHoc(lhp.getMonHoc().getTenMonHoc())
+                                .tenGiangVien(
+                                                lhp.getNhanVien() != null
+                                                                ? lhp.getNhanVien().getHoTen()
+                                                                : null)
+                                .tenGioHoc(lh.getGioHoc().getTenGioHoc())
+                                .tenPhong(
+                                                lh.getPhongHoc() != null
+                                                                ? lh.getPhongHoc().getTenPhong()
+                                                                : null)
+                                .tang(
+                                                lh.getPhongHoc() != null
+                                                                ? lh.getPhongHoc().getTang()
+                                                                : null)
+                                .toaNha(
+                                                lh.getPhongHoc() != null
+                                                                ? lh.getPhongHoc().getToaNha()
+                                                                : null)
+                                .ghiChu(lh.getGhiChu())
                                 .build();
         }
 

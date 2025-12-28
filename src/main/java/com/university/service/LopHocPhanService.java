@@ -2,8 +2,6 @@ package com.university.service;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
-
 import org.springframework.stereotype.Service;
 
 import com.university.dto.request.LopHocPhanRequestDTO;
@@ -25,52 +23,65 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class LopHocPhanService {
 
-    private final LopHocPhanRepository lopHocPhanRepository;
-    private final MonHocRepository monHocRepository;
-    private final KiHocRepository kiHocRepository;
-    private final NhanVienRepository nhanVienRepository;
-    private final LopHocPhanMapper lopHocPhanMapper;
+        private final LopHocPhanRepository lopHocPhanRepository;
+        private final MonHocRepository monHocRepository;
+        private final KiHocRepository kiHocRepository;
+        private final NhanVienRepository nhanVienRepository;
+        private final LopHocPhanMapper lopHocPhanMapper;
 
-    public LopHocPhanResponseDTO create(LopHocPhanRequestDTO dto) {
-        LopHocPhan lopHocPhan = lopHocPhanMapper.toEntity(dto);
-        return lopHocPhanMapper.toResponseDTO(lopHocPhanRepository.save(lopHocPhan));
-    }
+        public LopHocPhanResponseDTO create(LopHocPhanRequestDTO dto) {
 
-    public List<LopHocPhanResponseDTO> getAll() {
-        return lopHocPhanRepository.findAllLopHocPhanResponse();
-    }
+                System.out.println("Raw: " + dto.getMonHocId());
+                System.out.println("Encoded: " + dto.getKiHocId());
 
-    public LopHocPhanResponseDTO getById(UUID id) {
-        LopHocPhan lopHocPhan = lopHocPhanRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy lớp học phần"));
-        return lopHocPhanMapper.toResponseDTO(lopHocPhan);
-    }
+                MonHoc monHoc = monHocRepository.findById(dto.getMonHocId())
+                                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy môn học"));
 
-    public LopHocPhanResponseDTO update(UUID id, LopHocPhanRequestDTO dto) {
+                KiHoc kiHoc = kiHocRepository.findById(dto.getKiHocId())
+                                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy kì học"));
 
-        LopHocPhan existing = lopHocPhanRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy lớp học phần"));
+                NhanVien giangVien = nhanVienRepository.findById(dto.getGiangVienId())
+                                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy giảng viên"));
 
-        MonHoc monHoc = monHocRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy môn học"));
+                LopHocPhan lopHocPhan = lopHocPhanMapper.toEntity(dto, monHoc, kiHoc, giangVien);
+                return lopHocPhanMapper.toResponseDTO(lopHocPhanRepository.save(lopHocPhan));
+        }
 
-        KiHoc kiHoc = kiHocRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy kì học"));
+        public List<LopHocPhanResponseDTO> getAll() {
+                return lopHocPhanRepository.findAllLopHocPhanResponse();
+        }
 
-        NhanVien nhanVien = nhanVienRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy giảng viên"));
+        public LopHocPhanResponseDTO getById(UUID id) {
+                LopHocPhan lopHocPhan = lopHocPhanRepository.findById(id)
+                                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy lớp học phần"));
+                return lopHocPhanMapper.toResponseDTO(lopHocPhan);
+        }
 
-        existing.setMaLopHocPhan(dto.getMaLopHocPhan());
-        existing.setSoLuongHienTai(dto.getSo_luong_hien_tai());
-        existing.setSoLuongToiDa(dto.getSo_luong_toi_da());
-        existing.setTrangThai(dto.getTrang_thai());
-        existing.setMonHoc(monHoc);
-        existing.setNhanVien(nhanVien);
-        existing.setKiHoc(kiHoc);
-        return lopHocPhanMapper.toResponseDTO(lopHocPhanRepository.save(existing));
-    }
+        public LopHocPhanResponseDTO update(UUID id, LopHocPhanRequestDTO dto) {
 
-    public void delete(UUID id) {
-        lopHocPhanRepository.deleteById(id);
-    }
+                LopHocPhan existing = lopHocPhanRepository.findById(id)
+                                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy lớp học phần"));
+
+                MonHoc monHoc = monHocRepository.findById(dto.getMonHocId())
+                                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy môn học"));
+
+                KiHoc kiHoc = kiHocRepository.findById(dto.getKiHocId())
+                                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy kì học"));
+
+                NhanVien nhanVien = nhanVienRepository.findById(dto.getGiangVienId())
+                                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy giảng viên"));
+
+                existing.setMaLopHocPhan(dto.getMaLopHocPhan());
+                existing.setSoLuongHienTai(dto.getSo_luong_hien_tai());
+                existing.setSoLuongToiDa(dto.getSo_luong_toi_da());
+                existing.setTrangThai(dto.getTrang_thai());
+                existing.setMonHoc(monHoc);
+                existing.setNhanVien(nhanVien);
+                existing.setKiHoc(kiHoc);
+                return lopHocPhanMapper.toResponseDTO(lopHocPhanRepository.save(existing));
+        }
+
+        public void delete(UUID id) {
+                lopHocPhanRepository.deleteById(id);
+        }
 }
