@@ -2,7 +2,6 @@ package com.university.controller;
 
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,30 +13,34 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/schedule_registrations")
+@RequestMapping("/dang-ky-tin-chi")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*") // Đảm bảo không bị lỗi CORS
 public class DangKyTinChiController {
 
     private final DangKyTinChiService service;
 
-    // 🔹 Xem tất cả lịch học mà sinh viên đã đăng ký
+    // Thay @Param bằng @PathVariable
     @GetMapping("/by-sinhvien/{sinhVienId}")
-    public ResponseEntity<List<DangKyTinChi>> getBySinhVien(@Param("sinhVienId") UUID sinhVienId) {
+    public ResponseEntity<List<DangKyTinChi>> getBySinhVien(@PathVariable UUID sinhVienId) {
         return ResponseEntity.ok(service.getBySinhVien(sinhVienId));
     }
 
-    // 🔹 Đăng ký lịch học
     @PostMapping("/{sinhVienId}/{lophocphanId}")
-    public ResponseEntity<DangKyTinChi> register(@Param("sinhVienId") UUID sinhVienId,
-            @Param("lophocphanId") UUID lophocphanId) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.DangKiTinChiSinhVien(sinhVienId, lophocphanId));
+    public ResponseEntity<DangKyTinChi> register(
+            @PathVariable UUID sinhVienId,
+            @PathVariable UUID lophocphanId) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(service.DangKiTinChiSinhVien(sinhVienId, lophocphanId));
     }
 
-    // 🔹 Hủy đăng ký
     @DeleteMapping("/{sinhVienId}/{lophocphanId}")
-    public ResponseEntity<Void> unregister(@Param("sinhVienId") UUID sinhVienId,
-            @Param("lophocphanId") UUID lophocphanId) {
-        service.unregister(sinhVienId, lophocphanId);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<String> unregister(
+            @PathVariable UUID sinhVienId,
+            @PathVariable UUID lophocphanId) {
+
+        String message = service.unregister(sinhVienId, lophocphanId);
+        return ResponseEntity.ok(message);
     }
+
 }

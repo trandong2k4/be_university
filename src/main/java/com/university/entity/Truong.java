@@ -8,6 +8,9 @@ import lombok.Setter;
 
 import java.util.List;
 import java.util.UUID;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.time.LocalDate;
 
 @Entity
@@ -52,6 +55,7 @@ public class Truong {
     @Column(name = "nguoi_dai_dien", length = 100)
     private String nguoiDaiDien;
 
-    @OneToMany(mappedBy = "truong")
+    @OneToMany(mappedBy = "truong", fetch = FetchType.LAZY)
+    @JsonIgnore // Thêm annotation này
     private List<LienHe> lienHe;
 }

@@ -11,7 +11,6 @@ TrangThaiBaiVietEnum {CONG_KHAI, RIENG_TU, NHAP}
 TrangThaiLHP {MO_DANG_KY,DANG_HOC,DA_KET_THUC}
 ViTriEnum {GIANG_VIEN, QUAN_TRI, HIEU_TRUONG, KE_TOAN}
 
-
 https://myaccount.google.com/apppasswords
 
 Lấy danh sách:

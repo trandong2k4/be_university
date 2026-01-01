@@ -1,11 +1,13 @@
 package com.university.service;
 
+import com.university.dto.response.DangKyTinChiResponseDTO;
 import com.university.entity.DangKyTinChi;
 import com.university.entity.LichHoc;
 import com.university.entity.LopHocPhan;
 import com.university.entity.SinhVien;
 import com.university.enums.TrangThaiLHP;
 import com.university.exception.ResourceNotFoundException;
+import com.university.exception.SimpleMessageException;
 import com.university.repository.DangKyTinChiRepository;
 import com.university.repository.LichHocRepository;
 import com.university.repository.LopHocPhanRepository;
@@ -40,26 +42,29 @@ public class DangKyTinChiService {
 
     // Đăng ký tín chỉ - ĐÃ ĐƯỢC TỐI ƯU HOÀN TOÀN
     public DangKyTinChi DangKiTinChiSinhVien(UUID sinhVienId, UUID lopHocPhanId) {
+        // 0. Kiểm tra null ngay lập tức để tránh lỗi JPA
+        if (sinhVienId == null || lopHocPhanId == null) {
+            throw new SimpleMessageException("Dữ liệu đăng ký không hợp lệ: ID sinh viên hoặc ID lớp học bị trống!");
+        }
 
         SinhVien sinhVien = svRepo.findById(sinhVienId)
-                .orElseThrow(() -> new ResourceNotFoundException("Sinh viên không tồn tại"));
+                .orElseThrow(() -> new SimpleMessageException("Sinh viên không tồn tại"));
 
         LopHocPhan lopMoi = lhpRepo.findById(lopHocPhanId)
-                .orElseThrow(() -> new ResourceNotFoundException("Lớp học phần không tồn tại"));
-
+                .orElseThrow(() -> new SimpleMessageException("Lớp học phần không tồn tại"));
         // 1. Kiểm tra đã đăng ký lớp này chưa
         if (dkRepo.findByLopHocPhanIdAndSinhVienId(sinhVienId, lopHocPhanId).isPresent()) {
-            throw new ResourceNotFoundException("Bạn đã đăng ký lớp học phần này rồi!");
+            throw new SimpleMessageException("Bạn đã đăng ký lớp học phần này rồi!");
         }
 
         // 2. Kiểm tra lớp còn chỗ không
         if (lopMoi.getSoLuongHienTai() >= lopMoi.getSoLuongToiDa()) {
-            throw new ResourceNotFoundException("Lớp học phần đã hết chỗ!");
+            throw new SimpleMessageException("Lớp học phần đã hết chỗ!");
         }
 
         // 3. Kiểm tra trạng thái lớp có mở đăng ký không
         if (lopMoi.getTrangThai() != TrangThaiLHP.MO_DANG_KY) {
-            throw new ResourceNotFoundException("Lớp học phần hiện không mở đăng ký!");
+            throw new SimpleMessageException("Lớp học phần hiện không mở đăng ký!");
         }
 
         // 4. Kiểm tra trùng lịch học (chỉ dùng gio_hoc_id + ngoại lệ CA5/CA6)
@@ -79,7 +84,7 @@ public class DangKyTinChiService {
             for (LichHoc lhMoi : lichHocMoi) {
                 for (LichHoc lhCu : lichHocCu) {
                     if (isTrungLich(lhMoi, lhCu)) {
-                        throw new ResourceNotFoundException(
+                        throw new SimpleMessageException(
                                 "Trùng lịch học vào " +
                                         lhMoi.getNgayHoc() + " - " +
                                         lhMoi.getGioHoc().getTenGioHoc() +
@@ -120,16 +125,17 @@ public class DangKyTinChiService {
         return false;
     }
 
-    public void unregister(UUID sinhVienId, UUID lopHocPhanId) {
-        DangKyTinChi dk = dkRepo.findByLopHocPhanIdAndSinhVienId(sinhVienId, lopHocPhanId)
-                .orElseThrow(() -> new ResourceNotFoundException("Bạn chưa đăng ký lớp học phần này"));
+    public String unregister(UUID sinhVienId, UUID lopHocPhanId) {
+        DangKyTinChi dk = dkRepo.findByLopHocPhanIdAndSinhVienId(
+                lopHocPhanId, sinhVienId)
+                .orElseThrow(() -> new SimpleMessageException("Bạn chưa đăng ký lớp học phần này"));
 
         LopHocPhan lop = dk.getLopHocPhan();
 
-        // Kiểm tra có được phép hủy không (ví dụ: trước ngày bắt đầu kỳ học)
-        if (LocalDate.now().isAfter(lop.getKiHoc().getNgayBatDau().minusDays(3))) {
-            throw new ResourceNotFoundException("Đã quá hạn hủy đăng ký!");
-        }
+        // // Kiểm tra có được phép hủy không (ví dụ: trước ngày bắt đầu kỳ học)
+        // if (LocalDate.now().isAfter(lop.getKiHoc().getNgayBatDau().minusDays(3))) {
+        // throw new SimpleMessageException("Đã quá hạn hủy đăng ký!");
+        // }
 
         dkRepo.delete(dk);
 
@@ -138,5 +144,7 @@ public class DangKyTinChiService {
             lop.setSoLuongHienTai(lop.getSoLuongHienTai() - 1);
             lhpRepo.save(lop);
         }
+
+        return "Đã hủy đăng ký lớp học phần";
     }
 }
