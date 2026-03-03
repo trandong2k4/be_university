@@ -1,17 +1,13 @@
 package com.university.mapper;
 
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.ResourceAccessException;
 
 import com.university.dto.request.LichHocRequestDTO;
 import com.university.dto.response.LichHocResponseDTO;
 import com.university.entity.GioHoc;
 import com.university.entity.LichHoc;
 import com.university.entity.LopHocPhan;
-import com.university.entity.MonHoc;
-import com.university.entity.NhanVien;
 import com.university.entity.PhongHoc;
-import com.university.exception.SimpleMessageException;
 import com.university.repository.GioHocRepository;
 import com.university.repository.LichHocRepository;
 import com.university.repository.LopHocPhanRepository;
@@ -50,7 +46,7 @@ public class LichHocMapper {
                                                 lhp.getNhanVien() != null
                                                                 ? lhp.getNhanVien().getHoTen()
                                                                 : null)
-                                .tenGioHoc(lh.getGioHoc().getTenGioHoc())
+                                .tengioHoc(lh.getGioHoc().getTenGioHoc())
                                 .tenPhong(
                                                 lh.getPhongHoc() != null
                                                                 ? lh.getPhongHoc().getTenPhong()

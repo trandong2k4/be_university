@@ -1,12 +1,10 @@
 package com.university.service;
 
-import com.university.dto.response.DangKyTinChiResponseDTO;
 import com.university.entity.DangKyTinChi;
 import com.university.entity.LichHoc;
 import com.university.entity.LopHocPhan;
 import com.university.entity.SinhVien;
 import com.university.enums.TrangThaiLHP;
-import com.university.exception.ResourceNotFoundException;
 import com.university.exception.SimpleMessageException;
 import com.university.repository.DangKyTinChiRepository;
 import com.university.repository.LichHocRepository;
@@ -16,7 +14,6 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 

@@ -22,7 +22,6 @@ public class LichHocResponseDTO {
     private String tengioHoc;
     private String tenMonHoc;
     private String tenPhong;
-    private String tenGioHoc;
     private int tang;
     private String toaNha;
     private String ghiChu;

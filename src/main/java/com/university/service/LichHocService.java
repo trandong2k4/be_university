@@ -2,7 +2,6 @@ package com.university.service;
 
 import com.university.dto.request.LichHocRequestDTO;
 import com.university.dto.response.LichHocResponseDTO;
-import com.university.dto.response.LichHocSinhVienResponseDTO;
 import com.university.entity.GioHoc;
 import com.university.entity.LichHoc;
 import com.university.entity.LopHocPhan;
@@ -17,12 +16,7 @@ import com.university.repository.PhongHocRepository;
 
 // import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-
 import java.util.List;
 import java.util.UUID;
 

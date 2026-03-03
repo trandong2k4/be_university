@@ -1,9 +1,13 @@
 package com.university.service;
 
+import java.io.Console;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import com.university.dto.request.ContactMessageRequest;
+import com.university.exception.ResourceNotFoundException;
+
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
@@ -36,8 +40,12 @@ public class ContactMessageService {
             mimeMessage.setHeader("Date", rfcDate); // Ép cứng nhãn thời gian vào email
 
             mailSender.send(mimeMessage);
+            System.out.print("Suscess");
+            throw new ResourceNotFoundException("Yeu cau da dc goi di");
         } catch (Exception e) {
             e.printStackTrace();
+            System.out.print("Yeu cau chua dc goi di");
+            throw new ResourceNotFoundException("Yeu cau chua dc goi di");
         }
     }
 }
