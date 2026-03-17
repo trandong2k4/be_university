@@ -1,49 +1,69 @@
 package com.university.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-import com.university.dto.request.ContactMessageRequest;
-import com.university.exception.ResourceNotFoundException;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Service;
+
+import com.university.dto.request.ContactMessageRequest;
 
 import jakarta.mail.internet.MimeMessage;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.concurrent.CompletableFuture;
+
 @Service
+@RequiredArgsConstructor
+@Slf4j
 public class ContactMessageService {
 
-    @Autowired
-    private JavaMailSender mailSender;
+    private final JavaMailSender mailSender;
 
     @Value("${MAIL_USERNAME}")
     private String acceptedMail;
 
     @Async
-    public void sendContactEmail(ContactMessageRequest request) {
+    public CompletableFuture<Void> sendContactEmail(ContactMessageRequest request) {
         try {
+            log.info("Start sending contact email from: {}", request.getName());
+
             MimeMessage mimeMessage = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 
-            helper.setTo(acceptedMail);
+            helper.setTo(acceptedMail); // admin nhận
+            helper.setReplyTo(request.getEmail()); // email người dùng
             helper.setSubject("Liên hệ từ: " + request.getName());
-            helper.setText("Nội dung: " + request.getMessage());
+            helper.setText(buildEmailContent(request), false);
 
-            // ÉP GIỜ VIỆT NAM VÀO HEADER
-            java.time.ZonedDateTime hcmTime = java.time.ZonedDateTime.now(java.time.ZoneId.of("Asia/Ho_Chi_Minh"));
-            String rfcDate = java.time.format.DateTimeFormatter.RFC_1123_DATE_TIME.format(hcmTime);
-
-            mimeMessage.setHeader("Date", rfcDate); // Ép cứng nhãn thời gian vào email
+            // Set timezone Vietnam
+            ZonedDateTime hcmTime = ZonedDateTime.now(ZoneId.of("Asia/Ho_Chi_Minh"));
+            String rfcDate = DateTimeFormatter.RFC_1123_DATE_TIME.format(hcmTime);
+            mimeMessage.setHeader("Date", rfcDate);
 
             mailSender.send(mimeMessage);
-            System.out.print("Suscess");
-            throw new ResourceNotFoundException("Yeu cau da dc goi di");
+
+            log.info("Send mail SUCCESS to {}", acceptedMail);
+
+            return CompletableFuture.completedFuture(null);
+
         } catch (Exception e) {
-            e.printStackTrace();
-            System.out.print("Yeu cau chua dc goi di");
-            throw new ResourceNotFoundException("Yeu cau chua dc goi di");
+            log.error("Send mail FAILED", e);
+            return CompletableFuture.failedFuture(
+                    new RuntimeException("Gửi email thất bại"));
         }
+    }
+
+    private String buildEmailContent(ContactMessageRequest request) {
+        return String.format(
+                "Tên: %s\nEmail: %s\n\nNội dung:\n%s",
+                request.getName(),
+                request.getEmail(),
+                request.getMessage());
     }
 }
