@@ -92,7 +92,8 @@ public class SinhVienService {
     public List<SinhVienAdminResponseDTO> getAllAdmin() {
         return sinhVienRepository.findAll().stream()
                 .map(sinhVienMapper::toResponseAdminDTO)
-                .collect(Collectors.toList());
+                .toList();
+        // .collect(Collectors.toList());
     }
 
     // 🔹 Cập nhật sinh viên

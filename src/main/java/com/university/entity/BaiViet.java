@@ -50,7 +50,7 @@ public class BaiViet {
     @Column(name = "file_dinh_kem_url", length = 255)
     private String fileDinhKemUrl;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 }

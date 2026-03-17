@@ -39,7 +39,7 @@ public class LienHe {
     @Column(length = 100)
     private String tiktok;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "truong_id", nullable = false)
     private Truong truong;
 }

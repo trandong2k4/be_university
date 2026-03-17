@@ -43,7 +43,7 @@ public class ChiTietSinhVien {
     @Column(name = "sdt_nguoi_than", length = 10)
     private String sdtNguoiThan;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sinh_vien_id", nullable = false)
     private SinhVien sinhVien;
 }

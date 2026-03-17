@@ -18,4 +18,10 @@ public class NganhResponseDTO {
     private String tenNganh;
     private UUID khoaId;
     private String tenKhoa;
+
+    public interface NganhView {
+        UUID getId();
+
+        String getUsername();
+    }
 }

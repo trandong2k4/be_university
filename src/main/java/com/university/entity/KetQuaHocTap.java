@@ -44,7 +44,7 @@ public class KetQuaHocTap {
     @Column(name = "ngay_cap_nhat")
     private LocalDate ngayCapNhat;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dang_ky_tin_chi_id")
     private DangKyTinChi dangKyTinChi;
 
