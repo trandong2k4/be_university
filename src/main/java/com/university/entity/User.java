@@ -2,7 +2,8 @@ package com.university.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import java.time.LocalDate;
+
+import java.sql.Time;
 import java.util.UUID;
 
 @Entity
@@ -33,11 +34,9 @@ public class User {
   @Column(length = 255)
   private String note;
 
-  @Column(columnDefinition = "DATE")
-  private LocalDate createDate;
+  private Time createDate;
 
-  @Column(columnDefinition = "DATE")
-  private LocalDate updateDate;
+  private Time updateDate;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "role_id")

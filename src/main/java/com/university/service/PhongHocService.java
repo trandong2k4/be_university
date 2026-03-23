@@ -3,8 +3,8 @@ package com.university.service;
 import com.university.dto.request.PhongHocRequestDTO;
 import com.university.dto.response.PhongHocResponseDTO;
 import com.university.entity.PhongHoc;
-import com.university.exception.DuplicateRequestException;
 import com.university.exception.ResourceNotFoundException;
+import com.university.exception.SimpleMessageException;
 import com.university.mapper.PhongHocMapper;
 import com.university.repository.PhongHocRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ public class PhongHocService {
 
     public PhongHocResponseDTO create(PhongHocRequestDTO dto) {
         if (phongHocRepository.findByMaPhong(dto.getMaPhong()).isPresent()) {
-            throw new DuplicateRequestException("Mã phòng học đã tồn tại");
+            throw new SimpleMessageException("Mã phòng học đã tồn tại");
         }
         PhongHoc phong = phongHocMapper.toEntity(dto);
         return phongHocMapper.toResponseDTO(phongHocRepository.save(phong));

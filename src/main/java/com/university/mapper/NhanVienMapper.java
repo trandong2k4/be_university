@@ -13,12 +13,12 @@ import lombok.RequiredArgsConstructor;
 public class NhanVienMapper {
 
     public NhanVien toEntity(NhanVienRequestDTO dto, User user) {
-        NhanVien nv = new NhanVien();
+        NhanVien nv = new NhanVien() {
+        };
         nv.setHoTen(dto.getHoTen());
         nv.setSoDienThoai(dto.getSoDienThoai());
         nv.setNgayVaoLam(dto.getNgayVaoLam());
         nv.setNgayNghiViec(dto.getNgayNghiViec());
-        nv.setViTri(dto.getViTri());
         nv.setUser(user);
         return nv;
     }
@@ -33,7 +33,6 @@ public class NhanVienMapper {
         nhanVienResponseDTO.setSoDienThoai(nv.getSoDienThoai());
         nhanVienResponseDTO.setUserId(nv.getUser().getId());
         nhanVienResponseDTO.setTenNguoiDung(nv.getUser().getUsername());
-        nhanVienResponseDTO.setViTri(nv.getViTri());
         return nhanVienResponseDTO;
     }
 }

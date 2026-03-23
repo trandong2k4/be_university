@@ -81,6 +81,13 @@
 			<scope>runtime</scope>
 		</dependency>
 
+		<!-- PostgreSQL Localhost -->
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
 		<!-- Lombok -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -113,7 +120,7 @@
 			<version>3.13.2</version>
 		</dependency>
 
-		<!-- DevTools -->
+		<!-- DevTools/ restart lai server nhanh-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -124,6 +131,13 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+
+		<!-- SendGrid Java Library (dùng để gửi email qua SendGrid) -->
+		<dependency>
+			<groupId>com.sendgrid</groupId>
+			<artifactId>sendgrid-java</artifactId>
+			<version>4.10.2</version>
 		</dependency>
 
 		<!-- JWT -->
@@ -169,5 +183,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>

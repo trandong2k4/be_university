@@ -1,7 +1,6 @@
 package com.university.repository;
 
 import com.university.dto.response.LichHocResponseDTO.LichHocViewDTO;
-import com.university.dto.response.LichHocSinhVienResponseDTO;
 import com.university.entity.LichHoc;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -37,29 +36,29 @@ public interface LichHocRepository extends JpaRepository<LichHoc, UUID> {
             """, nativeQuery = true)
     List<LichHocViewDTO> findFullSchedule();
 
-    @Query("""
-                SELECT new com.university.dto.response.LichHocSinhVienResponseDTO(
-                    lh.id,
-                    lhp.maLopHocPhan,
-                    mh.tenMonHoc,
-                    lh.ngayHoc,
-                    gh.thoiGianBatDau,
-                    gh.thoiGianKetThuc,
-                    ph.tenPhong,
-                    ph.toaNha,
-                    nv.hoTen
-                )
-                FROM LichHoc lh
-                JOIN lh.lopHocPhan lhp
-                JOIN lhp.monHoc mh
-                LEFT JOIN lhp.nhanVien nv
-                JOIN lh.gioHoc gh
-                JOIN lh.phongHoc ph
-                JOIN DangKyTinChi dktc ON dktc.lopHocPhan.id = lhp.id
-                WHERE dktc.sinhVien.id = :sinhVienId
-                ORDER BY lh.ngayHoc, gh.thoiGianBatDau
-            """)
-    List<LichHocSinhVienResponseDTO> findScheduleBySinhVien(
-            @Param("sinhVienId") UUID sinhVienId);
+    // @Query("""
+    // SELECT new com.university.dto.response.LichHocSinhVienResponseDTO(
+    // lh.id,
+    // lhp.maLopHocPhan,
+    // mh.tenMonHoc,
+    // lh.ngayHoc,
+    // gh.thoiGianBatDau,
+    // gh.thoiGianKetThuc,
+    // ph.tenPhong,
+    // ph.toaNha,
+    // nv.hoTen
+    // )
+    // FROM LichHoc lh
+    // JOIN lh.lopHocPhan lhp
+    // JOIN lhp.monHoc mh
+    // LEFT JOIN lhp.nhanVien nv
+    // JOIN lh.gioHoc gh
+    // JOIN lh.phongHoc ph
+    // JOIN DangKyTinChi dktc ON dktc.lopHocPhan.id = lhp.id
+    // WHERE dktc.sinhVien.id = :sinhVienId
+    // ORDER BY lh.ngayHoc, gh.thoiGianBatDau
+    // """)
+    // List<LichHocSinhVienResponseDTO> findScheduleBySinhVien(
+    // @Param("sinhVienId") UUID sinhVienId);
 
 }

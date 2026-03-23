@@ -11,7 +11,7 @@ import com.university.entity.SinhVien;
 @Component
 public class HocPhiMapper {
 
-    public HocPhi toEntity(HocPhiRequestDTO dto, SinhVien sv) {
+    public HocPhi toEntity(HocPhiRequestDTO dto, SinhVien hv) {
         return HocPhi.builder()
                 .soTien(dto.getSoTien())
                 .ngayTao(LocalDate.now())
@@ -19,7 +19,7 @@ public class HocPhiMapper {
                 .ngayThanhToan(dto.getNgayThanhToan())
                 .ghiChu(dto.getGhiChu())
                 .trangThai(dto.getTrangThai())
-                .sinhVien(sv)
+                .sinhVien(hv)
                 .build();
     }
 

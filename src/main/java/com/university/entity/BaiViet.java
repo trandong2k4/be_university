@@ -6,7 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import java.time.LocalDate;
+
+import java.sql.Time;
 import java.util.UUID;
 import com.university.enums.LoaiBaiVietEnum;
 import com.university.enums.TrangThaiBaiVietEnum;
@@ -35,7 +36,7 @@ public class BaiViet {
     private LoaiBaiVietEnum loaiBaiViet;
 
     @Column(name = "ngay_dang")
-    public LocalDate ngayDang;
+    public Time ngayDang;
 
     @Column(name = "tac_gia", length = 100)
     private String tacGia;
@@ -50,7 +51,7 @@ public class BaiViet {
     @Column(name = "file_dinh_kem_url", length = 255)
     private String fileDinhKemUrl;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
 }

@@ -9,7 +9,7 @@ import java.util.UUID;
 
 import com.university.enums.ViTriEnum;
 
-import java.time.LocalDate;
+import java.sql.Time;
 
 @Entity
 @Table(name = "nhanviens")
@@ -33,10 +33,10 @@ public class NhanVien {
     private String soDienThoai;
 
     @Column(name = "ngay_vao_lam")
-    private LocalDate ngayVaoLam;
+    private Time ngayVaoLam;
 
     @Column(name = "ngay_nghi_viec")
-    private LocalDate ngayNghiViec;
+    private Time ngayNghiViec;
 
     @Enumerated(EnumType.STRING)
     private ViTriEnum viTri;

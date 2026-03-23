@@ -1,6 +1,6 @@
 package com.university.dto.response;
 
-import java.time.LocalTime;
+import java.sql.Time;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,9 +14,15 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GioHocResponseDTO {
+
     private UUID id;
+
     private String maGioHoc;
+
     private String tenGioHoc;
-    private LocalTime thoiGianBatDau;
-    private LocalTime thoiGianKetThuc;
+
+    private Time thoiGianBatDau;
+
+    private Time thoiGianKetThuc;
+
 }

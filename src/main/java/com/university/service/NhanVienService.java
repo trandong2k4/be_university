@@ -66,7 +66,6 @@ public class NhanVienService {
         nv.setSoDienThoai(dto.getSoDienThoai());
         nv.setNgayVaoLam(dto.getNgayVaoLam());
         nv.setNgayNghiViec(dto.getNgayNghiViec());
-        nv.setViTri(dto.getViTri());
         if (dto.getUserId() != null) {
             User user = userRepository.findById(dto.getUserId())
                     .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy người dùng"));

@@ -1,6 +1,6 @@
 package com.university.dto.request;
 
-import java.time.LocalTime;
+import java.sql.Time;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -21,8 +21,8 @@ public class GioHocRequestDTO {
     private String tenGioHoc;
 
     @NotNull(message = "Thời gian bắt đầu không được để trống")
-    private LocalTime thoiGianBatDau;
+    private Time thoiGianBatDau;
 
     @NotNull(message = "Thời gian kết thúc không được để trống")
-    private LocalTime thoiGianKetThuc;
+    private Time thoiGianKetThuc;
 }

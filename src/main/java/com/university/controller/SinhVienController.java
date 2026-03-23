@@ -1,8 +1,8 @@
 package com.university.controller;
 
 import com.university.dto.request.SinhVienRequestDTO;
-import com.university.dto.response.SinhVienAdminResponseDTO;
 import com.university.dto.response.SinhVienResponseDTO;
+import com.university.dto.response.SinhVienAdminResponseDTO;
 import com.university.service.SinhVienService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -13,19 +13,17 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/students")
+@RequestMapping("/hocvien")
 @RequiredArgsConstructor
 public class SinhVienController {
 
     private final SinhVienService sinhVienService;
 
-    // 🔹 Lấy tất cả sinh viên
     @GetMapping
     public ResponseEntity<List<SinhVienResponseDTO>> getAll() {
         return ResponseEntity.ok(sinhVienService.getAll());
     }
 
-    // 🔹 Lấy tất cả sinh viên
     @GetMapping("/admin")
     public ResponseEntity<List<SinhVienAdminResponseDTO>> getAllAdmin() {
         return ResponseEntity.ok(sinhVienService.getAllAdmin());
@@ -37,32 +35,30 @@ public class SinhVienController {
         return ResponseEntity.ok(sinhVienService.getById(id));
     }
 
-    // ✅ GET /api/sinhviens/by-user/{userId}
+    // ✅ GET /api/sinhVienServiceVienServiceVienServiceviens/by-user/{userId}
     @GetMapping("/by-user/{userId}")
     public ResponseEntity<SinhVienResponseDTO> getByUserId(@PathVariable UUID userId) {
         return ResponseEntity.ok(sinhVienService.findByUserId(userId));
     }
 
-    // 🔹 Tìm kiếm theo từ khóa
     @GetMapping("/search")
-    public ResponseEntity<List<SinhVienResponseDTO>> search(@RequestParam String keyword) {
+    public ResponseEntity<List<SinhVienResponseDTO>> search(
+            @RequestParam String keyword) {
         return ResponseEntity.ok(sinhVienService.search(keyword));
     }
 
-    // 🔹 Tạo mới sinh viên
     @PostMapping
-    public ResponseEntity<SinhVienResponseDTO> create(@RequestBody @Valid SinhVienRequestDTO dto) {
+    public ResponseEntity<SinhVienResponseDTO> create(
+            @RequestBody @Valid SinhVienRequestDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(sinhVienService.create(dto));
     }
 
-    // 🔹 Cập nhật sinh viên
     @PutMapping("/{id}")
     public ResponseEntity<SinhVienResponseDTO> update(@PathVariable UUID id,
             @RequestBody @Valid SinhVienRequestDTO dto) {
         return ResponseEntity.ok(sinhVienService.update(id, dto));
     }
 
-    // 🔹 Xóa sinh viên
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable UUID id) {
         sinhVienService.delete(id);

@@ -1,12 +1,7 @@
 # Getting Started
 
-# Connect pgAdmin4
-DB_HOST=aws-1-us-east-1.pooler.supabase.com
-DB_PORT=5432
-DB_NAME=postgres
-DB_USERNAME=postgres.nmgezhspwukialfmjfdv
-DB_PASSWORD=Ecx1X5mk54qnGAgG
-
+# Build project
+mvn install
 
 # ENUMS
 GioiTinhEnum  {NAM, NU}

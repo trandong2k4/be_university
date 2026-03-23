@@ -1,6 +1,8 @@
 package com.university.mapper;
 
-import java.time.LocalDate;
+import java.sql.Time;
+import java.time.LocalTime;
+
 import org.springframework.stereotype.Component;
 
 import com.university.dto.request.UserRequestDTO;
@@ -20,7 +22,7 @@ public class UserMapper {
                 .password(dto.getPassword())
                 .email(dto.getEmail())
                 .status(dto.isStatus())
-                .updateDate(LocalDate.now())
+                .updateDate(Time.valueOf(LocalTime.now()))
                 .note(dto.getNote())
                 .role(role)
                 .build();

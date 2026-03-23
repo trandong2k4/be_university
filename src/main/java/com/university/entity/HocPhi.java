@@ -42,4 +42,5 @@ public class HocPhi {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sinh_vien_id", nullable = false)
     private SinhVien sinhVien;
+
 }

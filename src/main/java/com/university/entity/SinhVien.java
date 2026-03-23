@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.util.UUID;
-import java.time.LocalDate;
+import java.sql.Time;
 
 @Entity
 @Table(name = "sinhviens")
@@ -32,10 +32,10 @@ public class SinhVien {
     private String soDienThoai;
 
     @Column(name = "ngay_nhap_hoc")
-    private LocalDate ngayNhapHoc;
+    private Time ngayNhapHoc;
 
     @Column(name = "ngay_tot_nghiep")
-    private LocalDate ngayTotNghiep;
+    private Time ngayTotNghiep;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "nganh_id", nullable = false)

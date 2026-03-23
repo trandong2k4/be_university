@@ -1,6 +1,6 @@
 package com.university.dto.response;
 
-import java.time.LocalDate;
+import java.sql.Time;
 import java.util.UUID;
 import com.university.enums.GioiTinhEnum;
 import lombok.Builder;
@@ -11,11 +11,19 @@ import lombok.Setter;
 @Setter
 @Builder
 public class ChiTietSinhVienResponseDTO {
+
     private UUID id;
-    private LocalDate ngaySinh;
+
+    private Time ngaySinh;
+
     private GioiTinhEnum gioiTinh;
+
     private String diaChi;
+
     private String quocTich;
+
     private String cccd;
+
     private String sdtNguoiThan;
+
 }

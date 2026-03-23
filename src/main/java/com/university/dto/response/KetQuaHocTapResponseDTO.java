@@ -15,16 +15,27 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class KetQuaHocTapResponseDTO {
+
     private UUID id;
+
     private String tenSinhVien;
+
     private String tenMonHoc;
+
     private String tenKiHoc;
+
     private BigDecimal chuyenCan;
+
     private BigDecimal thuongKi;
+
     private BigDecimal giuaKi;
+
     private BigDecimal cuoiKi;
+
     private String danhGia;
+
     private String ghiChu;
+
     private LocalDate ngayCapNhat;
 
 }

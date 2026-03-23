@@ -8,6 +8,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.util.UUID;
 
+import com.university.enums.LoaiPhongEnum;
+import com.university.enums.TinhTrangPhongEnum;
+
 @Entity
 @Table(name = "phonghocs")
 @Getter
@@ -22,8 +25,18 @@ public class PhongHoc {
 
     @Column(name = "ma_phong_hoc", length = 10, unique = true, nullable = false)
     private String maPhong;
+
     private String tenPhong;
+
     private String toaNha;
+
     private int tang;
+
     private int sucChua;
+
+    @Enumerated(EnumType.STRING)
+    private LoaiPhongEnum loaiPhong;
+
+    @Enumerated(EnumType.STRING)
+    private TinhTrangPhongEnum tinhTrang;
 }

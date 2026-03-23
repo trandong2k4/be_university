@@ -1,6 +1,6 @@
 package com.university.dto.request;
 
-import java.time.LocalDate;
+import java.sql.Time;
 import java.util.UUID;
 
 import com.university.enums.ViTriEnum;
@@ -23,9 +23,12 @@ public class NhanVienRequestDTO {
     @NotBlank(message = "Số điện thoại không được để trống")
     private String soDienThoai;
 
-    private LocalDate ngayVaoLam;
-    private LocalDate ngayNghiViec;
+    private Time ngayVaoLam;
+
+    private Time ngayNghiViec;
+
     private ViTriEnum viTri;
 
     private UUID userId;
+
 }

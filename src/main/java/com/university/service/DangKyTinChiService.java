@@ -32,7 +32,7 @@ public class DangKyTinChiService {
         return dkRepo.findByLopHocPhanId(lopHocPhanId);
     }
 
-    // Lấy danh sách lớp học phần mà sinh viên đã đăng ký
+    // Lấy danh sách lớp học phần mà học viên đã đăng ký
     public List<DangKyTinChi> getBySinhVien(UUID sinhVienId) {
         return dkRepo.findBySinhVienId(sinhVienId);
     }
@@ -41,11 +41,11 @@ public class DangKyTinChiService {
     public DangKyTinChi DangKiTinChiSinhVien(UUID sinhVienId, UUID lopHocPhanId) {
         // 0. Kiểm tra null ngay lập tức để tránh lỗi JPA
         if (sinhVienId == null || lopHocPhanId == null) {
-            throw new SimpleMessageException("Dữ liệu đăng ký không hợp lệ: ID sinh viên hoặc ID lớp học bị trống!");
+            throw new SimpleMessageException("Dữ liệu đăng ký không hợp lệ: ID học viên hoặc ID lớp học bị trống!");
         }
 
         SinhVien sinhVien = svRepo.findById(sinhVienId)
-                .orElseThrow(() -> new SimpleMessageException("Sinh viên không tồn tại"));
+                .orElseThrow(() -> new SimpleMessageException("Học viên không tồn tại"));
 
         LopHocPhan lopMoi = lhpRepo.findById(lopHocPhanId)
                 .orElseThrow(() -> new SimpleMessageException("Lớp học phần không tồn tại"));
@@ -99,7 +99,7 @@ public class DangKyTinChiService {
 
         DangKyTinChi saved = dkRepo.save(dangKy);
 
-        // Tăng số lượng sinh viên hiện tại
+        // Tăng số lượng họcviên hiện tại
         lopMoi.setSoLuongHienTai(lopMoi.getSoLuongHienTai() + 1);
         lhpRepo.save(lopMoi);
         return saved;

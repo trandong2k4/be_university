@@ -25,7 +25,7 @@ public class SmartChatService {
                 .build();
 
         // 🧩 Bộ nhớ hội thoại (lưu tối đa 5 tin gần nhất)
-        var memory = MessageWindowChatMemory.withMaxMessages(5);
+        var memory = MessageWindowChatMemory.withMaxMessages(10);
 
         // 🧠 Thêm system message thủ công nếu version chưa có .systemMessage()
         memory.add(SystemMessage.from("""

@@ -1,6 +1,6 @@
 package com.university.dto.response;
 
-import java.time.LocalDate;
+import java.sql.Time;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,12 +14,21 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SinhVienAdminResponseDTO {
+
     private UUID id;
+
     private String maSinhVien;
+
     private String hoTen;
-    private LocalDate ngayNhapHoc;
-    private LocalDate ngayTotNghiep;
+
+    private Time ngayNhapHoc;
+
+    private Time ngayTotNghiep;
+
     private String soDienThoai;
+
     private UUID nganhId;
+
     private String tenNganh;
+
 }

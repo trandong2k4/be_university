@@ -6,7 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import java.time.LocalTime;
+
+import java.sql.Time;
 import java.util.UUID;
 
 @Entity
@@ -23,8 +24,11 @@ public class GioHoc {
 
     @Column(name = "ma_gio_hoc", length = 10, unique = true, nullable = false)
     private String maGioHoc;
+
     private String tenGioHoc;
-    private LocalTime thoiGianBatDau;
-    private LocalTime thoiGianKetThuc;
+
+    private Time thoiGianBatDau;
+
+    private Time thoiGianKetThuc;
 
 }

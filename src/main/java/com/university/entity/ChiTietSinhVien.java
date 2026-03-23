@@ -9,7 +9,8 @@ import lombok.Setter;
 
 import java.util.UUID;
 import com.university.enums.GioiTinhEnum;
-import java.time.LocalDate;
+
+import java.sql.Time;
 
 @Entity
 @Table(name = "chitietsinhviens")
@@ -28,7 +29,7 @@ public class ChiTietSinhVien {
     private String diaChi;
 
     @Column
-    private LocalDate ngaySinh;
+    private Time ngaySinh;
 
     @Enumerated(EnumType.STRING)
     @Column

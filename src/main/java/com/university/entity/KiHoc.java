@@ -28,6 +28,7 @@ public class KiHoc {
     private String tenKiHoc;
 
     private LocalDate ngayBatDau;
+
     private LocalDate ngayKetThuc;
 
 }

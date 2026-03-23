@@ -4,8 +4,8 @@ import com.university.dto.request.NganhRequestDTO;
 import com.university.dto.response.NganhResponseDTO;
 import com.university.entity.Khoa;
 import com.university.entity.Nganh;
-import com.university.exception.DuplicateRequestException;
 import com.university.exception.ResourceNotFoundException;
+import com.university.exception.SimpleMessageException;
 import com.university.mapper.NganhMapper;
 import com.university.repository.KhoaRepository;
 import com.university.repository.NganhRepository;
@@ -28,7 +28,7 @@ public class NganhService {
 
     public NganhResponseDTO create(NganhRequestDTO dto) {
         if (nganhRepository.findByMaNganh(dto.getMaNganh()).isPresent()) {
-            throw new DuplicateRequestException("Mã ngành đã tồn tại");
+            throw new SimpleMessageException("Mã ngành đã tồn tại");
         }
         Nganh nganh = nganhMapper.toEntity(dto);
         return nganhMapper.toResponseDTO(nganhRepository.save(nganh));

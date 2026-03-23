@@ -31,7 +31,7 @@ public class HocPhiRequestDTO {
     private HocPhiEnum trangThai;
 
     @NotNull(message = "Sinh viên không được để trống")
-    private UUID sinhVienId;
+    private UUID SinhVienId;
 
     private String ghiChu;
 

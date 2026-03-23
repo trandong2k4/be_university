@@ -25,7 +25,7 @@ public class HocPhiService {
 
     public HocPhiResponseDTO create(HocPhiRequestDTO dto) {
         SinhVien sv = sinhVienRepository.findById(dto.getSinhVienId())
-                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy sinh viên"));
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy học viên"));
 
         HocPhi hp = hocPhiMapper.toEntity(dto, sv);
         return hocPhiMapper.toResponseDTO(hocPhiRepository.save(hp));

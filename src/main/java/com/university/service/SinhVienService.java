@@ -4,17 +4,19 @@ import com.university.dto.request.SinhVienRequestDTO;
 import com.university.dto.response.SinhVienAdminResponseDTO;
 import com.university.dto.response.SinhVienResponseDTO;
 import com.university.entity.ChiTietSinhVien;
-import com.university.entity.Nganh;
 import com.university.entity.SinhVien;
+import com.university.entity.Nganh;
 import com.university.entity.User;
 import com.university.exception.ResourceNotFoundException;
 import com.university.mapper.SinhVienMapper;
 import com.university.repository.ChiTietSinhVienRepository;
-import com.university.repository.NganhRepository;
 import com.university.repository.SinhVienRepository;
+import com.university.repository.NganhRepository;
 import com.university.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.sql.Time;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -25,81 +27,81 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class SinhVienService {
 
-    private final SinhVienRepository sinhVienRepository;
+    private final SinhVienRepository SinhVienRepository;
     private final ChiTietSinhVienRepository chiTietSinhVienRepository;
     private final NganhRepository nganhRepository;
     private final UserRepository userRepository;
-    private final SinhVienMapper sinhVienMapper;
+    private final SinhVienMapper SinhVienMapper;
 
-    // 🔹 Tạo mới sinh viên
+    // 🔹 Tạo mới hoc viên
     public SinhVienResponseDTO create(SinhVienRequestDTO dto) {
         // 1️⃣ Tìm ngành
         Nganh nganh = nganhRepository.findById(dto.getNganhId())
                 .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy ngành"));
         if (dto.getNgayNhapHoc() == null) {
-            dto.setNgayNhapHoc(LocalDate.now());
+            dto.setNgayNhapHoc(Time.valueOf(LocalDate.now().atStartOfDay().toLocalTime()));
         }
         if (dto.getMaSinhVien() == null || dto.getMaSinhVien().isEmpty()) {
-            long count = sinhVienRepository.count();
+            long count = SinhVienRepository.count();
             String generatedMaSV = "SV" + String.format("%05d", count + 1);
             dto.setMaSinhVien(generatedMaSV);
         }
-        SinhVien sv = sinhVienMapper.toEntity(dto, nganh, null);
+        SinhVien hv = SinhVienMapper.toEntity(dto, nganh, null);
         if (dto.getUserId() != null) {
             User user = userRepository.findById(dto.getUserId())
                     .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy user"));
-            sv.setUser(user);
+            hv.setUser(user);
         }
-        return sinhVienMapper.toResponseDTO(sinhVienRepository.save(sv));
+        return SinhVienMapper.toResponseDTO(SinhVienRepository.save(hv));
     }
 
     // 🔹 Lấy theo ID
     public SinhVienResponseDTO getById(UUID id) {
-        SinhVien sv = sinhVienRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy sinh viên"));
-        return sinhVienMapper.toResponseDTO(sv);
+        SinhVien sv = SinhVienRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy học viên"));
+        return SinhVienMapper.toResponseDTO(sv);
     }
 
     public SinhVienResponseDTO findByUserId(UUID userId) {
-        SinhVien sv = sinhVienRepository.findByUser_Id(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy sinh viên với userId: " + userId));
+        SinhVien sv = SinhVienRepository.findByUser_Id(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy học viên với userId: " + userId));
 
-        return sinhVienMapper.toResponseDTO(sv);
+        return SinhVienMapper.toResponseDTO(sv);
     }
 
     // Trong StudentService
     public Optional<SinhVienResponseDTO> findByUserIdChatbot(UUID userId) {
-        SinhVien entity = sinhVienRepository.findByUser_Id(userId)
+        SinhVien entity = SinhVienRepository.findByUser_Id(userId)
                 .orElseThrow(() -> new ResourceNotFoundException(""));
-        return entity != null ? Optional.of(sinhVienMapper.toResponseDTO(entity)) : Optional.empty();
+        return entity != null ? Optional.of(SinhVienMapper.toResponseDTO(entity)) : Optional.empty();
     }
 
     // 🔹 Tìm kiếm theo từ khóa
     public List<SinhVienResponseDTO> search(String keyword) {
-        return sinhVienRepository.searchByHoTen(keyword).stream()
-                .map(sinhVienMapper::toResponseDTO)
+        return SinhVienRepository.searchByHoTen(keyword).stream()
+                .map(SinhVienMapper::toResponseDTO)
                 .collect(Collectors.toList());
     }
 
-    // 🔹 Lấy tất cả sinh viên
+    // 🔹 Lấy tất cả hoc viên
     public List<SinhVienResponseDTO> getAll() {
-        return sinhVienRepository.findAll().stream()
-                .map(sinhVienMapper::toResponseDTO)
+        return SinhVienRepository.findAll().stream()
+                .map(SinhVienMapper::toResponseDTO)
                 .collect(Collectors.toList());
     }
 
-    // 🔹 Lấy tất cả sinh viên
+    // 🔹 Lấy tất cả học viên
     public List<SinhVienAdminResponseDTO> getAllAdmin() {
-        return sinhVienRepository.findAll().stream()
-                .map(sinhVienMapper::toResponseAdminDTO)
+        return SinhVienRepository.findAll().stream()
+                .map(SinhVienMapper::toResponseAdminDTO)
                 .toList();
         // .collect(Collectors.toList());
     }
 
-    // 🔹 Cập nhật sinh viên
+    // 🔹 Cập nhật hoc viên
     public SinhVienResponseDTO update(UUID id, SinhVienRequestDTO dto) {
-        SinhVien sv = sinhVienRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy sinh viên"));
+        SinhVien sv = SinhVienRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy học viên"));
 
         sv.setMaSinhVien(dto.getMaSinhVien());
         sv.setHoTen(dto.getHoTen());
@@ -120,18 +122,18 @@ public class SinhVienService {
             sv.setUser(user);
         }
 
-        return sinhVienMapper.toResponseDTO(sinhVienRepository.save(sv));
+        return SinhVienMapper.toResponseDTO(SinhVienRepository.save(sv));
     }
 
-    // 🔹 Xóa sinh viên
+    // 🔹 Xóa hoc viên
     public void delete(UUID id) {
-        if (!sinhVienRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Không tìm thấy sinh viên để xóa");
+        if (!SinhVienRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Không tìm thấy học viên để xóa");
         }
         ChiTietSinhVien ct = chiTietSinhVienRepository.findBySinhVien_Id(id)
                 .orElse(null);
         if (ct != null)
             chiTietSinhVienRepository.delete(ct);
-        sinhVienRepository.deleteById(id);
+        SinhVienRepository.deleteById(id);
     }
 }

@@ -2,6 +2,7 @@ package com.university.service;
 
 import com.university.dto.request.UserRequestDTO;
 import com.university.dto.response.UserResponseDTO;
+import com.university.dto.response.UserResponseDTO.UserView;
 import com.university.entity.Role;
 import com.university.entity.User;
 import com.university.exception.ResourceNotFoundException;
@@ -10,7 +11,8 @@ import com.university.repository.RoleRepository;
 import com.university.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 
-import java.time.LocalDate;
+import java.sql.Time;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -29,11 +31,11 @@ public class UserService {
 
     public UserResponseDTO create(UserRequestDTO dto) {
         Role role = roleRepository.findById(dto.getRoleId())
-                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy vai trò"));
+                .orElseThrow(() -> new ResourceNotFoundException("sKhông tìm thấy vai trò"));
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String hashed = encoder.encode(dto.getPassword());
         User user = userMapper.toEntity(dto, role);
-        user.setCreateDate(java.time.LocalDate.now());
+        user.setCreateDate(Time.valueOf(LocalTime.now().toString()));
         user.setPassword(hashed);
         return userMapper.toResponseDTO(userRepository.save(user));
     }
@@ -42,6 +44,10 @@ public class UserService {
         return userRepository.findAll().stream()
                 .map(userMapper::toResponseDTO)
                 .toList();
+    }
+
+    public List<UserView> getAllForView() {
+        return userRepository.findAllUserViews();
     }
 
     public UserResponseDTO getById(UUID id) {
@@ -64,7 +70,7 @@ public class UserService {
         existing.setUsername(dto.getUsername());
         existing.setStatus(dto.isStatus());
         existing.setNote(dto.getNote());
-        existing.setUpdateDate(LocalDate.now());
+        existing.setUpdateDate(Time.valueOf(LocalTime.now().toString()));
         if (dto.getPassword() != null) {
             existing.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
         }

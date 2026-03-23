@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/schools")
+@RequestMapping("/truong")
 @RequiredArgsConstructor
 public class TruongController {
 

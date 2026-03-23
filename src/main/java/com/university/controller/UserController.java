@@ -2,6 +2,7 @@ package com.university.controller;
 
 import com.university.dto.request.UserRequestDTO;
 import com.university.dto.response.UserResponseDTO;
+import com.university.dto.response.UserResponseDTO.UserView;
 import com.university.service.UserService;
 
 import jakarta.validation.Valid;
@@ -26,11 +27,16 @@ public class UserController {
         return ResponseEntity.ok(userService.getAll());
     }
 
+    @GetMapping("/views")
+    public ResponseEntity<List<UserView>> getAllUserView() {
+        return ResponseEntity.ok(userService.getAllForView());
+    }
+
     @PostMapping
     public ResponseEntity<UserResponseDTO> create(@RequestBody @Valid UserRequestDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.create(dto));
     }
-
+    
     @GetMapping("/getbyId/{id}")
     public ResponseEntity<UserResponseDTO> getById(@PathVariable UUID id) {
         return ResponseEntity.ok(userService.getById(id));

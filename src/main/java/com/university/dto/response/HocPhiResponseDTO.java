@@ -17,14 +17,25 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class HocPhiResponseDTO {
+
     private UUID id;
+
     private String tenSinhVien;
+
     private String maSinhVien;
+
     private String tenKiHoc;
+
     private BigDecimal soTien;
+
     private BigDecimal giaTriTinChi;
+
     private LocalDate hanThanhToan;
+
     private LocalDate ngayThanhToan;
+
     private HocPhiEnum trangThai;
+
     private String ghiChu;
+
 }

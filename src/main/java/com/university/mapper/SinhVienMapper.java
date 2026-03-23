@@ -5,9 +5,9 @@ import org.springframework.stereotype.Component;
 import com.university.dto.request.SinhVienRequestDTO;
 import com.university.dto.response.SinhVienAdminResponseDTO;
 import com.university.dto.response.SinhVienResponseDTO;
+import com.university.entity.SinhVien;
 import com.university.entity.Khoa;
 import com.university.entity.Nganh;
-import com.university.entity.SinhVien;
 import com.university.entity.Truong;
 import com.university.entity.User;
 
@@ -46,16 +46,16 @@ public class SinhVienMapper {
                 .build();
     }
 
-    public SinhVienAdminResponseDTO toResponseAdminDTO(SinhVien sv) {
+    public SinhVienAdminResponseDTO toResponseAdminDTO(SinhVien hv) {
         return SinhVienAdminResponseDTO.builder()
-                .id(sv.getId())
-                .maSinhVien(sv.getMaSinhVien())
-                .hoTen(sv.getHoTen())
-                .soDienThoai(sv.getSoDienThoai())
-                .ngayNhapHoc(sv.getNgayNhapHoc())
-                .ngayTotNghiep(sv.getNgayTotNghiep())
-                .nganhId(sv.getNganh().getId())
-                .tenNganh(sv.getNganh().getTenNganh())
+                .id(hv.getId())
+                .maSinhVien(hv.getMaSinhVien())
+                .hoTen(hv.getHoTen())
+                .soDienThoai(hv.getSoDienThoai())
+                .ngayNhapHoc(hv.getNgayNhapHoc())
+                .ngayTotNghiep(hv.getNgayTotNghiep())
+                .nganhId(hv.getNganh().getId())
+                .tenNganh(hv.getNganh().getTenNganh())
                 .build();
     }
 }

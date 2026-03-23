@@ -15,13 +15,23 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class HocLaiResponseDTO {
+
     private UUID id;
-    private String tenSinhVien;
-    private String maSinhVien;
+
+    private String tenHocVien;
+
+    private String maHocVien;
+
     private String tenMonHoc;
+
     private String tenKiHoc;
+
     private int lanHoc;
+
     private BigDecimal diemCu;
+
     private HocLaiEnum trangThai;
+
     private String lyDo;
+
 }

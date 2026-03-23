@@ -1,6 +1,6 @@
 package com.university.dto.response;
 
-import java.time.LocalDate;
+import java.sql.Time;
 import java.util.UUID;
 
 import com.university.enums.ViTriEnum;
@@ -13,14 +13,23 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class NhanVienResponseDTO {
+
     private UUID id;
+
     private String maNhanVien;
+
     private String hoTen;
+
     private String soDienThoai;
-    private LocalDate ngayVaoLam;
-    private LocalDate ngayNghiViec;
+
+    private Time ngayVaoLam;
+
+    private Time ngayNghiViec;
+
     private ViTriEnum ViTri;
+
     private UUID userId;
+
     private String tenNguoiDung;
 
     public interface NhanVienView {

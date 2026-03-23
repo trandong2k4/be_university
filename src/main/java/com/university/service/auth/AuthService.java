@@ -33,11 +33,7 @@ public class AuthService {
         user.setCreateDate(request.getCreateDate());
 
         user = userRepository.save(user);
-
-        return new RegisterResponseDTO(
-                user.getId(),
-                user.getUsername(),
-                user.getCreateDate());
+        return new RegisterResponseDTO(user.getId(), user.getUsername(), user.getCreateDate());
     }
 
     @Transactional

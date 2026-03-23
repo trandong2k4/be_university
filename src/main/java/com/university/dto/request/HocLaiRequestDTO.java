@@ -16,8 +16,8 @@ import lombok.Setter;
 @AllArgsConstructor
 public class HocLaiRequestDTO {
 
-    @NotNull(message = "Sinh viên không được để trống")
-    private UUID sinhVienId;
+    @NotNull(message = "Học viên không được để trống")
+    private UUID hocVienId;
 
     @NotNull(message = "Môn học không được để trống")
     private UUID monHocId;

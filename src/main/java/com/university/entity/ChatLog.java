@@ -2,7 +2,8 @@ package com.university.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import java.time.LocalDateTime;
+
+import java.sql.Time;
 import java.util.UUID;
 
 @Entity
@@ -25,7 +26,7 @@ public class ChatLog {
     private String content;
 
     @Column(name = "created_at", nullable = false)
-    private LocalDateTime createdAt;
+    private Time createdAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

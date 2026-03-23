@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/departments")
+@RequestMapping("/khoas")
 @RequiredArgsConstructor
 public class KhoaController {
 

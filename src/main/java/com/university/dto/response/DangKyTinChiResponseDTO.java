@@ -13,8 +13,11 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DangKyTinChiResponseDTO {
+
     UUID id;
+
     UUID sinhvienId;
+
     UUID lophocphanId;
 
 }
